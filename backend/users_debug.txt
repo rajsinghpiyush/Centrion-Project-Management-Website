@@ -1,0 +1,3 @@
+Found 2 users:
+- Name: Success User, Email: success@example.com, Provider: local, HasPassword: true, IsActive: true
+- Name: Piyush Raj, Email: rajsinghpiyush3@gmail.com, Provider: local, HasPassword: true, IsActive: true
