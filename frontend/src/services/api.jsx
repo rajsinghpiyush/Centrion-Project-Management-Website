@@ -5,7 +5,7 @@ import axios from 'axios';
  * Handles authentication tokens and error responses
  */
 
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5001/api';
 
 // Create axios instance
 const api = axios.create({
@@ -41,26 +41,22 @@ api.interceptors.response.use(
       originalRequest._retry = true;
 
       try {
-        const refreshToken = sessionStorage.getItem('refreshToken');
+        const response = await axios.post(
+          `${API_URL}/auth/refresh-token`,
+          {},
+          { withCredentials: true }
+        );
+
+        const { accessToken, refreshToken } = response.data;
+        sessionStorage.setItem('accessToken', accessToken);
+
         if (refreshToken) {
-          const response = await axios.post(`${API_URL}/auth/refresh-token`, {
-            refreshToken,
-          });
-
-          const { accessToken } = response.data;
-          sessionStorage.setItem('accessToken', accessToken);
-
-          // Retry original request with new token
-          originalRequest.headers.Authorization = `Bearer ${accessToken}`;
-          return api(originalRequest);
-        } else {
-          // No refresh token available, force redirect
-          sessionStorage.removeItem('accessToken');
-          sessionStorage.removeItem('refreshToken');
-          sessionStorage.removeItem('user');
-          window.location.href = '/';
-          return Promise.reject(error);
+          sessionStorage.setItem('refreshToken', refreshToken);
         }
+
+        // Retry original request with new token
+        originalRequest.headers.Authorization = `Bearer ${accessToken}`;
+        return api(originalRequest);
       } catch (refreshError) {
         // Refresh failed, logout user
         sessionStorage.removeItem('accessToken');
