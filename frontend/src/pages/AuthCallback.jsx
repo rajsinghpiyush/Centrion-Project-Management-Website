@@ -11,10 +11,12 @@ const AuthCallback = () => {
 
   useEffect(() => {
     const handleCallback = async () => {
+      // Support both query params and fragment (#accessToken=...)
       const searchParams = new URLSearchParams(location.search);
-      const accessToken = searchParams.get('accessToken');
-      const refreshToken = searchParams.get('refreshToken');
-      const error = searchParams.get('error');
+      const hash = new URLSearchParams(location.hash.replace(/^#/, ''));
+      const accessToken = searchParams.get('accessToken') || hash.get('accessToken');
+      const refreshToken = searchParams.get('refreshToken') || hash.get('refreshToken');
+      const error = searchParams.get('error') || hash.get('error');
 
       if (error) {
         toast.error('Authentication failed');
@@ -22,28 +24,27 @@ const AuthCallback = () => {
         return;
       }
 
-      if (accessToken && refreshToken) {
-        // Store tokens
+      if (accessToken) {
+        // Store access token (refresh token is httpOnly cookie set by server)
         sessionStorage.setItem('accessToken', accessToken);
-        sessionStorage.setItem('refreshToken', refreshToken);
 
         try {
-            // Fetch user data to ensure valid session and populate context
-            // Note: In a real app, we might call a context method setAuth(user) instead of relying on page reload or context auto-fetch
-            // But since our AuthContext checks token on mount, we can force a reload or just redirect
-            // Let's try to fetch user first
-            const response = await authAPI.getMe();
-            sessionStorage.setItem('user', JSON.stringify(response.data.user));
-            
-            toast.success('Successfully logged in!');
-            // Reload to ensure AuthContext picks up the new user state if it doesn't listen to sessionStorage changes dynamically
-            // Or if AuthContext exposes a setUser method, we could use that.
-            // For simplicity and robustness:
-            window.location.href = '/dashboard'; 
+          // Fetch user data to ensure valid session and populate context
+          // Note: In a real app, we might call a context method setAuth(user) instead of relying on page reload or context auto-fetch
+          // But since our AuthContext checks token on mount, we can force a reload or just redirect
+          // Let's try to fetch user first
+          const response = await authAPI.getMe();
+          sessionStorage.setItem('user', JSON.stringify(response.data.user));
+
+          toast.success('Successfully logged in!');
+          // Reload to ensure AuthContext picks up the new user state if it doesn't listen to sessionStorage changes dynamically
+          // Or if AuthContext exposes a setUser method, we could use that.
+          // For simplicity and robustness:
+          window.location.href = '/dashboard';
         } catch (err) {
-            console.error('Failed to fetch user:', err);
-            toast.error('Failed to verify login');
-            navigate('/login');
+          console.error('Failed to fetch user:', err);
+          toast.error('Failed to verify login');
+          navigate('/login');
         }
       } else {
         navigate('/login');

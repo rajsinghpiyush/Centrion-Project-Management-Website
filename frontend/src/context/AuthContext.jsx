@@ -33,7 +33,6 @@ export const AuthProvider = ({ children }) => {
       } catch (error) {
         // Token is invalid, clear storage
         sessionStorage.removeItem('accessToken');
-        sessionStorage.removeItem('refreshToken');
         sessionStorage.removeItem('user');
         setUser(null);
       }
@@ -44,11 +43,10 @@ export const AuthProvider = ({ children }) => {
   const register = async (userData) => {
     try {
       const response = await authAPI.register(userData);
-      const { user, accessToken, refreshToken } = response.data;
+      const { user, accessToken } = response.data;
 
-      // Save to sessionStorage
+      // Save to sessionStorage (refreshToken stored as httpOnly cookie by server)
       sessionStorage.setItem('accessToken', accessToken);
-      sessionStorage.setItem('refreshToken', refreshToken);
       sessionStorage.setItem('user', JSON.stringify(user));
 
       setUser(user);
@@ -64,11 +62,10 @@ export const AuthProvider = ({ children }) => {
   const login = async (credentials) => {
     try {
       const response = await authAPI.login(credentials);
-      const { user, accessToken, refreshToken } = response.data;
+      const { user, accessToken } = response.data;
 
-      // Save to sessionStorage
+      // Save to sessionStorage (refreshToken stored as httpOnly cookie by server)
       sessionStorage.setItem('accessToken', accessToken);
-      sessionStorage.setItem('refreshToken', refreshToken);
       sessionStorage.setItem('user', JSON.stringify(user));
 
       setUser(user);
@@ -83,16 +80,12 @@ export const AuthProvider = ({ children }) => {
 
   const logout = async () => {
     try {
-      const refreshToken = sessionStorage.getItem('refreshToken');
-      if (refreshToken) {
-        await authAPI.logout(refreshToken);
-      }
+      await authAPI.logout();
     } catch (error) {
       console.error('Logout error:', error);
     } finally {
       // Clear local storage and state
       sessionStorage.removeItem('accessToken');
-      sessionStorage.removeItem('refreshToken');
       sessionStorage.removeItem('user');
       setUser(null);
       toast.success('Logged out successfully');

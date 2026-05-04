@@ -59,7 +59,7 @@ const ProjectSettingsModal = ({ project, onClose, onUpdate, onAddMember, onRemov
     const member = project.members?.find(m => m.user?._id === user?._id);
     return member?.role || 'viewer';
   };
-  
+
   const myRole = getMyRole();
   const isAdmin = ['owner'].includes(myRole); // Only owner is full admin now
 
@@ -70,7 +70,7 @@ const ProjectSettingsModal = ({ project, onClose, onUpdate, onAddMember, onRemov
       await onUpdate({ name, description, customFields });
       toast.success('Project updated');
     } catch (error) {
-       // handled by parent
+      // handled by parent
     } finally {
       setIsLoading(false);
     }
@@ -111,21 +111,21 @@ const ProjectSettingsModal = ({ project, onClose, onUpdate, onAddMember, onRemov
     // Find member by email
     const member = project.members.find(m => m.user.email === transferEmail);
     if (!member) {
-        toast.error('User must be a member of the project first');
-        return;
+      toast.error('User must be a member of the project first');
+      return;
     }
     if (!window.confirm(`Transfer ownership to ${transferEmail}? You will become an editor.`)) return;
 
     setIsLoading(true);
     try {
-        await onTransferOwnership(member.user._id);
-        setTransferEmail('');
-        toast.success('Ownership transferred');
-        onClose();
+      await onTransferOwnership(member.user._id);
+      setTransferEmail('');
+      toast.success('Ownership transferred');
+      onClose();
     } catch (error) {
-        toast.error('Failed to transfer ownership');
+      toast.error('Failed to transfer ownership');
     } finally {
-        setIsLoading(false);
+      setIsLoading(false);
     }
   };
 
@@ -163,69 +163,69 @@ const ProjectSettingsModal = ({ project, onClose, onUpdate, onAddMember, onRemov
         <div className="p-6 overflow-y-auto custom-scrollbar flex-1">
           {activeTab === 'general' && (
             <div className="space-y-6">
-                <form onSubmit={handleUpdateProject} className="space-y-4">
+              <form onSubmit={handleUpdateProject} className="space-y-4">
                 <div>
-                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Project Name</label>
-                    <input
+                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Project Name</label>
+                  <input
                     type="text"
                     value={name}
                     onChange={(e) => setName(e.target.value)}
                     disabled={!isAdmin}
                     className="w-full px-4 py-2 rounded-xl bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 focus:ring-2 focus:ring-primary-500 outline-none transition-all"
                     placeholder="Enter project name"
-                    />
+                  />
                 </div>
                 <div>
-                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Description</label>
-                    <textarea
+                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Description</label>
+                  <textarea
                     value={description}
                     onChange={(e) => setDescription(e.target.value)}
                     disabled={!isAdmin}
                     rows="4"
                     className="w-full px-4 py-2 rounded-xl bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 focus:ring-2 focus:ring-primary-500 outline-none transition-all resize-none"
                     placeholder="Enter project description"
-                    />
+                  />
                 </div>
                 {isAdmin && (
-                    <div className="flex justify-end pt-4">
+                  <div className="flex justify-end pt-4">
                     <button
-                        type="submit"
-                        disabled={isLoading}
-                        className="px-6 py-2 bg-primary-600 hover:bg-primary-700 text-white rounded-xl font-medium shadow-lg hover:shadow-xl transition-all disabled:opacity-50"
+                      type="submit"
+                      disabled={isLoading}
+                      className="px-6 py-2 bg-primary-600 hover:bg-primary-700 text-white rounded-xl font-medium shadow-lg hover:shadow-xl transition-all disabled:opacity-50"
                     >
-                        {isLoading ? 'Saving...' : 'Save Changes'}
+                      {isLoading ? 'Saving...' : 'Save Changes'}
                     </button>
-                    </div>
+                  </div>
                 )}
                 {!isAdmin && (
-                    <div className="p-4 bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-300 rounded-xl text-sm">
+                  <div className="p-4 bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-300 rounded-xl text-sm">
                     Only the Owner can edit project details.
-                    </div>
+                  </div>
                 )}
-                </form>
+              </form>
 
-                {myRole === 'owner' && (
-                    <div className="pt-6 border-t border-gray-100 dark:border-gray-700">
-                         <h3 className="text-sm font-bold text-gray-900 dark:text-white mb-3">Transfer Ownership</h3>
-                         <form onSubmit={handleTransfer} className="flex gap-2">
-                            <input
-                                type="email"
-                                value={transferEmail}
-                                onChange={(e) => setTransferEmail(e.target.value)}
-                                placeholder="Enter member email"
-                                className="flex-1 px-4 py-2 rounded-lg bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 focus:ring-2 focus:ring-red-500 outline-none text-sm"
-                            />
-                             <button
-                                type="submit"
-                                disabled={isLoading || !transferEmail}
-                                className="px-4 py-2 bg-red-50 text-red-600 hover:bg-red-100 dark:bg-red-900/20 dark:text-red-300 rounded-lg text-sm font-bold transition-all disabled:opacity-50"
-                            >
-                                Transfer
-                            </button>
-                         </form>
-                         <p className="text-xs text-gray-500 mt-2">Ownership can only be transferred to an existing project member.</p>
-                    </div>
-                )}
+              {myRole === 'owner' && (
+                <div className="pt-6 border-t border-gray-100 dark:border-gray-700">
+                  <h3 className="text-sm font-bold text-gray-900 dark:text-white mb-3">Transfer Ownership</h3>
+                  <form onSubmit={handleTransfer} className="flex gap-2">
+                    <input
+                      type="email"
+                      value={transferEmail}
+                      onChange={(e) => setTransferEmail(e.target.value)}
+                      placeholder="Enter member email"
+                      className="flex-1 px-4 py-2 rounded-lg bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 focus:ring-2 focus:ring-red-500 outline-none text-sm"
+                    />
+                    <button
+                      type="submit"
+                      disabled={isLoading || !transferEmail}
+                      className="px-4 py-2 bg-red-50 text-red-600 hover:bg-red-100 dark:bg-red-900/20 dark:text-red-300 rounded-lg text-sm font-bold transition-all disabled:opacity-50"
+                    >
+                      Transfer
+                    </button>
+                  </form>
+                  <p className="text-xs text-gray-500 mt-2">Ownership can only be transferred to an existing project member.</p>
+                </div>
+              )}
             </div>
           )}
 
@@ -266,59 +266,58 @@ const ProjectSettingsModal = ({ project, onClose, onUpdate, onAddMember, onRemov
 
               <div className="space-y-3">
                 <h3 className="text-xs font-bold text-gray-400 uppercase tracking-wider">Project Members</h3>
-                
+
                 {/* Owner */}
                 <div className="flex items-center justify-between p-3 bg-white dark:bg-gray-800 rounded-xl border border-gray-100 dark:border-gray-700/50">
-                   <div className="flex items-center gap-3">
-                     <div className="w-8 h-8 rounded-full bg-gradient-to-br from-amber-400 to-orange-500 flex items-center justify-center text-white font-bold text-xs ring-2 ring-white dark:ring-gray-700">
-                       {project.owner?.name?.charAt(0)}
-                     </div>
-                     <div>
-                       <p className="text-sm font-bold text-gray-900 dark:text-white flex items-center gap-2">
-                         {project.owner?.name} <span className="text-[10px] bg-amber-100 text-amber-700 dark:bg-amber-900/40 dark:text-amber-300 px-1.5 py-0.5 rounded">OWNER</span>
-                       </p>
-                       <p className="text-xs text-gray-500">{project.owner?.email}</p>
-                     </div>
-                   </div>
+                  <div className="flex items-center gap-3">
+                    <div className="w-8 h-8 rounded-full bg-gradient-to-br from-amber-400 to-orange-500 flex items-center justify-center text-white font-bold text-xs ring-2 ring-white dark:ring-gray-700">
+                      {project.owner?.name?.charAt(0)}
+                    </div>
+                    <div>
+                      <p className="text-sm font-bold text-gray-900 dark:text-white flex items-center gap-2">
+                        {project.owner?.name} <span className="text-[10px] bg-amber-100 text-amber-700 dark:bg-amber-900/40 dark:text-amber-300 px-1.5 py-0.5 rounded">OWNER</span>
+                      </p>
+                      <p className="text-xs text-gray-500">{project.owner?.email}</p>
+                    </div>
+                  </div>
                 </div>
 
                 {/* Members */}
                 {project.members?.map((member) => (
                   <div key={member.user._id} className="flex items-center justify-between p-3 bg-white dark:bg-gray-800 rounded-xl border border-gray-100 dark:border-gray-700/50 hover:shadow-sm transition-shadow">
-                     <div className="flex items-center gap-3">
-                       <div className="w-8 h-8 rounded-full bg-gradient-to-br from-blue-400 to-indigo-500 flex items-center justify-center text-white font-bold text-xs">
-                         {member.user.name?.charAt(0)}
-                       </div>
-                       <div>
-                         <p className="text-sm font-bold text-gray-900 dark:text-white flex items-center gap-2">
-                           {member.user.name} 
-                           <span className={`text-[10px] px-1.5 py-0.5 rounded capitalize ml-2 ${
-                             member.role === 'editor' 
-                               ? 'bg-blue-100 text-blue-700 dark:bg-blue-900/40 dark:text-blue-300' 
-                               : 'bg-gray-100 text-gray-600 dark:bg-gray-700 dark:text-gray-300'
-                           }`}>
-                             {member.role}
-                           </span>
-                            {member.status === 'pending' && (
-                                <span className="ml-2 text-[10px] px-1.5 py-0.5 rounded bg-yellow-100 text-yellow-700 dark:bg-yellow-900/40 dark:text-yellow-300 uppercase tracking-wide">
-                                    Pending
-                                </span>
-                            )}
-                         </p>
-                         <p className="text-xs text-gray-500">{member.user.email}</p>
-                       </div>
-                     </div>
-                     
-                     {/* Only Owner can remove members. Owner cannot remove themselves here. */}
-                     {myRole === 'owner' && (
-                       <button
-                         onClick={() => onRemoveMember(member.user._id)}
-                         className="p-1.5 text-gray-400 hover:text-red-500 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-lg transition-colors"
-                         title="Remove Member"
-                       >
-                         <TrashIcon className="w-4 h-4" />
-                       </button>
-                     )}
+                    <div className="flex items-center gap-3">
+                      <div className="w-8 h-8 rounded-full bg-gradient-to-br from-blue-400 to-indigo-500 flex items-center justify-center text-white font-bold text-xs">
+                        {member.user.name?.charAt(0)}
+                      </div>
+                      <div>
+                        <p className="text-sm font-bold text-gray-900 dark:text-white flex items-center gap-2">
+                          {member.user.name}
+                          <span className={`text-[10px] px-1.5 py-0.5 rounded capitalize ml-2 ${member.role === 'editor'
+                            ? 'bg-blue-100 text-blue-700 dark:bg-blue-900/40 dark:text-blue-300'
+                            : 'bg-gray-100 text-gray-600 dark:bg-gray-700 dark:text-gray-300'
+                            }`}>
+                            {member.role}
+                          </span>
+                          {member.status === 'pending' && (
+                            <span className="ml-2 text-[10px] px-1.5 py-0.5 rounded bg-yellow-100 text-yellow-700 dark:bg-yellow-900/40 dark:text-yellow-300 uppercase tracking-wide">
+                              Pending
+                            </span>
+                          )}
+                        </p>
+                        <p className="text-xs text-gray-500">{member.user.email}</p>
+                      </div>
+                    </div>
+
+                    {/* Only Owner can remove members. Owner cannot remove themselves here. */}
+                    {myRole === 'owner' && (
+                      <button
+                        onClick={() => onRemoveMember(member.user._id)}
+                        className="p-1.5 text-gray-400 hover:text-red-500 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-lg transition-colors"
+                        title="Remove Member"
+                      >
+                        <TrashIcon className="w-4 h-4" />
+                      </button>
+                    )}
                   </div>
                 ))}
 
@@ -331,93 +330,93 @@ const ProjectSettingsModal = ({ project, onClose, onUpdate, onAddMember, onRemov
 
           {activeTab === 'customFields' && (
             <div className="space-y-6">
-               <div className="flex items-center justify-between mb-4">
-                  <h3 className="text-sm font-bold text-gray-900 dark:text-white">Custom Fields</h3>
-                  {isAdmin && (
-                    <button onClick={handleAddField} className="flex items-center gap-1.5 px-3 py-1.5 bg-primary-50 dark:bg-primary-900/20 text-primary-600 dark:text-primary-400 rounded-lg text-xs font-bold hover:bg-primary-100 dark:hover:bg-primary-900/40 transition-colors">
-                      <PlusIcon className="w-4 h-4" /> Add Field
-                    </button>
-                  )}
-               </div>
+              <div className="flex items-center justify-between mb-4">
+                <h3 className="text-sm font-bold text-gray-900 dark:text-white">Custom Fields</h3>
+                {isAdmin && (
+                  <button onClick={handleAddField} className="flex items-center gap-1.5 px-3 py-1.5 bg-primary-50 dark:bg-primary-900/20 text-primary-600 dark:text-primary-400 rounded-lg text-xs font-bold hover:bg-primary-100 dark:hover:bg-primary-900/40 transition-colors">
+                    <PlusIcon className="w-4 h-4" /> Add Field
+                  </button>
+                )}
+              </div>
 
-               {customFields.length === 0 ? (
-                 <p className="text-sm text-gray-500 dark:text-gray-400 text-center py-6 border-2 border-dashed border-gray-200 dark:border-gray-700 rounded-xl">No custom fields defined yet.</p>
-               ) : (
-                 <div className="space-y-4">
-                   {customFields.map((field, index) => (
-                     <div key={index} className="p-4 bg-gray-50 dark:bg-gray-800 rounded-xl border border-gray-100 dark:border-gray-700 space-y-3">
-                       <div className="flex gap-3">
-                         <div className="flex-1">
-                           <input
-                             type="text"
-                             value={field.name}
-                             onChange={(e) => handleUpdateField(index, { name: e.target.value })}
-                             placeholder="Field Name"
-                             disabled={!isAdmin}
-                             className="w-full px-3 py-1.5 rounded-lg bg-white dark:bg-gray-700 border border-gray-200 dark:border-gray-600 focus:ring-2 focus:ring-primary-500 outline-none text-sm"
-                           />
-                         </div>
-                         <div className="w-1/3">
-                           <select
-                             value={field.type}
-                             onChange={(e) => handleUpdateField(index, { type: e.target.value })}
-                             disabled={!isAdmin}
-                             className="w-full px-3 py-1.5 rounded-lg bg-white dark:bg-gray-700 border border-gray-200 dark:border-gray-600 focus:ring-2 focus:ring-primary-500 outline-none text-sm"
-                           >
-                             <option value="text">Text</option>
-                             <option value="number">Number</option>
-                             <option value="date">Date</option>
-                             <option value="dropdown">Dropdown</option>
-                             <option value="checkbox">Checkbox</option>
-                           </select>
-                         </div>
-                         {isAdmin && (
-                           <button onClick={() => handleRemoveField(index)} className="p-1.5 text-gray-400 hover:text-red-500 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-lg transition-colors mt-0.5">
-                             <TrashIcon className="w-4 h-4" />
-                           </button>
-                         )}
-                       </div>
-                       
-                       {field.type === 'dropdown' && (
-                         <div>
-                           <input
-                             type="text"
-                             value={field.options?.join(', ') || ''}
-                             onChange={(e) => handleUpdateField(index, { options: e.target.value.split(',').map(s => s.trim()).filter(Boolean) })}
-                             placeholder="Options (comma separated)"
-                             disabled={!isAdmin}
-                             className="w-full px-3 py-1.5 rounded-lg bg-white dark:bg-gray-700 border border-gray-200 dark:border-gray-600 focus:ring-2 focus:ring-primary-500 outline-none text-sm"
-                           />
-                         </div>
-                       )}
+              {customFields.length === 0 ? (
+                <p className="text-sm text-gray-500 dark:text-gray-400 text-center py-6 border-2 border-dashed border-gray-200 dark:border-gray-700 rounded-xl">No custom fields defined yet.</p>
+              ) : (
+                <div className="space-y-4">
+                  {customFields.map((field, index) => (
+                    <div key={index} className="p-4 bg-gray-50 dark:bg-gray-800 rounded-xl border border-gray-100 dark:border-gray-700 space-y-3">
+                      <div className="flex gap-3">
+                        <div className="flex-1">
+                          <input
+                            type="text"
+                            value={field.name}
+                            onChange={(e) => handleUpdateField(index, { name: e.target.value })}
+                            placeholder="Field Name"
+                            disabled={!isAdmin}
+                            className="w-full px-3 py-1.5 rounded-lg bg-white dark:bg-gray-700 border border-gray-200 dark:border-gray-600 focus:ring-2 focus:ring-primary-500 outline-none text-sm"
+                          />
+                        </div>
+                        <div className="w-1/3">
+                          <select
+                            value={field.type}
+                            onChange={(e) => handleUpdateField(index, { type: e.target.value })}
+                            disabled={!isAdmin}
+                            className="w-full px-3 py-1.5 rounded-lg bg-white dark:bg-gray-700 border border-gray-200 dark:border-gray-600 focus:ring-2 focus:ring-primary-500 outline-none text-sm"
+                          >
+                            <option value="text">Text</option>
+                            <option value="number">Number</option>
+                            <option value="date">Date</option>
+                            <option value="dropdown">Dropdown</option>
+                            <option value="checkbox">Checkbox</option>
+                          </select>
+                        </div>
+                        {isAdmin && (
+                          <button onClick={() => handleRemoveField(index)} className="p-1.5 text-gray-400 hover:text-red-500 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-lg transition-colors mt-0.5">
+                            <TrashIcon className="w-4 h-4" />
+                          </button>
+                        )}
+                      </div>
 
-                       <div className="flex items-center gap-2">
-                         <input
-                           type="checkbox"
-                           id={`req-${index}`}
-                           checked={field.required || false}
-                           onChange={(e) => handleUpdateField(index, { required: e.target.checked })}
-                           disabled={!isAdmin}
-                           className="rounded border-gray-300 text-primary-600 focus:ring-primary-500"
-                         />
-                         <label htmlFor={`req-${index}`} className="text-xs text-gray-600 dark:text-gray-400">Required Field</label>
-                       </div>
-                     </div>
-                   ))}
-                 </div>
-               )}
+                      {field.type === 'dropdown' && (
+                        <div>
+                          <input
+                            type="text"
+                            value={field.options?.join(', ') || ''}
+                            onChange={(e) => handleUpdateField(index, { options: e.target.value.split(',').map(s => s.trim()).filter(Boolean) })}
+                            placeholder="Options (comma separated)"
+                            disabled={!isAdmin}
+                            className="w-full px-3 py-1.5 rounded-lg bg-white dark:bg-gray-700 border border-gray-200 dark:border-gray-600 focus:ring-2 focus:ring-primary-500 outline-none text-sm"
+                          />
+                        </div>
+                      )}
 
-               {isAdmin && customFields.length > 0 && (
-                 <div className="flex justify-end pt-4 border-t border-gray-100 dark:border-gray-700">
-                    <button
-                        onClick={() => handleUpdateProject({ customFields })}
-                        disabled={isLoading}
-                        className="px-6 py-2 bg-primary-600 hover:bg-primary-700 text-white rounded-xl font-medium shadow-lg hover:shadow-xl transition-all disabled:opacity-50"
-                    >
-                        {isLoading ? 'Saving...' : 'Save Fields'}
-                    </button>
-                 </div>
-               )}
+                      <div className="flex items-center gap-2">
+                        <input
+                          type="checkbox"
+                          id={`req-${index}`}
+                          checked={field.required || false}
+                          onChange={(e) => handleUpdateField(index, { required: e.target.checked })}
+                          disabled={!isAdmin}
+                          className="rounded border-gray-300 text-primary-600 focus:ring-primary-500"
+                        />
+                        <label htmlFor={`req-${index}`} className="text-xs text-gray-600 dark:text-gray-400">Required Field</label>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
+
+              {isAdmin && customFields.length > 0 && (
+                <div className="flex justify-end pt-4 border-t border-gray-100 dark:border-gray-700">
+                  <button
+                    onClick={() => handleUpdateProject({ customFields })}
+                    disabled={isLoading}
+                    className="px-6 py-2 bg-primary-600 hover:bg-primary-700 text-white rounded-xl font-medium shadow-lg hover:shadow-xl transition-all disabled:opacity-50"
+                  >
+                    {isLoading ? 'Saving...' : 'Save Fields'}
+                  </button>
+                </div>
+              )}
             </div>
           )}
         </div>
@@ -432,18 +431,19 @@ const getCleanDesc = (htmlStr) => {
   return htmlStr.replace(/<[^>]*>?/gm, '').replace(/&nbsp;/g, ' ').trim();
 };
 
-// Task card component - Minimal
-const TaskCard = ({ task, onMoveTask, onDeleteTask, onOpenTask, columnIndex }) => {
+// Task card component - Minimal with Drag & Drop
+const TaskCard = ({ task, onMoveTask, onDeleteTask, onOpenTask, columnIndex, isDragging, onDragStart, onDragEnd }) => {
   const [showMenu, setShowMenu] = useState(false);
   const [menuPos, setMenuPos] = useState({ top: 0, right: 0 });
   const buttonRef = useRef(null);
   const menuRef = useRef(null);
+  const cardRef = useRef(null);
 
   useEffect(() => {
     const handleClick = (e) => {
       // If click is outside the button AND outside the menu portal, close it
       if (
-        showMenu && 
+        showMenu &&
         menuRef.current && !menuRef.current.contains(e.target) &&
         buttonRef.current && !buttonRef.current.contains(e.target)
       ) {
@@ -466,32 +466,47 @@ const TaskCard = ({ task, onMoveTask, onDeleteTask, onOpenTask, columnIndex }) =
     setShowMenu(!showMenu);
   };
 
+  const handleDragStart = (e) => {
+    e.dataTransfer.effectAllowed = 'move';
+    e.dataTransfer.setData('taskId', task._id);
+    onDragStart(task._id);
+  };
+
+  const handleDragEnd = (e) => {
+    onDragEnd();
+  };
+
   const priority = priorityConfig[task.priority] || priorityConfig.medium;
 
   return (
-    <div 
+    <div
+      ref={cardRef}
+      draggable
+      onDragStart={handleDragStart}
+      onDragEnd={handleDragEnd}
       onClick={() => onOpenTask(task)}
-      className="kanban-task-card group animate-fade-in-up"
+      className={`kanban-task-card group animate-fade-in-up ${isDragging ? 'opacity-50 cursor-grabbing' : 'cursor-grab'}`}
+      style={{ transition: isDragging ? 'none' : 'all 0.2s ease' }}
     >
       {/* Priority Strip */}
       <div className="kanban-task-priority-strip" style={{ background: priority.color || '#6366F1', boxShadow: `0 0 10px ${priority.color}80` }} />
-      
+
       {/* Avatar */}
       <div style={{
-          width: '36px',
-          height: '36px',
-          borderRadius: '50%',
-          background: 'linear-gradient(135deg, #3B82F6 0%, #6366F1 100%)',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          fontSize: '15px',
-          fontWeight: 'bold',
-          color: '#fff',
-          flexShrink: 0,
-          boxShadow: '0 4px 12px rgba(0,0,0,0.2)'
+        width: '36px',
+        height: '36px',
+        borderRadius: '50%',
+        background: 'linear-gradient(135deg, #3B82F6 0%, #6366F1 100%)',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        fontSize: '15px',
+        fontWeight: 'bold',
+        color: '#fff',
+        flexShrink: 0,
+        boxShadow: '0 4px 12px rgba(0,0,0,0.2)'
       }}>
-         {task.assignees && task.assignees.length > 0 ? task.assignees[0].name?.charAt(0).toUpperCase() : 'U'}
+        {task.assignees && task.assignees.length > 0 ? task.assignees[0].name?.charAt(0).toUpperCase() : 'U'}
       </div>
 
       {/* Content Stack */}
@@ -499,7 +514,7 @@ const TaskCard = ({ task, onMoveTask, onDeleteTask, onOpenTask, columnIndex }) =
         <h3 className="kanban-task-title truncate">
           {task.title}
         </h3>
-        
+
         {getCleanDesc(task.description).length > 0 && (
           <p className="kanban-task-desc">
             {getCleanDesc(task.description)}
@@ -524,10 +539,10 @@ const TaskCard = ({ task, onMoveTask, onDeleteTask, onOpenTask, columnIndex }) =
           <EllipsisHorizontalIcon className="w-6 h-6" />
         </button>
         {showMenu && createPortal(
-          <div 
+          <div
             ref={menuRef}
-            className="kanban-task-menu" 
-            style={{ 
+            className="kanban-task-menu"
+            style={{
               position: 'fixed',
               top: menuPos.top,
               right: menuPos.right,
@@ -572,10 +587,15 @@ const KanbanBoard = () => {
   const [loading, setLoading] = useState(true);
   const [showSettings, setShowSettings] = useState(false);
   const [showNotifications, setShowNotifications] = useState(false);
+  const [hasUnreadNotification, setHasUnreadNotification] = useState(false);
+  const [bellPop, setBellPop] = useState(false);
   const [selectedTask, setSelectedTask] = useState(null);
   const [showCreateTask, setShowCreateTask] = useState(false);
   const [createTaskDefaultStatus, setCreateTaskDefaultStatus] = useState('todo');
   const [isChatOpen, setIsChatOpen] = useState(false);
+  const [draggedTaskId, setDraggedTaskId] = useState(null);
+  const [dropZoneHovered, setDropZoneHovered] = useState(null);
+  const bellPopTimerRef = useRef(null);
 
   const stardustParticles = useMemo(() => {
     return [...Array(30)].map((_, i) => ({
@@ -596,6 +616,9 @@ const KanbanBoard = () => {
       socket.on('task:updated', handleTaskUpdated);
       socket.on('task:deleted', handleTaskDeleted);
       socket.on('task:moved', handleTaskMoved);
+      socket.on('project:updated', handleProjectUpdated);
+      socket.on('project:membership-removed', handleMembershipRemoved);
+      socket.on('project:deleted', handleProjectDeleted);
     }
     return () => {
       leaveProject(projectId);
@@ -604,9 +627,41 @@ const KanbanBoard = () => {
         socket.off('task:updated');
         socket.off('task:deleted');
         socket.off('task:moved');
+        socket.off('project:updated');
+        socket.off('project:membership-removed');
+        socket.off('project:deleted');
       }
     };
   }, [projectId, socket]);
+
+  useEffect(() => {
+    if (!socket) return;
+
+    const handleNotificationNew = () => {
+      setHasUnreadNotification(true);
+      setBellPop(true);
+
+      if (bellPopTimerRef.current) clearTimeout(bellPopTimerRef.current);
+      bellPopTimerRef.current = setTimeout(() => {
+        setBellPop(false);
+      }, 900);
+    };
+
+    socket.on('notification:new', handleNotificationNew);
+
+    return () => {
+      socket.off('notification:new', handleNotificationNew);
+      if (bellPopTimerRef.current) {
+        clearTimeout(bellPopTimerRef.current);
+      }
+    };
+  }, [socket]);
+
+  useEffect(() => {
+    if (showNotifications) {
+      setHasUnreadNotification(false);
+    }
+  }, [showNotifications]);
 
   const loadProjectData = async () => {
     try {
@@ -623,45 +678,65 @@ const KanbanBoard = () => {
       setLoading(false);
     }
   };
-  
+
   const handleUpdateProject = async (data) => {
     await projectAPI.updateProject(projectId, data);
     setProject(prev => ({ ...prev, ...data }));
   };
 
   const handleAddMember = async (email, role) => {
-     await projectAPI.addMember(projectId, { email, role });
-     loadProjectData(); // Reload to get updated member list with details
+    await projectAPI.addMember(projectId, { email, role });
+    loadProjectData(); // Reload to get updated member list with details
   };
 
   const handleRemoveMember = async (userId) => {
     if (window.confirm('Are you sure you want to remove this member?')) {
-        await projectAPI.removeMember(projectId, userId);
-        setProject(prev => ({
-            ...prev,
-            members: prev.members.filter(m => m.user._id !== userId)
-        }));
-        toast.success('Member removed');
+      await projectAPI.removeMember(projectId, userId);
+      setProject(prev => ({
+        ...prev,
+        members: prev.members.filter(m => m.user._id !== userId)
+      }));
+      toast.success('Member removed');
     }
   };
 
   const handleTransferOwnership = async (newOwnerId) => {
-      // Logic handled in Modal, but we might want state update here if modal doesn't do full reload behavior
-      // The modal reloads or the parent reloads... actually modal calls API.
-      // If modal calls onTransferOwnership, we might want to reload project data.
-      await projectAPI.transferOwnership(projectId, newOwnerId);
-      loadProjectData();    
+    // Logic handled in Modal, but we might want state update here if modal doesn't do full reload behavior
+    // The modal reloads or the parent reloads... actually modal calls API.
+    // If modal calls onTransferOwnership, we might want to reload project data.
+    await projectAPI.transferOwnership(projectId, newOwnerId);
+    loadProjectData();
   };
 
   const handleTaskCreated = (newTask) => {
     if ((newTask.project?._id || newTask.project) === projectId) {
-       setTasks(prev => [...prev, newTask]);
+      setTasks(prev => [...prev, newTask]);
     }
   };
 
   const handleTaskUpdated = (updatedTask) => setTasks(prev => prev.map(t => t._id === updatedTask._id ? updatedTask : t));
   const handleTaskDeleted = ({ id }) => setTasks(prev => prev.filter(t => t._id !== id));
   const handleTaskMoved = (movedTask) => setTasks(prev => prev.map(t => t._id === movedTask._id ? movedTask : t));
+
+  const handleProjectUpdated = (updatedProject) => {
+    if (updatedProject?._id === projectId) {
+      setProject(updatedProject);
+    }
+  };
+
+  const handleMembershipRemoved = ({ projectId: removedFromProject }) => {
+    if (removedFromProject === projectId) {
+      toast.error('You were removed from this project');
+      navigate('/dashboard');
+    }
+  };
+
+  const handleProjectDeleted = ({ projectId: deletedProjectId }) => {
+    if (deletedProjectId === projectId) {
+      toast.error('This project was deleted');
+      navigate('/dashboard');
+    }
+  };
 
   const getTasksByColumn = (col) => {
     return tasks.filter(task => {
@@ -685,8 +760,8 @@ const KanbanBoard = () => {
   };
 
   const deleteTask = async (taskId) => {
-    if(!window.confirm('Delete this task?')) return;
-    
+    if (!window.confirm('Delete this task?')) return;
+
     setTasks(prev => prev.filter(t => t._id !== taskId));
     try {
       await taskAPI.deleteTask(taskId);
@@ -696,7 +771,7 @@ const KanbanBoard = () => {
       toast.error('Failed to delete task');
     }
   };
-  
+
   if (loading) return (
     <div className="min-h-screen flex items-center justify-center bg-gray-50 dark:bg-gray-900">
       <div className="w-12 h-12 rounded-full border-4 border-primary-500 border-t-transparent animate-spin" />
@@ -710,7 +785,7 @@ const KanbanBoard = () => {
         <div className="dashboard-bg-blob-1" />
         <div className="dashboard-bg-blob-2" />
         <div className="dashboard-bg-blob-3" />
-        
+
         {/* Stardust Particles */}
         {stardustParticles.map((pt) => (
           <div
@@ -730,72 +805,73 @@ const KanbanBoard = () => {
       {/* Header - Minimal & Consistent */}
       <nav className="kanban-header-nav">
         <div style={{ maxWidth: 1280, margin: '0 auto', padding: '0 24px', height: 64, display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-           <div className="flex items-center gap-4">
-             <Link to="/dashboard" className="p-2 rounded-xl hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-500 dark:text-gray-400 transition-colors">
-               <ArrowLeftIcon className="w-5 h-5" />
-             </Link>
-             <div>
-               <h1 className="text-xl font-bold text-gray-900 dark:text-white flex items-center gap-2">
-                 <span className="w-3 h-3 rounded-full shadow-sm" style={{ backgroundColor: project?.color || '#6366F1' }} />
-                 {project?.name || 'Project'}
-               </h1>
-               <div className="flex items-center gap-2 text-xs text-gray-500 dark:text-gray-400">
-                 <ClockIcon className="w-3 h-3" />
-                 <span>{tasks.length} tasks</span>
-                 <span className="w-1 h-1 bg-gray-300 dark:bg-gray-600 rounded-full"></span>
-                 <UserIcon className="w-3 h-3" />
-                 <span>{project?.members?.length + 1} members</span>
-               </div>
-             </div>
-           </div>
+          <div className="flex items-center gap-4">
+            <Link to="/dashboard" className="p-2 rounded-xl hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-500 dark:text-gray-400 transition-colors">
+              <ArrowLeftIcon className="w-5 h-5" />
+            </Link>
+            <div>
+              <h1 className="text-xl font-bold text-gray-900 dark:text-white flex items-center gap-2">
+                <span className="w-3 h-3 rounded-full shadow-sm" style={{ backgroundColor: project?.color || '#6366F1' }} />
+                {project?.name || 'Project'}
+              </h1>
+              <div className="flex items-center gap-2 text-xs text-gray-500 dark:text-gray-400">
+                <ClockIcon className="w-3 h-3" />
+                <span>{tasks.length} tasks</span>
+                <span className="w-1 h-1 bg-gray-300 dark:bg-gray-600 rounded-full"></span>
+                <UserIcon className="w-3 h-3" />
+                <span>{project?.members?.length + 1} members</span>
+              </div>
+            </div>
+          </div>
 
-           <div className="flex items-center gap-3 relative">
-             <button onClick={() => { setCreateTaskDefaultStatus('todo'); setShowCreateTask(true); }} className="hidden sm:flex items-center gap-2 px-4 py-2 rounded-xl bg-gray-900 dark:bg-white text-white dark:text-gray-900 text-sm font-bold shadow-lg hover:shadow-xl hover:-translate-y-0.5 transition-all" style={{ border: 'none', cursor: 'pointer' }}>
-               <PlusIcon className="w-4 h-4" />
-               <span className="hidden md:inline">New Task</span>
-             </button>
-             
-             {/* Bell Icon for Notifications */}
-             <div className="relative">
-                 <button 
-                    onClick={() => setShowNotifications(!showNotifications)}
-                    className="p-2.5 rounded-xl hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-500 dark:text-gray-400 transition-colors relative"
-                 >
-                    <BellIcon className="w-5 h-5" />
-                 </button>
-                 {showNotifications && <NotificationsPopover onClose={() => setShowNotifications(false)} />}
-             </div>
+          <div className="flex items-center gap-3 relative">
+            <button onClick={() => { setCreateTaskDefaultStatus('todo'); setShowCreateTask(true); }} className="hidden sm:flex items-center gap-2 px-4 py-2 rounded-xl bg-gray-900 dark:bg-white text-white dark:text-gray-900 text-sm font-bold shadow-lg hover:shadow-xl hover:-translate-y-0.5 transition-all" style={{ border: 'none', cursor: 'pointer' }}>
+              <PlusIcon className="w-4 h-4" />
+              <span className="hidden md:inline">New Task</span>
+            </button>
 
-             <button 
-                onClick={() => setShowSettings(true)}
-                className="p-2.5 rounded-xl hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-500 dark:text-gray-400 transition-colors"
-                title="Project Settings"
-             >
-                <Cog6ToothIcon className="w-5 h-5" />
-             </button>
-             <button onClick={toggleTheme} className="p-2.5 rounded-xl hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-500 dark:text-gray-400">
-                {theme === 'dark' ? <SunIcon className="w-5 h-5 text-amber-400" /> : <MoonIcon className="w-5 h-5" />}
-             </button>
-             <button
-                onClick={() => setIsChatOpen(!isChatOpen)}
-                className={`p-2.5 rounded-xl transition-colors ${isChatOpen ? 'bg-primary-100 dark:bg-primary-900/30 text-primary-600 dark:text-primary-400' : 'hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-500 dark:text-gray-400'}`}
-                title="Project Chat"
+            {/* Bell Icon for Notifications */}
+            <div className="relative">
+              <button
+                onClick={() => setShowNotifications(!showNotifications)}
+                className={`p-2.5 rounded-xl hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-500 dark:text-gray-400 transition-colors relative ${bellPop ? 'notif-bell-pop' : ''} ${hasUnreadNotification ? 'notif-bell-has-unread' : ''}`}
               >
-                <ChatBubbleLeftRightIcon className="w-5 h-5" />
+                <BellIcon className="w-5 h-5" />
+                {hasUnreadNotification && <span className="notif-bell-dot" />}
               </button>
-           </div>
+              {showNotifications && <NotificationsPopover onClose={() => setShowNotifications(false)} />}
+            </div>
+
+            <button
+              onClick={() => setShowSettings(true)}
+              className="p-2.5 rounded-xl hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-500 dark:text-gray-400 transition-colors"
+              title="Project Settings"
+            >
+              <Cog6ToothIcon className="w-5 h-5" />
+            </button>
+            <button onClick={toggleTheme} className="p-2.5 rounded-xl hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-500 dark:text-gray-400">
+              {theme === 'dark' ? <SunIcon className="w-5 h-5 text-amber-400" /> : <MoonIcon className="w-5 h-5" />}
+            </button>
+            <button
+              onClick={() => setIsChatOpen(!isChatOpen)}
+              className={`p-2.5 rounded-xl transition-colors ${isChatOpen ? 'bg-primary-100 dark:bg-primary-900/30 text-primary-600 dark:text-primary-400' : 'hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-500 dark:text-gray-400'}`}
+              title="Project Chat"
+            >
+              <ChatBubbleLeftRightIcon className="w-5 h-5" />
+            </button>
+          </div>
         </div>
       </nav>
 
       {showSettings && (
-        <ProjectSettingsModal 
-           project={project} 
-           user={user}
-           onClose={() => setShowSettings(false)} 
-           onUpdate={handleUpdateProject}
-           onAddMember={handleAddMember}
-           onRemoveMember={handleRemoveMember}
-           onTransferOwnership={handleTransferOwnership}
+        <ProjectSettingsModal
+          project={project}
+          user={user}
+          onClose={() => setShowSettings(false)}
+          onUpdate={handleUpdateProject}
+          onAddMember={handleAddMember}
+          onRemoveMember={handleRemoveMember}
+          onTransferOwnership={handleTransferOwnership}
         />
       )}
 
@@ -804,12 +880,12 @@ const KanbanBoard = () => {
           task={selectedTask}
           onClose={() => setSelectedTask(null)}
           onUpdate={(updatedTask) => {
-             setTasks(prev => prev.map(t => t._id === updatedTask._id ? updatedTask : t));
-             setSelectedTask(updatedTask);
+            setTasks(prev => prev.map(t => t._id === updatedTask._id ? updatedTask : t));
+            setSelectedTask(updatedTask);
           }}
           onDelete={(taskId) => {
-             deleteTask(taskId);
-             setSelectedTask(null);
+            deleteTask(taskId);
+            setSelectedTask(null);
           }}
         />
       )}
@@ -825,12 +901,12 @@ const KanbanBoard = () => {
 
       {/* Main Scrolling Layout */}
       <div className="kanban-board-container custom-scrollbar" style={{ flex: 1, minWidth: 0, transition: 'all 300ms ease', overflowY: 'auto', overflowX: 'auto', padding: '24px' }}>
-        
+
         <div style={{ display: 'flex', alignItems: 'flex-start', gap: isChatOpen ? 24 : 0, transition: 'gap 300ms ease', minHeight: 'min-content' }}>
-          
+
           {/* ── Left Side: Board & Metrics ── */}
           <div style={{ flex: 1, minWidth: 0, display: 'flex', flexDirection: 'column', gap: 24 }}>
-            
+
             {/* Columns Wrapper */}
             <div className="kanban-columns-wrapper" style={{ padding: 0 }}>
               {columns.map((col, colIndex) => {
@@ -839,7 +915,7 @@ const KanbanBoard = () => {
                   <div key={col.id} className="kanban-column" style={{ position: 'relative' }}>
                     {/* Decorative glow */}
                     <div style={{ position: 'absolute', top: -60, right: -60, width: 180, height: 180, background: `radial-gradient(circle, ${col.glowColor || 'rgba(99,102,241,0.15)'}, transparent 70%)`, borderRadius: '50%', pointerEvents: 'none' }} />
-                    
+
                     {/* Minimal Column Header */}
                     <div className="kanban-column-header" style={{ position: 'relative', zIndex: 1 }}>
                       <div className="flex items-center gap-3">
@@ -856,9 +932,39 @@ const KanbanBoard = () => {
                         <PlusIcon className="w-4 h-4" />
                       </button>
                     </div>
-                    
+
                     {/* Task List */}
-                    <div className="kanban-task-list custom-scrollbar overflow-y-auto max-h-[80vh]" style={{ position: 'relative', zIndex: 1 }}>
+                    <div
+                      className={`kanban-task-list custom-scrollbar overflow-y-auto max-h-[80vh] ${dropZoneHovered === col.id ? 'drop-zone-active' : ''}`}
+                      style={{
+                        position: 'relative',
+                        zIndex: 1,
+                        background: dropZoneHovered === col.id ? 'rgba(99, 102, 241, 0.1)' : 'transparent',
+                        borderRadius: '12px',
+                        transition: 'background-color 0.2s ease',
+                        border: dropZoneHovered === col.id ? '2px dashed rgba(99, 102, 241, 0.4)' : 'none',
+                        padding: dropZoneHovered === col.id ? '8px' : '0'
+                      }}
+                      onDragOver={(e) => {
+                        e.preventDefault();
+                        e.dataTransfer.dropEffect = 'move';
+                        setDropZoneHovered(col.id);
+                      }}
+                      onDragLeave={(e) => {
+                        e.preventDefault();
+                        if (e.currentTarget === e.target) {
+                          setDropZoneHovered(null);
+                        }
+                      }}
+                      onDrop={(e) => {
+                        e.preventDefault();
+                        const taskId = e.dataTransfer.getData('taskId');
+                        if (taskId) {
+                          moveTask(taskId, col.id, col.status);
+                        }
+                        setDropZoneHovered(null);
+                      }}
+                    >
                       {colTasks.length === 0 ? (
                         <div className="kanban-empty-col">
                           <svg fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
@@ -868,13 +974,16 @@ const KanbanBoard = () => {
                         </div>
                       ) : (
                         colTasks.map(task => (
-                          <TaskCard 
-                            key={task._id} 
-                            task={task} 
-                            onMoveTask={moveTask} 
+                          <TaskCard
+                            key={task._id}
+                            task={task}
+                            onMoveTask={moveTask}
                             onDeleteTask={deleteTask}
                             onOpenTask={(t) => setSelectedTask(t)}
                             columnIndex={colIndex}
+                            isDragging={draggedTaskId === task._id}
+                            onDragStart={setDraggedTaskId}
+                            onDragEnd={() => setDraggedTaskId(null)}
                           />
                         ))
                       )}
@@ -887,12 +996,12 @@ const KanbanBoard = () => {
             {/* Metrics Layout */}
             {tasks.length > 0 && (
               <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 24, paddingBottom: 32 }}>
-                
+
                 {/* Task Progress Card */}
                 <div style={{ background: 'rgba(17,24,39,0.8)', backdropFilter: 'blur(24px)', border: '1px solid rgba(255,255,255,0.06)', borderRadius: 24, padding: 28, boxShadow: '0 20px 60px rgba(0,0,0,0.4)', position: 'relative', overflow: 'hidden' }}>
                   {/* Decorative glow */}
                   <div style={{ position: 'absolute', top: -60, right: -60, width: 180, height: 180, background: 'radial-gradient(circle, rgba(99,102,241,0.15), transparent 70%)', borderRadius: '50%', pointerEvents: 'none' }} />
-                  
+
                   <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 24, position: 'relative', zIndex: 1 }}>
                     <div style={{ width: 36, height: 36, borderRadius: 12, background: 'linear-gradient(135deg, rgba(99,102,241,0.2), rgba(139,92,246,0.2))', border: '1px solid rgba(99,102,241,0.2)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                       <svg style={{ width: 18, height: 18, color: '#A5B4FC' }} fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" /></svg>
@@ -909,7 +1018,7 @@ const KanbanBoard = () => {
                     });
                     const completedPct = total > 0 ? Math.round((getTasksByColumn(columns[3]).length / total) * 100) : 0;
                     const barColors = { 'todo': '#6B7280', 'in-progress': '#6366F1', 'review': '#F59E0B', 'completed': '#10B981' };
-                    
+
                     // SVG donut ring
                     const radius = 64;
                     const circumference = 2 * Math.PI * radius;
@@ -985,7 +1094,7 @@ const KanbanBoard = () => {
                   {/* Decorative glows */}
                   <div style={{ position: 'absolute', bottom: -80, left: -80, width: 200, height: 200, background: 'radial-gradient(circle, rgba(99,102,241,0.12), transparent 70%)', borderRadius: '50%', pointerEvents: 'none' }} />
                   <div style={{ position: 'absolute', top: -60, right: -60, width: 160, height: 160, background: 'radial-gradient(circle, rgba(59,130,246,0.08), transparent 70%)', borderRadius: '50%', pointerEvents: 'none' }} />
-                  
+
                   <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 20, position: 'relative', zIndex: 1 }}>
                     <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
                       <div style={{ width: 36, height: 36, borderRadius: 12, background: 'linear-gradient(135deg, rgba(59,130,246,0.2), rgba(99,102,241,0.2))', border: '1px solid rgba(59,130,246,0.2)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
@@ -998,7 +1107,7 @@ const KanbanBoard = () => {
                     </div>
                     {/* Legend */}
                     <div style={{ display: 'flex', gap: 10, background: 'rgba(255,255,255,0.04)', padding: '6px 12px', borderRadius: 10, border: '1px solid rgba(255,255,255,0.05)' }}>
-                      {[{c:'#6B7280',l:'To Do'},{c:'#6366F1',l:'Active'},{c:'#F59E0B',l:'Review'},{c:'#10B981',l:'Done'}].map(({c,l}) => (
+                      {[{ c: '#6B7280', l: 'To Do' }, { c: '#6366F1', l: 'Active' }, { c: '#F59E0B', l: 'Review' }, { c: '#10B981', l: 'Done' }].map(({ c, l }) => (
                         <div key={l} style={{ display: 'flex', alignItems: 'center', gap: 4 }}>
                           <div style={{ width: 7, height: 7, borderRadius: '50%', background: c, boxShadow: `0 0 6px ${c}88` }} />
                           <span style={{ fontSize: '0.6rem', fontWeight: 600, color: 'rgba(255,255,255,0.4)' }}>{l}</span>
@@ -1017,11 +1126,11 @@ const KanbanBoard = () => {
                     const rangeDays = 14;
                     const statusColors = { 'todo': '#6B7280', 'in-progress': '#6366F1', 'review': '#F59E0B', 'completed': '#10B981' };
                     const todayPct = ((now - rangeStart) / (rangeEnd - rangeStart)) * 100;
-                    const avatarGradients = ['linear-gradient(135deg,#6366F1,#8B5CF6)','linear-gradient(135deg,#3B82F6,#06B6D4)','linear-gradient(135deg,#10B981,#34D399)','linear-gradient(135deg,#F59E0B,#EF4444)','linear-gradient(135deg,#EC4899,#8B5CF6)'];
+                    const avatarGradients = ['linear-gradient(135deg,#6366F1,#8B5CF6)', 'linear-gradient(135deg,#3B82F6,#06B6D4)', 'linear-gradient(135deg,#10B981,#34D399)', 'linear-gradient(135deg,#F59E0B,#EF4444)', 'linear-gradient(135deg,#EC4899,#8B5CF6)'];
 
                     const getDayLabels = () => {
                       const labels = [];
-                      const dayNames = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+                      const dayNames = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
                       for (let i = 0; i < rangeDays; i++) {
                         const d = new Date(rangeStart);
                         d.setDate(d.getDate() + i);
@@ -1041,7 +1150,7 @@ const KanbanBoard = () => {
                     const getAssignee = (task) => {
                       if (task.assignees && task.assignees.length > 0) {
                         const a = task.assignees[0];
-                        if (typeof a === 'object' && a.name) return { initials: a.name.split(' ').map(n => n[0]).join('').toUpperCase().slice(0,2), name: a.name };
+                        if (typeof a === 'object' && a.name) return { initials: a.name.split(' ').map(n => n[0]).join('').toUpperCase().slice(0, 2), name: a.name };
                       }
                       return null;
                     };

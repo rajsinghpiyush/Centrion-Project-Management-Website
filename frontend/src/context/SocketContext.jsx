@@ -46,7 +46,6 @@ export const SocketProvider = ({ children }) => {
         if (error.message && error.message.includes('Authentication error')) {
           newSocket.close();
           sessionStorage.removeItem('accessToken');
-          sessionStorage.removeItem('refreshToken');
           sessionStorage.removeItem('user');
           window.location.href = '/';
         }

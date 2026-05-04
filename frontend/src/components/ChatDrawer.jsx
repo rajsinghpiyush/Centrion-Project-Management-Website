@@ -3,9 +3,9 @@ import { useAuth } from '../context/AuthContext';
 import { useSocket } from '../context/SocketContext';
 import { messageAPI, projectAPI } from '../services/api';
 import { formatDistanceToNow } from 'date-fns';
-import { 
-  XMarkIcon, 
-  PaperAirplaneIcon, 
+import {
+  XMarkIcon,
+  PaperAirplaneIcon,
   ChatBubbleLeftRightIcon,
   UserGroupIcon,
 } from '@heroicons/react/24/outline';
@@ -18,8 +18,10 @@ const ChatDrawer = ({ projectId, isOpen, onClose }) => {
   const [newMessage, setNewMessage] = useState('');
   const [project, setProject] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [typingUsers, setTypingUsers] = useState([]);
   const messagesEndRef = useRef(null);
   const inputRef = useRef(null);
+  const typingTimerRef = useRef(null);
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -53,15 +55,41 @@ const ChatDrawer = ({ projectId, isOpen, onClose }) => {
   useEffect(() => {
     if (socket && connected) {
       const handleNewMessage = (message) => {
-        if (message.project === projectId) {
+        const messageProjectId = message.project?._id || message.project;
+        if (messageProjectId === projectId) {
           setMessages(prev => [...prev.filter(m => m._id !== message._id), message]);
           scrollToBottom();
         }
       };
+
+      const handleTyping = ({ projectId: typingProjectId, userId, isTyping }) => {
+        if (typingProjectId !== projectId || userId === user?._id) return;
+
+        setTypingUsers((prev) => {
+          if (isTyping) {
+            return prev.includes(userId) ? prev : [...prev, userId];
+          }
+          return prev.filter((id) => id !== userId);
+        });
+      };
+
       socket.on('message:new', handleNewMessage);
-      return () => socket.off('message:new', handleNewMessage);
+      socket.on('chat:typing', handleTyping);
+
+      return () => {
+        socket.off('message:new', handleNewMessage);
+        socket.off('chat:typing', handleTyping);
+      };
     }
-  }, [socket, connected, projectId]);
+  }, [socket, connected, projectId, user?._id]);
+
+  useEffect(() => {
+    return () => {
+      if (typingTimerRef.current) {
+        clearTimeout(typingTimerRef.current);
+      }
+    };
+  }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -70,11 +98,26 @@ const ChatDrawer = ({ projectId, isOpen, onClose }) => {
     try {
       await messageAPI.sendMessage({ content: newMessage, project: projectId });
       setNewMessage('');
+      if (socket) {
+        socket.emit('chat:typing', { projectId, isTyping: false });
+      }
     } catch (error) {
       toast.error('Failed to send message');
     } finally {
       setLoading(false);
     }
+  };
+
+  const handleInputChange = (value) => {
+    setNewMessage(value);
+    if (!socket) return;
+
+    socket.emit('chat:typing', { projectId, isTyping: value.trim().length > 0 });
+
+    if (typingTimerRef.current) clearTimeout(typingTimerRef.current);
+    typingTimerRef.current = setTimeout(() => {
+      socket.emit('chat:typing', { projectId, isTyping: false });
+    }, 1200);
   };
 
   const pc = project?.color || '#6366F1';
@@ -185,6 +228,12 @@ const ChatDrawer = ({ projectId, isOpen, onClose }) => {
 
         {/* ═══ MESSAGES ═══ */}
         <div style={s.msgArea} className="custom-scrollbar relative">
+          {typingUsers.length > 0 && (
+            <div style={{ fontSize: '12px', color: '#94A3B8', marginBottom: '8px' }}>
+              {typingUsers.length === 1 ? 'Someone is typing...' : `${typingUsers.length} people are typing...`}
+            </div>
+          )}
+
           {messages.length === 0 && (
             <div style={s.empty}>
               <div style={{ textAlign: 'center' }}>
@@ -246,13 +295,13 @@ const ChatDrawer = ({ projectId, isOpen, onClose }) => {
                   </div>
 
                   {/* Message Body */}
-                  <div 
+                  <div
                     className="break-words whitespace-pre-wrap"
                     style={{
-                    fontSize: '15px',
-                    lineHeight: '1.5',
-                    color: '#F8FAFC',
-                  }}>
+                      fontSize: '15px',
+                      lineHeight: '1.5',
+                      color: '#F8FAFC',
+                    }}>
                     {msg.content}
                   </div>
                 </div>
@@ -274,17 +323,17 @@ const ChatDrawer = ({ projectId, isOpen, onClose }) => {
               ref={inputRef}
               type="text"
               value={newMessage}
-              onChange={e => setNewMessage(e.target.value)}
+              onChange={e => handleInputChange(e.target.value)}
               placeholder="Type a message..."
               style={s.input}
               className="chat-invisible-input"
             />
-            <button type="submit" disabled={!newMessage.trim()||loading} style={s.sendBtn(!!newMessage.trim())}
-              onMouseOver={e=>{
-                if(newMessage.trim()) e.currentTarget.style.background = '#eab308'; // darker yellow on hover
+            <button type="submit" disabled={!newMessage.trim() || loading} style={s.sendBtn(!!newMessage.trim())}
+              onMouseOver={e => {
+                if (newMessage.trim()) e.currentTarget.style.background = '#eab308'; // darker yellow on hover
               }}
-              onMouseOut={e=>{
-                if(newMessage.trim()) e.currentTarget.style.background = '#FACC15';
+              onMouseOut={e => {
+                if (newMessage.trim()) e.currentTarget.style.background = '#FACC15';
               }}
             >
               <PaperAirplaneIcon style={{ width: 22, height: 22, transform: 'translateX(-1px)' }} />

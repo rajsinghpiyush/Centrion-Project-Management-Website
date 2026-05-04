@@ -169,6 +169,24 @@ const Dashboard = () => {
     return result;
   }, [projects, activeWorkspace, searchQuery]);
 
+  // Separate owned vs invited projects
+  const { myProjects, invitedProjects } = useMemo(() => {
+    const owned = filteredProjects.filter(p => {
+      const ownerId = typeof p.owner === 'object' ? p.owner?._id : p.owner;
+      return ownerId === user?._id;
+    });
+    const invited = filteredProjects.filter(p => {
+      const ownerId = typeof p.owner === 'object' ? p.owner?._id : p.owner;
+      if (ownerId === user?._id) return false; // Exclude owned projects
+      const userMembership = p.members?.find(m => {
+        const memberId = typeof m.user === 'object' ? m.user?._id : m.user;
+        return memberId === user?._id;
+      });
+      return userMembership?.status === 'active';
+    });
+    return { myProjects: owned, invitedProjects: invited };
+  }, [filteredProjects, user?._id]);
+
   const filteredTasks = useMemo(() => {
     if (!activeWorkspace) return allTasks;
     const projectIds = new Set(filteredProjects.map(p => p._id));
@@ -825,7 +843,7 @@ const Dashboard = () => {
             >Create New +</button>
           </div>
 
-          {filteredProjects.length === 0 ? (
+          {myProjects.length === 0 && invitedProjects.length === 0 ? (
             <div className="empty-state">
               <FolderIcon style={{ width: 56, height: 56, color: 'rgba(255,255,255,0.12)', margin: '0 auto 16px' }} />
               <h3 style={{ fontSize: '1.1rem', fontWeight: 800, color: '#fff', marginBottom: 8 }}>
@@ -839,53 +857,138 @@ const Dashboard = () => {
               </button>
             </div>
           ) : (
-            <div style={{ display: 'flex', flexWrap: 'wrap', gap: 24 }}>
-              {filteredProjects.map((project, index) => {
-                const m = projectMetrics[project._id] || { total: 0, completed: 0 };
-                const progress = m.total > 0 ? Math.round((m.completed / m.total) * 100) : 0;
-                const projectColor = project.color || '#6366F1';
-                return (
-                  <Link
-                    key={project._id}
-                    to={`/projects/${project._id}`}
-                    className="project-card-new"
-                    style={{ '--project-color': projectColor, textDecoration: 'none', flex: '1 1 320px', maxWidth: '100%' }}
-                  >
-                    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 20 }}>
-                      <div style={{ display: 'flex', alignItems: 'center', gap: 14 }}>
-                        <div style={{ width: 48, height: 48, borderRadius: 14, background: `linear-gradient(135deg, ${projectColor}, ${projectColor}CC)`, display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#fff', fontSize: '1.1rem', fontWeight: 800, boxShadow: `0 4px 16px ${projectColor}40` }}>
-                          {project.name?.charAt(0).toUpperCase()}
-                        </div>
-                        <div>
-                          <h3 style={{ fontSize: '1rem', fontWeight: 700, color: '#fff', marginBottom: 2 }}>{project.name}</h3>
-                          <p style={{ fontSize: '0.8rem', color: 'rgba(255,255,255,0.35)', maxWidth: 200, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{project.description || 'No description'}</p>
-                        </div>
-                      </div>
-                      <ProgressRing progress={progress} color={projectColor} />
-                    </div>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 40 }}>
+              {/* My Projects Section */}
+              {myProjects.length > 0 && (
+                <div>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 16 }}>
+                    <h3 style={{ fontSize: '1rem', fontWeight: 700, color: '#fff', display: 'flex', alignItems: 'center', gap: 8 }}>
+                      <UserGroupIcon style={{ width: 18, height: 18, color: '#6366F1' }} />
+                      My Projects
+                    </h3>
+                    <span style={{ fontSize: '0.75rem', fontWeight: 700, color: '#fff', background: '#6366F1', padding: '4px 10px', borderRadius: 10 }}>
+                      {myProjects.length}
+                    </span>
+                  </div>
+                  <div style={{ display: 'flex', flexWrap: 'wrap', gap: 24 }}>
+                    {myProjects.map((project, index) => {
+                      const m = projectMetrics[project._id] || { total: 0, completed: 0 };
+                      const progress = m.total > 0 ? Math.round((m.completed / m.total) * 100) : 0;
+                      const projectColor = project.color || '#6366F1';
+                      return (
+                        <Link
+                          key={project._id}
+                          to={`/projects/${project._id}`}
+                          className="project-card-new"
+                          style={{ '--project-color': projectColor, textDecoration: 'none', flex: '1 1 320px', maxWidth: '100%', position: 'relative' }}
+                        >
+                          <div style={{ position: 'absolute', top: 12, right: 12, fontSize: '0.65rem', fontWeight: 700, background: '#6366F1', color: '#fff', padding: '4px 8px', borderRadius: 8, textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+                            Owner
+                          </div>
+                          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 20 }}>
+                            <div style={{ display: 'flex', alignItems: 'center', gap: 14 }}>
+                              <div style={{ width: 48, height: 48, borderRadius: 14, background: `linear-gradient(135deg, ${projectColor}, ${projectColor}CC)`, display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#fff', fontSize: '1.1rem', fontWeight: 800, boxShadow: `0 4px 16px ${projectColor}40` }}>
+                                {project.name?.charAt(0).toUpperCase()}
+                              </div>
+                              <div>
+                                <h3 style={{ fontSize: '1rem', fontWeight: 700, color: '#fff', marginBottom: 2 }}>{project.name}</h3>
+                                <p style={{ fontSize: '0.8rem', color: 'rgba(255,255,255,0.35)', maxWidth: 200, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{project.description || 'No description'}</p>
+                              </div>
+                            </div>
+                            <ProgressRing progress={progress} color={projectColor} />
+                          </div>
 
-                    <div style={{ display: 'flex', alignItems: 'center', gap: 20, fontSize: '0.8rem' }}>
-                      <span style={{ display: 'flex', alignItems: 'center', gap: 6, color: 'rgba(255,255,255,0.4)', fontWeight: 500 }}>
-                        <ClockIcon style={{ width: 14, height: 14 }} /> {m.total} Tasks
-                      </span>
-                      <span style={{ display: 'flex', alignItems: 'center', gap: 6, color: progress === 100 ? '#34D399' : '#818CF8', fontWeight: 700 }}>
-                        {progress === 100 ? <CheckCircleIcon style={{ width: 14, height: 14 }} /> : <ChartBarIcon style={{ width: 14, height: 14 }} />}
-                        {progress}% Done
-                      </span>
-                      {m.overdue > 0 && (
-                        <span style={{ display: 'flex', alignItems: 'center', gap: 4, color: '#F87171', fontWeight: 600 }}>
-                          <FireIcon style={{ width: 14, height: 14 }} /> {m.overdue} overdue
-                        </span>
-                      )}
-                    </div>
+                          <div style={{ display: 'flex', alignItems: 'center', gap: 20, fontSize: '0.8rem' }}>
+                            <span style={{ display: 'flex', alignItems: 'center', gap: 6, color: 'rgba(255,255,255,0.4)', fontWeight: 500 }}>
+                              <ClockIcon style={{ width: 14, height: 14 }} /> {m.total} Tasks
+                            </span>
+                            <span style={{ display: 'flex', alignItems: 'center', gap: 6, color: progress === 100 ? '#34D399' : '#818CF8', fontWeight: 700 }}>
+                              {progress === 100 ? <CheckCircleIcon style={{ width: 14, height: 14 }} /> : <ChartBarIcon style={{ width: 14, height: 14 }} />}
+                              {progress}% Done
+                            </span>
+                            {m.overdue > 0 && (
+                              <span style={{ display: 'flex', alignItems: 'center', gap: 4, color: '#F87171', fontWeight: 600 }}>
+                                <FireIcon style={{ width: 14, height: 14 }} /> {m.overdue} overdue
+                              </span>
+                            )}
+                          </div>
 
-                    {/* Thin progress bar */}
-                    <div style={{ marginTop: 14, height: 3, width: '100%', background: 'rgba(255,255,255,0.06)', borderRadius: 100, overflow: 'hidden' }}>
-                      <div style={{ height: '100%', width: `${progress}%`, background: `linear-gradient(90deg, ${projectColor}, ${projectColor}99)`, borderRadius: 100, transition: 'width 0.6s ease' }} />
-                    </div>
-                  </Link>
-                );
-              })}
+                          {/* Thin progress bar */}
+                          <div style={{ marginTop: 14, height: 3, width: '100%', background: 'rgba(255,255,255,0.06)', borderRadius: 100, overflow: 'hidden' }}>
+                            <div style={{ height: '100%', width: `${progress}%`, background: `linear-gradient(90deg, ${projectColor}, ${projectColor}99)`, borderRadius: 100, transition: 'width 0.6s ease' }} />
+                          </div>
+                        </Link>
+                      );
+                    })}
+                  </div>
+                </div>
+              )}
+
+              {/* Invited Projects Section */}
+              {invitedProjects.length > 0 && (
+                <div>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 16 }}>
+                    <h3 style={{ fontSize: '1rem', fontWeight: 700, color: '#fff', display: 'flex', alignItems: 'center', gap: 8 }}>
+                      <UserGroupIcon style={{ width: 18, height: 18, color: '#A78BFA' }} />
+                      Invited Projects
+                    </h3>
+                    <span style={{ fontSize: '0.75rem', fontWeight: 700, color: '#fff', background: '#A78BFA', padding: '4px 10px', borderRadius: 10 }}>
+                      {invitedProjects.length}
+                    </span>
+                  </div>
+                  <div style={{ display: 'flex', flexWrap: 'wrap', gap: 24 }}>
+                    {invitedProjects.map((project, index) => {
+                      const m = projectMetrics[project._id] || { total: 0, completed: 0 };
+                      const progress = m.total > 0 ? Math.round((m.completed / m.total) * 100) : 0;
+                      const projectColor = project.color || '#6366F1';
+                      return (
+                        <Link
+                          key={project._id}
+                          to={`/projects/${project._id}`}
+                          className="project-card-new"
+                          style={{ '--project-color': projectColor, textDecoration: 'none', flex: '1 1 320px', maxWidth: '100%', position: 'relative', opacity: 0.95 }}
+                        >
+                          <div style={{ position: 'absolute', top: 12, right: 12, fontSize: '0.65rem', fontWeight: 700, background: '#A78BFA', color: '#fff', padding: '4px 8px', borderRadius: 8, textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+                            Invited
+                          </div>
+                          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 20 }}>
+                            <div style={{ display: 'flex', alignItems: 'center', gap: 14 }}>
+                              <div style={{ width: 48, height: 48, borderRadius: 14, background: `linear-gradient(135deg, ${projectColor}, ${projectColor}CC)`, display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#fff', fontSize: '1.1rem', fontWeight: 800, boxShadow: `0 4px 16px ${projectColor}40`, opacity: 0.8 }}>
+                                {project.name?.charAt(0).toUpperCase()}
+                              </div>
+                              <div>
+                                <h3 style={{ fontSize: '1rem', fontWeight: 700, color: '#fff', marginBottom: 2 }}>{project.name}</h3>
+                                <p style={{ fontSize: '0.8rem', color: 'rgba(255,255,255,0.35)', maxWidth: 200, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{project.description || 'No description'}</p>
+                              </div>
+                            </div>
+                            <ProgressRing progress={progress} color={projectColor} />
+                          </div>
+
+                          <div style={{ display: 'flex', alignItems: 'center', gap: 20, fontSize: '0.8rem' }}>
+                            <span style={{ display: 'flex', alignItems: 'center', gap: 6, color: 'rgba(255,255,255,0.4)', fontWeight: 500 }}>
+                              <ClockIcon style={{ width: 14, height: 14 }} /> {m.total} Tasks
+                            </span>
+                            <span style={{ display: 'flex', alignItems: 'center', gap: 6, color: progress === 100 ? '#34D399' : '#818CF8', fontWeight: 700 }}>
+                              {progress === 100 ? <CheckCircleIcon style={{ width: 14, height: 14 }} /> : <ChartBarIcon style={{ width: 14, height: 14 }} />}
+                              {progress}% Done
+                            </span>
+                            {m.overdue > 0 && (
+                              <span style={{ display: 'flex', alignItems: 'center', gap: 4, color: '#F87171', fontWeight: 600 }}>
+                                <FireIcon style={{ width: 14, height: 14 }} /> {m.overdue} overdue
+                              </span>
+                            )}
+                          </div>
+
+                          {/* Thin progress bar */}
+                          <div style={{ marginTop: 14, height: 3, width: '100%', background: 'rgba(255,255,255,0.06)', borderRadius: 100, overflow: 'hidden' }}>
+                            <div style={{ height: '100%', width: `${progress}%`, background: `linear-gradient(90deg, ${projectColor}, ${projectColor}99)`, borderRadius: 100, transition: 'width 0.6s ease' }} />
+                          </div>
+                        </Link>
+                      );
+                    })}
+                  </div>
+                </div>
+              )}
             </div>
           )}
         </div>
