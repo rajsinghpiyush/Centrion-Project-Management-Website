@@ -48,7 +48,7 @@ const server = http.createServer(app);
 // Socket.io
 const allowedOrigins = (
   process.env.CLIENT_URL || "http://localhost:5173"
-).split(",");
+).split(",").map(url => url.trim().replace(/\/$/, ""));
 
 const io = new Server(server, {
   cors: {
