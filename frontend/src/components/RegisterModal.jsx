@@ -81,11 +81,11 @@ const RegisterModal = ({ isOpen, onClose }) => {
         onClick={onClose}
       >
         <div 
-           className="w-full max-w-6xl w-[95%] xl:w-full h-[90vh] min-h-[600px] flex overflow-hidden rounded-[2.5rem] bg-[#0B0F19] border border-white/10 shadow-[0_0_80px_rgba(0,0,0,0.8)] animate-fade-in-up relative"
+           className="w-full max-w-6xl w-[95%] xl:w-full h-[90vh] min-h-[600px] flex overflow-hidden rounded-[2.5rem] bg-white dark:bg-[#0B0F19] border border-gray-200 dark:border-white/10 shadow-[0_0_80px_rgba(0,0,0,0.8)] animate-fade-in-up relative"
            onClick={(e) => e.stopPropagation()}
         >
       {/* Left Panel - Branding */}
-      <div className="hidden lg:flex lg:w-1/2 relative overflow-hidden bg-[#0B0F19] border-r border-gray-800/50">
+      <div className="hidden lg:flex lg:w-1/2 relative overflow-hidden bg-white dark:bg-[#0B0F19] border-r border-gray-200 dark:border-gray-800/50">
         {/* Modern Grid Background */}
         <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.02)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.02)_1px,transparent_1px)] bg-[size:32px_32px] opacity-30"></div>
         
@@ -100,9 +100,9 @@ const RegisterModal = ({ isOpen, onClose }) => {
           {/* Top: Logo */}
           <Link to="/" className="flex items-center gap-3 w-fit group">
             <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-emerald-600 to-teal-600 flex items-center justify-center shadow-lg shadow-emerald-500/20 group-hover:shadow-emerald-500/40 transition-shadow">
-              <SparklesIcon className="h-6 w-6 text-white" />
+              <SparklesIcon className="h-6 w-6 text-gray-900 dark:text-white" />
             </div>
-            <span className="text-xl font-bold tracking-tight text-white drop-shadow-sm">Centrion</span>
+            <span className="text-xl font-bold tracking-tight text-gray-900 dark:text-white drop-shadow-sm">Centrion</span>
           </Link>
 
           {/* Middle: Floating Dashboard Concept */}
@@ -111,9 +111,9 @@ const RegisterModal = ({ isOpen, onClose }) => {
             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[110%] h-[110%] bg-gradient-to-br from-emerald-500/10 to-cyan-500/10 rounded-full blur-3xl z-0"></div>
 
             {/* Main Dashboard Window */}
-            <div className="relative z-10 bg-[#111827]/80 backdrop-blur-2xl rounded-2xl border border-white/10 shadow-[0_20px_40px_rgba(0,0,0,0.5)] overflow-hidden transform transition-transform hover:-translate-y-2 duration-700 hover:shadow-emerald-500/20">
+            <div className="relative z-10 bg-gray-50 dark:bg-[#111827]/80 backdrop-blur-2xl rounded-2xl border border-gray-200 dark:border-white/10 shadow-[0_20px_40px_rgba(0,0,0,0.5)] overflow-hidden transform transition-transform hover:-translate-y-2 duration-700 hover:shadow-emerald-500/20">
               {/* Window Header */}
-              <div className="h-8 bg-gray-900/80 border-b border-white/5 flex items-center px-4 gap-2">
+              <div className="h-8 bg-white dark:bg-gray-900/80 border-b border-gray-200 dark:border-white/5 flex items-center px-4 gap-2">
                 <div className="w-3 h-3 rounded-full bg-[#EF4444] shadow-sm"></div>
                 <div className="w-3 h-3 rounded-full bg-[#F59E0B] shadow-sm"></div>
                 <div className="w-3 h-3 rounded-full bg-[#10B981] shadow-sm"></div>
@@ -121,14 +121,14 @@ const RegisterModal = ({ isOpen, onClose }) => {
               <div className="p-4 lg:p-5">
                 <div className="flex justify-between items-center mb-4">
                   <div>
-                    <h3 className="text-white font-semibold flex items-center gap-2">
+                    <h3 className="text-gray-900 dark:text-white font-semibold flex items-center gap-2">
                       New Project Setup
                       <span className="relative flex h-2.5 w-2.5 ml-1">
                         <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
                         <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500"></span>
                       </span>
                     </h3>
-                    <p className="text-gray-400 text-xs mt-0.5">Automated workflow generation</p>
+                    <p className="text-gray-600 dark:text-gray-400 text-xs mt-0.5">Automated workflow generation</p>
                   </div>
                   <div className="px-3 py-1 rounded-full bg-emerald-500/20 text-emerald-400 text-[11px] font-semibold border border-emerald-500/20">
                     Step 2/3
@@ -149,18 +149,18 @@ const RegisterModal = ({ isOpen, onClose }) => {
                   {[
                     { c: 'emerald', t: 'Initialize repository', s: 'Complete' },
                     { c: 'teal', t: 'Configure CI/CD pipeline', s: 'Complete' }].map((item, i) => (
-                    <div key={i} className="flex items-center justify-between p-2.5 rounded-xl bg-gray-800/40 border border-white/5 hover:bg-gray-800/60 transition-colors">
+                    <div key={i} className="flex items-center justify-between p-2.5 rounded-xl bg-gray-100 dark:bg-gray-800/40 border border-gray-200 dark:border-white/5 hover:bg-gray-100 dark:bg-gray-800/60 transition-colors">
                       <div className="flex items-center gap-3">
                         <div className={`w-8 h-8 rounded-lg flex items-center justify-center bg-${item.c}-500/20 text-${item.c}-400 shadow-[0_0_15px_rgba(0,0,0,0.2)]`}>
                           {i < 2 ? <CheckIcon className="w-3 h-3" /> : <RocketLaunchIcon className="w-4 h-4" />}
                         </div>
                         <div className="space-y-1">
-                          <div className="text-xs font-medium text-gray-200">{item.t}</div>
+                          <div className="text-xs font-medium text-gray-800 dark:text-gray-200">{item.t}</div>
                           <div className="text-[10px] text-gray-500">{item.s}</div>
                         </div>
                       </div>
                       <div className="h-5 w-12 bg-gray-700/50 rounded-full flex items-center justify-center">
-                        <span className="text-[9px] text-gray-400 font-medium">Logs</span>
+                        <span className="text-[9px] text-gray-600 dark:text-gray-400 font-medium">Logs</span>
                       </div>
                     </div>
                   ))}
@@ -169,43 +169,43 @@ const RegisterModal = ({ isOpen, onClose }) => {
             </div>
 
             {/* Floating Stat Card 1 */}
-            <div className="absolute -left-6 lg:-left-10 top-20 z-20 bg-[#1F2937]/90 backdrop-blur-xl p-4 lg:p-5 rounded-2xl border border-white/10 shadow-[0_15px_30px_rgba(0,0,0,0.6)] animate-[bounce_4s_ease-in-out_infinite]">
+            <div className="absolute -left-6 lg:-left-10 top-20 z-20 bg-[#1F2937]/90 backdrop-blur-xl p-4 lg:p-5 rounded-2xl border border-gray-200 dark:border-white/10 shadow-[0_15px_30px_rgba(0,0,0,0.6)] animate-[bounce_4s_ease-in-out_infinite]">
               <div className="flex items-center gap-4">
                 <div className="w-10 h-10 lg:w-12 lg:h-12 rounded-full bg-cyan-500/20 flex items-center justify-center border border-cyan-500/30">
                   <ShieldCheckIcon className="w-5 h-5 lg:w-6 lg:h-6 text-cyan-400" />
                 </div>
                 <div>
                   <p className="text-cyan-400 font-bold text-lg lg:text-lg">Secured</p>
-                  <p className="text-gray-400 text-[11px] lg:text-xs font-medium">Enterprise Grade</p>
+                  <p className="text-gray-600 dark:text-gray-400 text-[11px] lg:text-xs font-medium">Enterprise Grade</p>
                 </div>
               </div>
             </div>
 
             {/* Floating Stat Card 2 */}
-            <div className="absolute -right-8 lg:-right-12 bottom-24 lg:bottom-28 z-20 bg-[#1F2937]/90 backdrop-blur-xl p-3 lg:p-3.5 rounded-2xl border border-white/10 shadow-[0_15px_30px_rgba(0,0,0,0.6)] animate-[bounce_5s_ease-in-out_infinite_1s]">
+            <div className="absolute -right-8 lg:-right-12 bottom-24 lg:bottom-28 z-20 bg-[#1F2937]/90 backdrop-blur-xl p-3 lg:p-3.5 rounded-2xl border border-gray-200 dark:border-white/10 shadow-[0_15px_30px_rgba(0,0,0,0.6)] animate-[bounce_5s_ease-in-out_infinite_1s]">
               <div className="flex items-center gap-2 mb-2 lg:mb-3">
                 <UserGroupIcon className="w-4 h-4 lg:w-5 lg:h-5 text-emerald-400" />
-                <span className="text-white text-xs lg:text-sm font-semibold">Collaborators</span>
+                <span className="text-gray-900 dark:text-white text-xs lg:text-sm font-semibold">Collaborators</span>
               </div>
               <div className="flex -space-x-2">
                 <div className="w-5 h-5 lg:w-6 lg:h-6 lg:w-8 lg:h-8 rounded-full border-2 border-[#1F2937] bg-gradient-to-br from-emerald-400 to-teal-500 shadow-sm"></div>
                 <div className="w-7 h-7 lg:w-8 lg:h-8 rounded-full border-2 border-[#1F2937] bg-gradient-to-br from-teal-400 to-cyan-500 shadow-sm"></div>
                 <div className="w-7 h-7 lg:w-8 lg:h-8 rounded-full border-2 border-[#1F2937] bg-gradient-to-br from-cyan-400 to-blue-500 shadow-sm"></div>
-                <div className="w-7 h-7 lg:w-8 lg:h-8 rounded-full border-2 border-[#1F2937] bg-gray-700 flex items-center justify-center text-[9px] lg:text-[10px] text-white font-bold shadow-sm">+8</div>
+                <div className="w-7 h-7 lg:w-8 lg:h-8 rounded-full border-2 border-[#1F2937] bg-gray-700 flex items-center justify-center text-[9px] lg:text-[10px] text-gray-900 dark:text-white font-bold shadow-sm">+8</div>
               </div>
             </div>
           </div>
 
           {/* Bottom: Text & Social Proof */}
           <div className="mt-auto pt-4">
-            <h1 className="text-2xl lg:text-3xl font-extrabold text-transparent bg-clip-text bg-gradient-to-br from-white via-gray-100 to-gray-500 leading-[1.1] mb-2 tracking-tight">
+            <h1 className="text-2xl lg:text-3xl font-extrabold text-transparent bg-clip-text bg-gradient-to-br from-gray-900 via-gray-700 to-gray-500 dark:from-white dark:via-gray-100 dark:to-gray-500 leading-[1.1] mb-2 tracking-tight">
               Start building <br/> something great
             </h1>
-            <p className="text-gray-400/90 text-base lg:text-sm lg:text-[15px] max-w-[400px] leading-relaxed font-medium mb-4 lg:mb-5">
+            <p className="text-gray-600 dark:text-gray-400/90 text-base lg:text-sm lg:text-[15px] max-w-[400px] leading-relaxed font-medium mb-4 lg:mb-5">
                Join thousands of engineering teams who trust Centrion to manage their sprints, tasks, and deployments.
             </p>
             
-            <div className="flex items-center gap-4 lg:gap-5 pt-4 lg:pt-4 border-t border-gray-800/80">
+            <div className="flex items-center gap-4 lg:gap-5 pt-4 lg:pt-4 border-t border-gray-200 dark:border-gray-800/80">
               <div className="flex -space-x-3">
                 {[1,2,3,4].map(i => (
                    <div key={i} className={`w-8 h-8 lg:w-10 lg:h-10 rounded-full border-2 border-[#0B0F19] bg-gradient-to-br ${i%2===0?'from-emerald-500 to-teal-500':'from-teal-500 to-cyan-500'} opacity-90 shadow-sm relative z-${10-i}`}></div>
@@ -219,7 +219,7 @@ const RegisterModal = ({ isOpen, onClose }) => {
                     </svg>
                   ))}
                 </div>
-                <p className="text-[11px] lg:text-sm text-gray-400 font-medium">Loved by developers everywhere</p>
+                <p className="text-[11px] lg:text-sm text-gray-600 dark:text-gray-400 font-medium">Loved by developers everywhere</p>
               </div>
             </div>
           </div>
@@ -227,7 +227,7 @@ const RegisterModal = ({ isOpen, onClose }) => {
       </div>
 
       {/* Right Panel - Form */}
-      <div className="w-full lg:w-1/2 flex flex-col bg-gray-50 dark:bg-gray-900 relative overflow-hidden">
+      <div className="w-full lg:w-1/2 flex flex-col bg-white dark:bg-gray-900 relative overflow-hidden">
         {/* Decorative background blobs for the form side */}
         <div className="absolute inset-0 pointer-events-none z-0">
           <div className="absolute top-[-10%] right-[-10%] w-[500px] h-[500px] bg-emerald-500/10 rounded-full blur-[100px] animate-pulse" style={{ animationDuration: '6s' }} />
@@ -239,7 +239,7 @@ const RegisterModal = ({ isOpen, onClose }) => {
           
           <button
             onClick={onClose}
-            className="flex items-center gap-2 text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors group"
+            className="flex items-center gap-2 text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-900 dark:text-white transition-colors group"
           >
             <ArrowLeftIcon className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
             <span className="text-sm font-medium">Back to home</span>
@@ -263,7 +263,7 @@ const RegisterModal = ({ isOpen, onClose }) => {
             <div className="lg:hidden mb-8 text-center flex justify-center">
               <Link to="/" className="inline-flex items-center gap-3">
                 <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-emerald-600 to-teal-600 flex items-center justify-center shadow-lg shadow-emerald-500/20">
-                  <SparklesIcon className="h-6 w-6 text-white" />
+                  <SparklesIcon className="h-6 w-6 text-gray-900 dark:text-white" />
                 </div>
                 <span className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Centrion</span>
               </Link>
@@ -273,7 +273,7 @@ const RegisterModal = ({ isOpen, onClose }) => {
               <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-2">
                 Create your account
               </h2>
-              <p className="text-gray-500 dark:text-gray-400">
+              <p className="text-gray-600 dark:text-gray-400">
                 Start managing your projects in minutes
               </p>
             </div>
@@ -282,7 +282,7 @@ const RegisterModal = ({ isOpen, onClose }) => {
             <div className="grid grid-cols-2 gap-3 mb-4">
               <button
                 type="button"
-                className="flex items-center justify-center gap-2 px-4 py-3 border border-gray-200 dark:border-gray-700/50 rounded-xl bg-white/50 dark:bg-gray-800/50 backdrop-blur-md hover:bg-gray-50 dark:hover:bg-gray-800 hover:shadow-md transition-all text-sm font-semibold text-gray-700 dark:text-gray-300"
+                className="flex items-center justify-center gap-2 px-4 py-3 border border-gray-200 dark:border-gray-700/50 rounded-xl bg-white/50 dark:bg-gray-800/50 backdrop-blur-md hover:bg-gray-50 dark:hover:bg-gray-100 dark:bg-gray-800 hover:shadow-md transition-all text-sm font-semibold text-gray-700 dark:text-gray-300"
                 onClick={() => window.location.href = 'http://localhost:5001/api/auth/google'}
               >
                 <svg className="w-5 h-5" viewBox="0 0 24 24">
@@ -295,7 +295,7 @@ const RegisterModal = ({ isOpen, onClose }) => {
               </button>
               <button
                 type="button"
-                className="flex items-center justify-center gap-2 px-4 py-3 border border-gray-200 dark:border-gray-700/50 rounded-xl bg-white/50 dark:bg-gray-800/50 backdrop-blur-md hover:bg-gray-50 dark:hover:bg-gray-800 hover:shadow-md transition-all text-sm font-semibold text-gray-700 dark:text-gray-300"
+                className="flex items-center justify-center gap-2 px-4 py-3 border border-gray-200 dark:border-gray-700/50 rounded-xl bg-white/50 dark:bg-gray-800/50 backdrop-blur-md hover:bg-gray-50 dark:hover:bg-gray-100 dark:bg-gray-800 hover:shadow-md transition-all text-sm font-semibold text-gray-700 dark:text-gray-300"
                 onClick={() => window.location.href = 'http://localhost:5001/api/auth/github'}
               >
                 <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
@@ -311,7 +311,7 @@ const RegisterModal = ({ isOpen, onClose }) => {
                 <div className="w-full border-t border-gray-200 dark:border-gray-700/50"></div>
               </div>
               <div className="relative flex justify-center">
-                <span className="px-4 text-xs font-semibold uppercase tracking-wider text-gray-400 bg-gray-50 dark:bg-gray-900 rounded-full">
+                <span className="px-4 text-xs font-semibold uppercase tracking-wider text-gray-600 dark:text-gray-400 bg-white dark:bg-gray-900 rounded-full">
                   or sign up with email
                 </span>
               </div>
@@ -324,13 +324,13 @@ const RegisterModal = ({ isOpen, onClose }) => {
                   Full Name
                 </label>
                 <div className="relative group">
-                  <UserIcon className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400 group-focus-within:text-emerald-500 transition-colors" />
+                  <UserIcon className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-600 dark:text-gray-400 group-focus-within:text-emerald-500 transition-colors" />
                   <input
                     id="name"
                     name="name"
                     type="text"
                     required
-                    className="w-full pl-12 pr-4 py-3 border border-gray-200 dark:border-gray-700/50 rounded-xl bg-white/50 dark:bg-gray-800/50 backdrop-blur-md text-gray-900 dark:text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:bg-white dark:focus:bg-gray-800 transition-all shadow-sm"
+                    className="w-full pl-12 pr-4 py-3 border border-gray-200 dark:border-gray-700/50 rounded-xl bg-white/50 dark:bg-gray-800/50 backdrop-blur-md text-gray-900 dark:text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:bg-white dark:focus:bg-gray-100 dark:bg-gray-800 transition-all shadow-sm"
                     placeholder="John Doe"
                     value={formData.name}
                     onChange={handleChange}
@@ -343,13 +343,13 @@ const RegisterModal = ({ isOpen, onClose }) => {
                   Email address
                 </label>
                 <div className="relative group">
-                  <EnvelopeIcon className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400 group-focus-within:text-emerald-500 transition-colors" />
+                  <EnvelopeIcon className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-600 dark:text-gray-400 group-focus-within:text-emerald-500 transition-colors" />
                   <input
                     id="email"
                     name="email"
                     type="email"
                     required
-                    className="w-full pl-12 pr-4 py-3 border border-gray-200 dark:border-gray-700/50 rounded-xl bg-white/50 dark:bg-gray-800/50 backdrop-blur-md text-gray-900 dark:text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:bg-white dark:focus:bg-gray-800 transition-all shadow-sm"
+                    className="w-full pl-12 pr-4 py-3 border border-gray-200 dark:border-gray-700/50 rounded-xl bg-white/50 dark:bg-gray-800/50 backdrop-blur-md text-gray-900 dark:text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:bg-white dark:focus:bg-gray-100 dark:bg-gray-800 transition-all shadow-sm"
                     placeholder="you@example.com"
                     value={formData.email}
                     onChange={handleChange}
@@ -362,13 +362,13 @@ const RegisterModal = ({ isOpen, onClose }) => {
                   Password
                 </label>
                 <div className="relative group">
-                  <LockClosedIcon className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400 group-focus-within:text-emerald-500 transition-colors" />
+                  <LockClosedIcon className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-600 dark:text-gray-400 group-focus-within:text-emerald-500 transition-colors" />
                   <input
                     id="password"
                     name="password"
                     type={showPassword ? 'text' : 'password'}
                     required
-                    className="w-full pl-12 pr-12 py-3 border border-gray-200 dark:border-gray-700/50 rounded-xl bg-white/50 dark:bg-gray-800/50 backdrop-blur-md text-gray-900 dark:text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:bg-white dark:focus:bg-gray-800 transition-all shadow-sm"
+                    className="w-full pl-12 pr-12 py-3 border border-gray-200 dark:border-gray-700/50 rounded-xl bg-white/50 dark:bg-gray-800/50 backdrop-blur-md text-gray-900 dark:text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:bg-white dark:focus:bg-gray-100 dark:bg-gray-800 transition-all shadow-sm"
                     placeholder="Create a strong password"
                     value={formData.password}
                     onChange={handleChange}
@@ -376,7 +376,7 @@ const RegisterModal = ({ isOpen, onClose }) => {
                   <button
                     type="button"
                     onClick={() => setShowPassword(!showPassword)}
-                    className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 dark:hover:text-gray-200 transition-colors"
+                    className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-600 dark:text-gray-400 hover:text-gray-600 dark:hover:text-gray-800 dark:text-gray-200 transition-colors"
                   >
                     {showPassword ? <EyeSlashIcon className="w-5 h-5" /> : <EyeIcon className="w-5 h-5" />}
                   </button>
@@ -411,13 +411,13 @@ const RegisterModal = ({ isOpen, onClose }) => {
                   Confirm Password
                 </label>
                 <div className="relative group">
-                  <LockClosedIcon className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400 group-focus-within:text-emerald-500 transition-colors" />
+                  <LockClosedIcon className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-600 dark:text-gray-400 group-focus-within:text-emerald-500 transition-colors" />
                   <input
                     id="confirmPassword"
                     name="confirmPassword"
                     type={showConfirmPassword ? 'text' : 'password'}
                     required
-                    className={`w-full pl-12 pr-12 py-3 border rounded-xl bg-white/50 dark:bg-gray-800/50 backdrop-blur-md text-gray-900 dark:text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:bg-white dark:focus:bg-gray-800 transition-all shadow-sm ${
+                    className={`w-full pl-12 pr-12 py-3 border rounded-xl bg-white/50 dark:bg-gray-800/50 backdrop-blur-md text-gray-900 dark:text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:bg-white dark:focus:bg-gray-100 dark:bg-gray-800 transition-all shadow-sm ${
                       formData.confirmPassword && formData.password !== formData.confirmPassword
                         ? 'border-red-300 dark:border-red-700/50'
                         : formData.confirmPassword && formData.password === formData.confirmPassword
@@ -431,7 +431,7 @@ const RegisterModal = ({ isOpen, onClose }) => {
                   <button
                     type="button"
                     onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                    className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 dark:hover:text-gray-200 transition-colors"
+                    className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-600 dark:text-gray-400 hover:text-gray-600 dark:hover:text-gray-800 dark:text-gray-200 transition-colors"
                   >
                     {showConfirmPassword ? <EyeSlashIcon className="w-5 h-5" /> : <EyeIcon className="w-5 h-5" />}
                   </button>
@@ -449,7 +449,7 @@ const RegisterModal = ({ isOpen, onClose }) => {
               <button
                 type="submit"
                 disabled={loading || (formData.confirmPassword && formData.password !== formData.confirmPassword)}
-                className="w-full mt-4 py-3.5 px-4 bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white font-bold rounded-xl shadow-lg shadow-emerald-500/25 hover:shadow-emerald-500/40 transform hover:-translate-y-0.5 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
+                className="w-full mt-4 py-3.5 px-4 bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-gray-900 dark:text-white font-bold rounded-xl shadow-lg shadow-emerald-500/25 hover:shadow-emerald-500/40 transform hover:-translate-y-0.5 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
               >
                 {loading ? (
                   <span className="flex items-center justify-center gap-2">
@@ -464,7 +464,7 @@ const RegisterModal = ({ isOpen, onClose }) => {
                 )}
               </button>
 
-              <p className="text-xs text-center text-gray-400 dark:text-gray-500 mt-4">
+              <p className="text-xs text-center text-gray-600 dark:text-gray-400 dark:text-gray-500 mt-4">
                 By creating an account, you agree to our{' '}
                 <a href="#" className="font-semibold text-emerald-600 dark:text-emerald-400 hover:underline">Terms</a> and{' '}
                 <a href="#" className="font-semibold text-emerald-600 dark:text-emerald-400 hover:underline">Privacy Policy</a>
@@ -472,7 +472,7 @@ const RegisterModal = ({ isOpen, onClose }) => {
             </form>
 
             {/* Footer */}
-            <p className="mt-8 text-center text-sm font-medium text-gray-500 dark:text-gray-400">
+            <p className="mt-8 text-center text-sm font-medium text-gray-600 dark:text-gray-400">
               Already have an account?{' '}
               
               <Link to="/login" onClick={onClose} className="font-bold text-emerald-600 dark:text-emerald-400 hover:text-emerald-500 transition-colors">

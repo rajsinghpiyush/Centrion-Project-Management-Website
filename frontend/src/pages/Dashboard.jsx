@@ -345,20 +345,20 @@ const Dashboard = () => {
 
   if (loading) {
     return (
-      <div className="dashboard-page" style={{ alignItems: 'center', justifyContent: 'center' }}>
-        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 20 }}>
-          <div style={{ position: 'relative', width: 56, height: 56 }}>
-            <div style={{ position: 'absolute', inset: 0, borderRadius: '50%', border: '3px solid rgba(255,255,255,0.06)' }} />
-            <div style={{ position: 'absolute', inset: 0, borderRadius: '50%', border: '3px solid transparent', borderTopColor: '#6366F1', animation: 'spin 1s linear infinite' }} />
+      <div className="min-h-screen flex flex-col items-center justify-center relative overflow-hidden">
+        <div className="flex flex-col items-center gap-5 z-10">
+          <div className="relative w-14 h-14">
+            <div className="absolute inset-0 rounded-full border-4 border-gray-200 dark:border-white/5" />
+            <div className="absolute inset-0 rounded-full border-4 border-transparent border-t-primary-500 animate-spin" />
           </div>
-          <p style={{ fontSize: '0.875rem', color: 'rgba(255,255,255,0.35)', animation: 'pulse 2s ease-in-out infinite' }}>Loading workspace...</p>
+          <p className="text-sm font-semibold text-gray-500 dark:text-gray-400 animate-pulse">Loading workspace...</p>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="dashboard-page">
+    <div className="min-h-screen flex flex-col relative overflow-hidden">
       {/* Ambient Background Blobs & Fireflies */}
       <div style={{ position: 'fixed', inset: 0, overflow: 'hidden', pointerEvents: 'none', zIndex: 0 }}>
         <div className="dashboard-bg-blob-1" />
@@ -515,22 +515,22 @@ const Dashboard = () => {
       <div style={{ maxWidth: 1100, width: '92%', margin: '0 auto', padding: '40px 0', position: 'relative', zIndex: 10, flex: 1 }}>
 
         {/* ─── Hero Section ─── */}
-        <div className="animate-fade-in-up" style={{ marginBottom: 48, display: 'flex', flexWrap: 'wrap', justifyContent: 'space-between', alignItems: 'flex-end', gap: 24 }}>
+        <div className="animate-fade-in-up mb-12 flex flex-wrap justify-between items-end gap-6">
           <div>
-            <div className="greeting-badge">
-              <div className="live-dot" />
+            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-primary-500/10 border border-primary-500/20 text-sm font-semibold text-primary-600 dark:text-primary-400 mb-4">
+              <div className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
               {getGreeting()}
             </div>
-            <h1 style={{ fontSize: '2.5rem', fontWeight: 800, letterSpacing: '-0.03em', color: '#fff', marginBottom: 8, lineHeight: 1.15 }}>
+            <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight mb-2">
               Welcome back,{' '}
-              <span style={{ background: 'linear-gradient(135deg, #818CF8 0%, #6366F1 40%, #A78BFA 100%)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text' }}>
+              <span className="text-gradient-primary">
                 {user?.name?.split(' ')[0]}
               </span>
             </h1>
-            <p style={{ fontSize: '1rem', color: 'rgba(255,255,255,0.45)', lineHeight: 1.6 }}>
+            <p className="text-gray-600 dark:text-gray-400 text-lg">
               {activeWorkspace
-                ? <>Viewing <span style={{ fontWeight: 600, color: '#818CF8' }}>{activeWorkspace.name}</span> &middot; {stats.total - stats.completed} pending tasks</>
-                : <>You have <span style={{ fontWeight: 700, color: '#fff' }}>{stats.total - stats.completed} pending tasks</span> across all workspaces</>
+                ? <>Viewing <span className="font-bold text-primary-600 dark:text-primary-400">{activeWorkspace.name}</span> &middot; {stats.total - stats.completed} pending tasks</>
+                : <>You have <span className="font-bold">{stats.total - stats.completed} pending tasks</span> across all workspaces</>
               }
             </p>
           </div>
@@ -548,7 +548,7 @@ const Dashboard = () => {
             >
               <PlusIcon style={{ width: 16, height: 16 }} /> New Task
             </button>
-            <button onClick={() => setShowCreateProject(true)} style={{ padding: '10px 22px', borderRadius: 14, background: 'rgba(255,255,255,0.06)', color: '#fff', fontWeight: 700, fontSize: '0.875rem', border: '1px solid rgba(255,255,255,0.1)', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 8, transition: 'all 0.3s' }}
+            <button onClick={() => setShowCreateProject(true)} style={{ padding: '10px 22px', borderRadius: 14, background: 'rgba(255,255,255,0.06)', color: 'var(--text-primary)', fontWeight: 700, fontSize: '0.875rem', border: '1px solid var(--border-color, rgba(255,255,255,0.1))', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 8, transition: 'all 0.3s' }}
               onMouseOver={e => { e.currentTarget.style.background = 'rgba(255,255,255,0.1)'; e.currentTarget.style.transform = 'translateY(-2px)' }}
               onMouseOut={e => { e.currentTarget.style.background = 'rgba(255,255,255,0.06)'; e.currentTarget.style.transform = 'translateY(0)' }}
             >
@@ -560,7 +560,7 @@ const Dashboard = () => {
         {/* ─── Workspaces ─── */}
         <div className="animate-fade-in-up" style={{ animationDelay: '0.05s', marginBottom: 40 }}>
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 16 }}>
-            <h2 style={{ fontSize: '0.8rem', fontWeight: 700, color: 'rgba(255,255,255,0.35)', textTransform: 'uppercase', letterSpacing: '0.08em', display: 'flex', alignItems: 'center', gap: 8 }}>
+            <h2 className="text-gray-500 dark:text-white/35" style={{ fontSize: '0.8rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.08em', display: 'flex', alignItems: 'center', gap: 8 }}>
               <Squares2X2Icon style={{ width: 16, height: 16, color: '#818CF8' }} />
               Workspaces
             </h2>
@@ -574,34 +574,34 @@ const Dashboard = () => {
             </button>
           </div>
 
-          <div className="custom-scrollbar" style={{ display: 'flex', gap: 10, overflowX: 'auto', paddingBottom: 4 }}>
+          <div className="custom-scrollbar flex gap-3 overflow-x-auto pb-2">
             <button
               onClick={() => setActiveWorkspace(null)}
-              className={`workspace-pill ${!activeWorkspace ? 'workspace-pill--active' : 'workspace-pill--inactive'}`}
+              className={`px-5 py-2.5 rounded-2xl text-sm font-bold flex items-center gap-2 whitespace-nowrap transition-all border ${!activeWorkspace ? 'bg-primary-500/10 text-primary-600 dark:text-primary-400 border-primary-500/30 shadow-inner' : 'bg-white dark:bg-white/5 text-gray-600 dark:text-gray-400 border-gray-200 dark:border-transparent hover:bg-gray-50 dark:hover:bg-white/10 shadow-sm'}`}
             >
               All Workspaces
             </button>
 
             {workspaces.map((ws, idx) => (
-              <div key={ws._id} style={{ position: 'relative', flexShrink: 0 }} className="group">
+              <div key={ws._id} className="relative flex-shrink-0 group">
                 {editingWorkspace === ws._id ? (
-                  <form onSubmit={(e) => { e.preventDefault(); handleRenameWorkspace(ws); }} style={{ display: 'flex', alignItems: 'center' }}>
+                  <form onSubmit={(e) => { e.preventDefault(); handleRenameWorkspace(ws); }} className="flex items-center">
                     <input
                       autoFocus
                       value={editName}
                       onChange={(e) => setEditName(e.target.value)}
                       onBlur={() => handleRenameWorkspace(ws)}
-                      style={{ padding: '10px 20px', borderRadius: 14, fontSize: '0.875rem', fontWeight: 600, background: 'rgba(255,255,255,0.06)', border: '2px solid #6366F1', outline: 'none', color: '#fff', width: 160 }}
+                      className="px-5 py-2.5 rounded-2xl text-sm font-bold bg-white dark:bg-white/5 border-2 border-primary-500 outline-none text-gray-900 dark:text-white w-40 shadow-sm"
                     />
                   </form>
                 ) : (
                   <button
                     onClick={() => setActiveWorkspace(activeWorkspace?._id === ws._id ? null : ws)}
-                    className={`workspace-pill ${activeWorkspace?._id === ws._id ? 'workspace-pill--active' : 'workspace-pill--inactive'}`}
+                    className={`px-5 py-2.5 rounded-2xl text-sm font-bold flex items-center gap-2 whitespace-nowrap transition-all border ${activeWorkspace?._id === ws._id ? 'bg-primary-500/10 text-primary-600 dark:text-primary-400 border-primary-500/30 shadow-inner' : 'bg-white dark:bg-white/5 text-gray-600 dark:text-gray-400 border-gray-200 dark:border-transparent hover:bg-gray-50 dark:hover:bg-white/10 shadow-sm'}`}
                   >
-                    <div style={{ width: 8, height: 8, borderRadius: '50%', flexShrink: 0, backgroundColor: getWsColor(idx) }} />
+                    <div className="w-2.5 h-2.5 rounded-full flex-shrink-0 shadow-sm" style={{ backgroundColor: getWsColor(idx) }} />
                     {ws.name}
-                    <span style={{ fontSize: '0.7rem', padding: '2px 8px', borderRadius: 8, background: activeWorkspace?._id === ws._id ? 'rgba(255,255,255,0.2)' : 'rgba(255,255,255,0.08)', fontWeight: 700 }}>
+                    <span className={`text-[10px] px-2 py-0.5 rounded-lg font-bold ml-1 ${activeWorkspace?._id === ws._id ? 'bg-primary-500/20' : 'bg-gray-200 dark:bg-white/10'}`}>
                       {projects.filter(p => {
                         const pwId = typeof p.workspace === 'object' ? p.workspace?._id : p.workspace;
                         return pwId === ws._id;
@@ -613,32 +613,27 @@ const Dashboard = () => {
                 {/* Context Menu Button */}
                 <button
                   onClick={(e) => { e.stopPropagation(); setWorkspaceMenu(workspaceMenu === ws._id ? null : ws._id); }}
-                  className="group-hover:opacity-100"
-                  style={{ position: 'absolute', top: -4, right: -4, width: 20, height: 20, borderRadius: '50%', background: '#1E2438', border: '1px solid rgba(255,255,255,0.12)', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', opacity: workspaceMenu === ws._id ? 1 : 0, transition: 'opacity 0.2s' }}
+                  className={`absolute -top-1 -right-1 w-6 h-6 rounded-full bg-white dark:bg-gray-800 border border-gray-200 dark:border-white/10 flex items-center justify-center cursor-pointer shadow-md transition-opacity ${workspaceMenu === ws._id ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'}`}
                 >
-                  <EllipsisHorizontalIcon style={{ width: 12, height: 12, color: 'rgba(255,255,255,0.5)' }} />
+                  <EllipsisHorizontalIcon className="w-4 h-4 text-gray-500 dark:text-gray-400" />
                 </button>
 
                 {workspaceMenu === ws._id && (
                   <>
-                    <div style={{ position: 'fixed', inset: 0, zIndex: 40 }} onClick={() => setWorkspaceMenu(null)} />
-                    <div style={{ position: 'absolute', top: 'calc(100% + 8px)', right: 0, width: 180, background: '#1E2438', border: '1px solid rgba(255,255,255,0.1)', borderRadius: 14, boxShadow: '0 16px 48px rgba(0,0,0,0.4)', overflow: 'hidden', zIndex: 50 }}>
+                    <div className="fixed inset-0 z-40" onClick={() => setWorkspaceMenu(null)} />
+                    <div className="absolute top-[calc(100%+8px)] right-0 w-48 bg-white dark:bg-gray-800 border border-gray-200 dark:border-white/10 rounded-2xl shadow-xl overflow-hidden z-50">
                       <button
                         onClick={() => { setEditingWorkspace(ws._id); setEditName(ws.name); setWorkspaceMenu(null); }}
-                        style={{ width: '100%', padding: '10px 16px', textAlign: 'left', fontSize: '0.875rem', color: 'rgba(255,255,255,0.75)', background: 'none', border: 'none', display: 'flex', alignItems: 'center', gap: 8, cursor: 'pointer', transition: 'background 0.2s' }}
-                        onMouseOver={e => e.currentTarget.style.background = 'rgba(255,255,255,0.06)'}
-                        onMouseOut={e => e.currentTarget.style.background = 'none'}
+                        className="w-full px-4 py-2.5 text-left text-sm font-semibold text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-white/5 flex items-center gap-2 transition-colors"
                       >
-                        <PencilSquareIcon style={{ width: 16, height: 16 }} /> Rename
+                        <PencilSquareIcon className="w-4 h-4" /> Rename
                       </button>
                       {(ws.owner?._id === user?._id || ws.owner === user?._id) && (
                         <button
                           onClick={() => handleDeleteWorkspace(ws)}
-                          style={{ width: '100%', padding: '10px 16px', textAlign: 'left', fontSize: '0.875rem', color: '#f87171', background: 'none', border: 'none', display: 'flex', alignItems: 'center', gap: 8, cursor: 'pointer', transition: 'background 0.2s' }}
-                          onMouseOver={e => e.currentTarget.style.background = 'rgba(239,68,68,0.08)'}
-                          onMouseOut={e => e.currentTarget.style.background = 'none'}
+                          className="w-full px-4 py-2.5 text-left text-sm font-semibold text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-500/10 flex items-center gap-2 transition-colors"
                         >
-                          <TrashIcon style={{ width: 16, height: 16 }} /> Delete
+                          <TrashIcon className="w-4 h-4" /> Delete
                         </button>
                       )}
                     </div>
@@ -650,10 +645,9 @@ const Dashboard = () => {
             {workspaces.length === 0 && (
               <button
                 onClick={() => setShowCreateWorkspace(true)}
-                className="workspace-pill workspace-pill--inactive"
-                style={{ borderStyle: 'dashed' }}
+                className="px-5 py-2.5 rounded-2xl text-sm font-bold flex items-center gap-2 whitespace-nowrap transition-all border-2 border-dashed bg-transparent text-gray-500 dark:text-gray-400 border-gray-300 dark:border-gray-600 hover:border-primary-500 hover:text-primary-500 dark:hover:border-primary-400 dark:hover:text-primary-400"
               >
-                <PlusIcon style={{ width: 14, height: 14 }} /> Create your first workspace
+                <PlusIcon className="w-4 h-4" /> Create your first workspace
               </button>
             )}
           </div>
@@ -664,49 +658,40 @@ const Dashboard = () => {
           <>
             <div style={{ position: 'fixed', inset: 0, zIndex: 40, background: 'rgba(0,0,0,0.6)', backdropFilter: 'blur(8px)' }} onClick={() => setShowCreateWorkspace(false)} />
             <div style={{ position: 'fixed', inset: 0, zIndex: 50, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 16 }}>
-              <div className="animate-fade-in-up" style={{ width: '100%', maxWidth: 440, background: '#151B2E', border: '1px solid rgba(255,255,255,0.08)', borderRadius: 24, padding: 32, boxShadow: '0 32px 100px rgba(0,0,0,0.6)' }}>
-                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 28 }}>
-                  <h3 style={{ fontSize: '1.25rem', fontWeight: 800, color: '#fff' }}>Create Workspace</h3>
-                  <button onClick={() => setShowCreateWorkspace(false)} style={{ padding: 6, borderRadius: 10, background: 'none', border: 'none', cursor: 'pointer', color: 'rgba(255,255,255,0.35)', transition: 'all 0.2s' }}
-                    onMouseOver={e => { e.currentTarget.style.background = 'rgba(255,255,255,0.06)'; e.currentTarget.style.color = '#fff' }}
-                    onMouseOut={e => { e.currentTarget.style.background = 'none'; e.currentTarget.style.color = 'rgba(255,255,255,0.35)' }}
-                  >
-                    <XMarkIcon style={{ width: 20, height: 20 }} />
+              <div className="animate-fade-in-up w-full max-w-md bento-card p-8">
+                <div className="flex items-center justify-between mb-6">
+                  <h3 className="text-xl font-extrabold">Create Workspace</h3>
+                  <button onClick={() => setShowCreateWorkspace(false)} className="p-1.5 rounded-lg text-gray-500 hover:bg-gray-100 dark:hover:bg-white/10 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors">
+                    <XMarkIcon className="w-5 h-5" />
                   </button>
                 </div>
                 <form onSubmit={handleCreateWorkspace}>
-                  <div style={{ marginBottom: 16 }}>
-                    <label style={{ display: 'block', fontSize: '0.8rem', fontWeight: 700, color: 'rgba(255,255,255,0.6)', marginBottom: 8 }}>Workspace Name *</label>
+                  <div className="mb-4">
+                    <label className="block text-xs font-bold text-gray-600 dark:text-gray-400 mb-2">Workspace Name *</label>
                     <input
                       autoFocus type="text" value={newWorkspaceName}
                       onChange={(e) => setNewWorkspaceName(e.target.value)}
                       placeholder="e.g., Engineering Team"
                       required
-                      style={{ width: '100%', padding: '12px 16px', borderRadius: 14, background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.08)', color: '#fff', fontSize: '0.875rem', outline: 'none', transition: 'all 0.3s', boxSizing: 'border-box' }}
-                      onFocus={e => { e.currentTarget.style.borderColor = '#6366F1'; e.currentTarget.style.boxShadow = '0 0 0 3px rgba(99,102,241,0.15)' }}
-                      onBlur={e => { e.currentTarget.style.borderColor = 'rgba(255,255,255,0.08)'; e.currentTarget.style.boxShadow = 'none' }}
+                      className="input-field"
                     />
                   </div>
-                  <div style={{ marginBottom: 28 }}>
-                    <label style={{ display: 'block', fontSize: '0.8rem', fontWeight: 700, color: 'rgba(255,255,255,0.6)', marginBottom: 8 }}>Description</label>
+                  <div className="mb-8">
+                    <label className="block text-xs font-bold text-gray-600 dark:text-gray-400 mb-2">Description</label>
                     <textarea
                       value={newWorkspaceDesc}
                       onChange={(e) => setNewWorkspaceDesc(e.target.value)}
                       placeholder="What's this workspace for?"
                       rows={3}
-                      style={{ width: '100%', padding: '12px 16px', borderRadius: 14, background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.08)', color: '#fff', fontSize: '0.875rem', outline: 'none', resize: 'none', transition: 'all 0.3s', boxSizing: 'border-box' }}
-                      onFocus={e => { e.currentTarget.style.borderColor = '#6366F1'; e.currentTarget.style.boxShadow = '0 0 0 3px rgba(99,102,241,0.15)' }}
-                      onBlur={e => { e.currentTarget.style.borderColor = 'rgba(255,255,255,0.08)'; e.currentTarget.style.boxShadow = 'none' }}
+                      className="input-field resize-none"
                     />
                   </div>
-                  <div style={{ display: 'flex', gap: 12 }}>
+                  <div className="flex gap-3">
                     <button type="button" onClick={() => setShowCreateWorkspace(false)}
-                      style={{ flex: 1, padding: 14, borderRadius: 14, background: 'rgba(255,255,255,0.06)', color: 'rgba(255,255,255,0.7)', fontWeight: 700, border: 'none', cursor: 'pointer', fontSize: '0.875rem', transition: 'all 0.2s' }}
-                      onMouseOver={e => e.currentTarget.style.background = 'rgba(255,255,255,0.1)'}
-                      onMouseOut={e => e.currentTarget.style.background = 'rgba(255,255,255,0.06)'}
+                      className="flex-1 btn-secondary"
                     >Cancel</button>
                     <button type="submit" disabled={creatingWorkspace || !newWorkspaceName.trim()}
-                      style={{ flex: 1, padding: 14, borderRadius: 14, background: 'linear-gradient(135deg, #6366F1, #4F46E5)', color: '#fff', fontWeight: 800, border: 'none', cursor: 'pointer', fontSize: '0.875rem', boxShadow: '0 4px 16px rgba(99,102,241,0.35)', opacity: (creatingWorkspace || !newWorkspaceName.trim()) ? 0.5 : 1, transition: 'all 0.2s' }}
+                      className="flex-1 btn-primary disabled:opacity-50 disabled:cursor-not-allowed"
                     >{creatingWorkspace ? 'Creating...' : 'Create Workspace'}</button>
                   </div>
                 </form>
@@ -716,59 +701,59 @@ const Dashboard = () => {
         )}
 
         {/* ─── Stats Row ─── */}
-        <div className="dashboard-stats-grid animate-fade-in-up" style={{ animationDelay: '0.1s', marginBottom: 40, display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '20px' }}>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 animate-fade-in-up stagger-1 mb-12">
 
           {/* Active Projects Summary Card */}
-          <div className="stat-card" style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.05)', borderRadius: 24, padding: 24, display: 'flex', flexDirection: 'column' }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: 14, marginBottom: 14 }}>
-              <div style={{ width: 48, height: 48, borderRadius: 16, background: 'linear-gradient(135deg, #6366F1, #8B5CF6)', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 8px 16px rgba(99,102,241,0.5)' }}>
-                <FolderIcon style={{ width: 22, height: 22, color: '#fff' }} />
+          <div className="bento-card p-6 flex flex-col">
+            <div className="flex items-center gap-4 mb-4">
+              <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-primary-500 to-accent-purple flex items-center justify-center shadow-lg shadow-primary-500/50">
+                <FolderIcon className="w-6 h-6 text-white" />
               </div>
-              <span style={{ fontSize: '2.5rem', fontWeight: 800, color: '#fff', letterSpacing: '-0.02em' }}>{filteredProjects.length}</span>
+              <span className="text-4xl font-bold">{filteredProjects.length}</span>
             </div>
-            <p style={{ fontSize: '0.8rem', fontWeight: 700, color: 'rgba(255,255,255,0.5)', textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: 4 }}>Active Projects</p>
-            <div style={{ fontSize: '0.85rem', color: '#A5B4FC', fontWeight: 600, display: 'flex', alignItems: 'center', gap: 6 }}>
-              <div style={{ padding: '4px 8px', background: 'rgba(52,211,153,0.1)', color: '#34D399', borderRadius: 8, fontSize: '0.75rem' }}>+2 this week</div>
+            <p className="text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-widest mb-1">Active Projects</p>
+            <div className="flex items-center gap-2">
+              <div className="px-2 py-1 bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 rounded-lg text-xs font-semibold">+2 this week</div>
             </div>
           </div>
 
           {/* Active Tasks Summary Card */}
-          <div className="stat-card" style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.05)', borderRadius: 24, padding: 24, display: 'flex', flexDirection: 'column' }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: 14, marginBottom: 14 }}>
-              <div style={{ width: 48, height: 48, borderRadius: 16, background: 'linear-gradient(135deg, #3B82F6, #60A5FA)', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 8px 16px rgba(59,130,246,0.5)' }}>
-                <ArrowTrendingUpIcon style={{ width: 22, height: 22, color: '#fff' }} />
+          <div className="bento-card p-6 flex flex-col">
+            <div className="flex items-center gap-4 mb-4">
+              <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-blue-500 to-cyan-400 flex items-center justify-center shadow-lg shadow-blue-500/50">
+                <ArrowTrendingUpIcon className="w-6 h-6 text-white" />
               </div>
-              <span style={{ fontSize: '2.5rem', fontWeight: 800, color: '#fff', letterSpacing: '-0.02em' }}>{stats.total}</span>
+              <span className="text-4xl font-bold">{stats.total}</span>
             </div>
-            <p style={{ fontSize: '0.8rem', fontWeight: 700, color: 'rgba(255,255,255,0.5)', textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: 4 }}>Active Tasks</p>
-            <div style={{ fontSize: '0.85rem', color: '#A5B4FC', fontWeight: 600, display: 'flex', alignItems: 'center', gap: 6 }}>
-              <div style={{ padding: '4px 8px', background: 'rgba(52,211,153,0.1)', color: '#34D399', borderRadius: 8, fontSize: '0.75rem' }}>+{stats.completed > 0 ? Math.round((stats.completed / stats.total) * 20) : 0}% from last month</div>
+            <p className="text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-widest mb-1">Active Tasks</p>
+            <div className="flex items-center gap-2">
+              <div className="px-2 py-1 bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 rounded-lg text-xs font-semibold">+{stats.completed > 0 ? Math.round((stats.completed / stats.total) * 20) : 0}% from last month</div>
             </div>
           </div>
 
           {/* AI Suggestions Summary Card */}
-          <div className="stat-card" style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(139,92,246,0.3)', borderRadius: 24, padding: 24, display: 'flex', flexDirection: 'column' }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: 14, marginBottom: 14 }}>
-              <div style={{ width: 48, height: 48, borderRadius: 16, background: 'linear-gradient(135deg, #8B5CF6, #D946EF)', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 8px 16px rgba(139,92,246,0.5)' }}>
-                <SparklesIcon style={{ width: 22, height: 22, color: '#fff' }} />
+          <div className="bento-card p-6 flex flex-col border-accent-purple/30 dark:border-accent-purple/30 bg-accent-purple/5 dark:bg-accent-purple/5">
+            <div className="flex items-center gap-4 mb-4">
+              <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-accent-purple to-pink-500 flex items-center justify-center shadow-lg shadow-accent-purple/50">
+                <SparklesIcon className="w-6 h-6 text-white" />
               </div>
-              <span style={{ fontSize: '2.5rem', fontWeight: 800, color: '#fff', letterSpacing: '-0.02em' }}>{aiSuggestions.length}</span>
+              <span className="text-4xl font-bold">{aiSuggestions.length}</span>
             </div>
-            <p style={{ fontSize: '0.8rem', fontWeight: 700, color: 'rgba(255,255,255,0.5)', textTransform: 'uppercase', letterSpacing: '0.08em' }}>AI Suggestions</p>
-            <p style={{ fontSize: '0.85rem', color: '#E879F9', fontWeight: 600, marginTop: 4 }}>Actionable insights available</p>
+            <p className="text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-widest mb-1">AI Suggestions</p>
+            <p className="text-xs font-semibold text-accent-purple dark:text-purple-400">Actionable insights available</p>
           </div>
 
           {/* Team Efficiency Summary Card */}
-          <div className="stat-card" style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.05)', borderRadius: 24, padding: 24, display: 'flex', flexDirection: 'column' }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: 14, marginBottom: 14 }}>
-              <div style={{ width: 48, height: 48, borderRadius: 16, background: 'linear-gradient(135deg, #10B981, #059669)', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 8px 16px rgba(16,185,129,0.5)' }}>
-                <FireIcon style={{ width: 22, height: 22, color: '#fff' }} />
+          <div className="bento-card p-6 flex flex-col">
+            <div className="flex items-center gap-4 mb-4">
+              <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-emerald-500 to-teal-400 flex items-center justify-center shadow-lg shadow-emerald-500/50">
+                <FireIcon className="w-6 h-6 text-white" />
               </div>
-              <span style={{ fontSize: '2.5rem', fontWeight: 800, color: '#fff', letterSpacing: '-0.02em' }}>{stats.teamEfficiency}%</span>
+              <span className="text-4xl font-bold">{stats.teamEfficiency}%</span>
             </div>
-            <p style={{ fontSize: '0.8rem', fontWeight: 700, color: 'rgba(255,255,255,0.5)', textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: 4 }}>Team Efficiency</p>
-            <div className="w-full bg-white/10 rounded-full h-1.5 mt-2">
-              <div className="bg-emerald-500 h-1.5 rounded-full" style={{ width: `${stats.teamEfficiency}%` }}></div>
+            <p className="text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-widest mb-1">Team Efficiency</p>
+            <div className="w-full bg-gray-200 dark:bg-white/10 rounded-full h-1.5 mt-2 overflow-hidden">
+              <div className="bg-emerald-500 h-1.5 rounded-full transition-all duration-1000" style={{ width: `${stats.teamEfficiency}%` }}></div>
             </div>
           </div>
 
@@ -778,17 +763,17 @@ const Dashboard = () => {
         {aiSuggestions.length > 0 && (
           <div className="animate-fade-in-up" style={{ animationDelay: '0.15s', marginBottom: 48 }}>
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 20 }}>
-              <h2 style={{ fontSize: '1.25rem', fontWeight: 800, color: '#fff', display: 'flex', alignItems: 'center', gap: 8 }}>
+              <h2 className="text-gray-900 dark:text-white" style={{ fontSize: '1.25rem', fontWeight: 800, display: 'flex', alignItems: 'center', gap: 8 }}>
                 <SparklesIcon style={{ width: 20, height: 20, color: '#A78BFA' }} />
                 AI Suggestions
               </h2>
             </div>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
               {aiSuggestions.map(suggestion => (
-                <div key={suggestion.id} style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(139,92,246,0.15)', borderRadius: 20, padding: '18px 24px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 16, backdropFilter: 'blur(40px) saturate(180%)', WebkitBackdropFilter: 'blur(40px) saturate(180%)', boxShadow: '0 8px 32px rgba(0,0,0,0.25), inset 0 1px 0 rgba(255,255,255,0.06)' }}>
+                <div key={suggestion.id} className="bg-white/50 dark:bg-white/5" style={{ border: '1px solid rgba(139,92,246,0.15)', borderRadius: 20, padding: '18px 24px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 16, backdropFilter: 'blur(40px) saturate(180%)', WebkitBackdropFilter: 'blur(40px) saturate(180%)', boxShadow: '0 8px 32px rgba(0,0,0,0.25), inset 0 1px 0 rgba(255,255,255,0.06)' }}>
                   <div style={{ display: 'flex', alignItems: 'center', gap: 12, flex: 1 }}>
                     <div style={{ width: 8, height: 8, borderRadius: '50%', background: '#A78BFA', boxShadow: '0 0 8px #A78BFA' }} />
-                    <span style={{ fontSize: '0.9rem', color: '#E2E8F0', fontWeight: 500 }}>{suggestion.text}</span>
+                    <span className="text-gray-800 dark:text-slate-200" style={{ fontSize: '0.9rem', fontWeight: 500 }}>{suggestion.text}</span>
                   </div>
                   <div style={{ display: 'flex', gap: 8 }}>
                     <button
@@ -832,27 +817,24 @@ const Dashboard = () => {
         )}
 
         {/* ─── Project Overview ─── */}
-        <div className="animate-fade-in-up" style={{ animationDelay: '0.2s', marginBottom: 48 }}>
-          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 20 }}>
-            <h2 style={{ fontSize: '1.25rem', fontWeight: 800, color: '#fff' }}>
+        <div className="animate-fade-in-up stagger-2 mb-12">
+          <div className="flex items-center justify-between mb-6">
+            <h2 className="text-2xl font-bold">
               {activeWorkspace ? `Projects in ${activeWorkspace.name}` : 'Your Projects'}
             </h2>
-            <button onClick={() => setShowCreateProject(true)} style={{ background: 'none', border: 'none', fontSize: '0.8rem', fontWeight: 600, color: '#818CF8', cursor: 'pointer', transition: 'color 0.2s' }}
-              onMouseOver={e => e.currentTarget.style.color = '#A5B4FC'}
-              onMouseOut={e => e.currentTarget.style.color = '#818CF8'}
-            >Create New +</button>
+            <button onClick={() => setShowCreateProject(true)} className="text-sm font-semibold text-primary-500 hover:text-primary-400 transition-colors">Create New +</button>
           </div>
 
           {myProjects.length === 0 && invitedProjects.length === 0 ? (
-            <div className="empty-state">
-              <FolderIcon style={{ width: 56, height: 56, color: 'rgba(255,255,255,0.12)', margin: '0 auto 16px' }} />
-              <h3 style={{ fontSize: '1.1rem', fontWeight: 800, color: '#fff', marginBottom: 8 }}>
+            <div className="bento-card p-12 text-center border-dashed border-2">
+              <FolderIcon className="w-14 h-14 text-gray-400 mx-auto mb-4" />
+              <h3 className="text-xl font-bold mb-2">
                 {activeWorkspace ? `No projects in ${activeWorkspace.name}` : 'No projects yet'}
               </h3>
-              <p style={{ color: 'rgba(255,255,255,0.35)', fontSize: '0.875rem', marginBottom: 24 }}>
+              <p className="text-gray-500 dark:text-gray-400 text-sm mb-6">
                 {activeWorkspace ? 'Create a project in this workspace to get started.' : 'Create your first project to get started.'}
               </p>
-              <button onClick={() => setShowCreateProject(true)} style={{ display: 'inline-flex', alignItems: 'center', gap: 8, padding: '10px 22px', borderRadius: 14, background: 'linear-gradient(135deg, #6366F1, #4F46E5)', color: '#fff', fontWeight: 700, fontSize: '0.875rem', border: 'none', cursor: 'pointer', boxShadow: '0 4px 16px rgba(99,102,241,0.3)' }}>
+              <button onClick={() => setShowCreateProject(true)} className="btn-primary inline-flex">
                 Create Project
               </button>
             </div>
@@ -862,7 +844,7 @@ const Dashboard = () => {
               {myProjects.length > 0 && (
                 <div>
                   <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 16 }}>
-                    <h3 style={{ fontSize: '1rem', fontWeight: 700, color: '#fff', display: 'flex', alignItems: 'center', gap: 8 }}>
+                    <h3 className="text-gray-900 dark:text-white" style={{ fontSize: '1rem', fontWeight: 700, display: 'flex', alignItems: 'center', gap: 8 }}>
                       <UserGroupIcon style={{ width: 18, height: 18, color: '#6366F1' }} />
                       My Projects
                     </h3>
@@ -879,43 +861,43 @@ const Dashboard = () => {
                         <Link
                           key={project._id}
                           to={`/projects/${project._id}`}
-                          className="project-card-new"
-                          style={{ '--project-color': projectColor, textDecoration: 'none', flex: '1 1 320px', maxWidth: '100%', position: 'relative' }}
+                          className="bento-card block p-6 relative flex-1 min-w-[300px]"
+                          style={{ '--project-color': projectColor }}
                         >
-                          <div style={{ position: 'absolute', top: 12, right: 12, fontSize: '0.65rem', fontWeight: 700, background: '#6366F1', color: '#fff', padding: '4px 8px', borderRadius: 8, textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+                          <div className="absolute top-4 right-4 text-[10px] font-bold bg-primary-500 text-white px-2 py-1 rounded-md uppercase tracking-widest">
                             Owner
                           </div>
-                          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 20 }}>
-                            <div style={{ display: 'flex', alignItems: 'center', gap: 14 }}>
-                              <div style={{ width: 48, height: 48, borderRadius: 14, background: `linear-gradient(135deg, ${projectColor}, ${projectColor}CC)`, display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#fff', fontSize: '1.1rem', fontWeight: 800, boxShadow: `0 4px 16px ${projectColor}40` }}>
+                          <div className="flex items-center justify-between mb-6">
+                            <div className="flex items-center gap-4">
+                              <div className="w-12 h-12 rounded-2xl flex items-center justify-center text-white text-xl font-bold shadow-lg" style={{ background: `linear-gradient(135deg, ${projectColor}, ${projectColor}CC)`, boxShadow: `0 4px 16px ${projectColor}40` }}>
                                 {project.name?.charAt(0).toUpperCase()}
                               </div>
                               <div>
-                                <h3 style={{ fontSize: '1rem', fontWeight: 700, color: '#fff', marginBottom: 2 }}>{project.name}</h3>
-                                <p style={{ fontSize: '0.8rem', color: 'rgba(255,255,255,0.35)', maxWidth: 200, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{project.description || 'No description'}</p>
+                                <h3 className="text-lg font-bold mb-1">{project.name}</h3>
+                                <p className="text-xs text-gray-500 dark:text-gray-400 max-w-[200px] truncate">{project.description || 'No description'}</p>
                               </div>
                             </div>
                             <ProgressRing progress={progress} color={projectColor} />
                           </div>
 
-                          <div style={{ display: 'flex', alignItems: 'center', gap: 20, fontSize: '0.8rem' }}>
-                            <span style={{ display: 'flex', alignItems: 'center', gap: 6, color: 'rgba(255,255,255,0.4)', fontWeight: 500 }}>
-                              <ClockIcon style={{ width: 14, height: 14 }} /> {m.total} Tasks
+                          <div className="flex items-center gap-4 text-xs font-semibold">
+                            <span className="flex items-center gap-1.5 text-gray-500 dark:text-gray-400">
+                              <ClockIcon className="w-4 h-4" /> {m.total} Tasks
                             </span>
-                            <span style={{ display: 'flex', alignItems: 'center', gap: 6, color: progress === 100 ? '#34D399' : '#818CF8', fontWeight: 700 }}>
-                              {progress === 100 ? <CheckCircleIcon style={{ width: 14, height: 14 }} /> : <ChartBarIcon style={{ width: 14, height: 14 }} />}
+                            <span className="flex items-center gap-1.5" style={{ color: progress === 100 ? '#10B981' : '#6366F1' }}>
+                              {progress === 100 ? <CheckCircleIcon className="w-4 h-4" /> : <ChartBarIcon className="w-4 h-4" />}
                               {progress}% Done
                             </span>
                             {m.overdue > 0 && (
-                              <span style={{ display: 'flex', alignItems: 'center', gap: 4, color: '#F87171', fontWeight: 600 }}>
-                                <FireIcon style={{ width: 14, height: 14 }} /> {m.overdue} overdue
+                              <span className="flex items-center gap-1 text-red-500">
+                                <FireIcon className="w-4 h-4" /> {m.overdue} overdue
                               </span>
                             )}
                           </div>
 
                           {/* Thin progress bar */}
-                          <div style={{ marginTop: 14, height: 3, width: '100%', background: 'rgba(255,255,255,0.06)', borderRadius: 100, overflow: 'hidden' }}>
-                            <div style={{ height: '100%', width: `${progress}%`, background: `linear-gradient(90deg, ${projectColor}, ${projectColor}99)`, borderRadius: 100, transition: 'width 0.6s ease' }} />
+                          <div className="mt-4 h-1 w-full bg-gray-200 dark:bg-white/10 rounded-full overflow-hidden">
+                            <div className="h-full rounded-full transition-all duration-700" style={{ width: `${progress}%`, background: `linear-gradient(90deg, ${projectColor}, ${projectColor}99)` }} />
                           </div>
                         </Link>
                       );
@@ -928,7 +910,7 @@ const Dashboard = () => {
               {invitedProjects.length > 0 && (
                 <div>
                   <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 16 }}>
-                    <h3 style={{ fontSize: '1rem', fontWeight: 700, color: '#fff', display: 'flex', alignItems: 'center', gap: 8 }}>
+                    <h3 className="text-gray-900 dark:text-white" style={{ fontSize: '1rem', fontWeight: 700, display: 'flex', alignItems: 'center', gap: 8 }}>
                       <UserGroupIcon style={{ width: 18, height: 18, color: '#A78BFA' }} />
                       Invited Projects
                     </h3>
@@ -945,43 +927,43 @@ const Dashboard = () => {
                         <Link
                           key={project._id}
                           to={`/projects/${project._id}`}
-                          className="project-card-new"
-                          style={{ '--project-color': projectColor, textDecoration: 'none', flex: '1 1 320px', maxWidth: '100%', position: 'relative', opacity: 0.95 }}
+                          className="bento-card block p-6 relative flex-1 min-w-[300px]"
+                          style={{ '--project-color': projectColor }}
                         >
-                          <div style={{ position: 'absolute', top: 12, right: 12, fontSize: '0.65rem', fontWeight: 700, background: '#A78BFA', color: '#fff', padding: '4px 8px', borderRadius: 8, textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+                          <div className="absolute top-4 right-4 text-[10px] font-bold bg-accent-purple text-white px-2 py-1 rounded-md uppercase tracking-widest">
                             Invited
                           </div>
-                          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 20 }}>
-                            <div style={{ display: 'flex', alignItems: 'center', gap: 14 }}>
-                              <div style={{ width: 48, height: 48, borderRadius: 14, background: `linear-gradient(135deg, ${projectColor}, ${projectColor}CC)`, display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#fff', fontSize: '1.1rem', fontWeight: 800, boxShadow: `0 4px 16px ${projectColor}40`, opacity: 0.8 }}>
+                          <div className="flex items-center justify-between mb-6">
+                            <div className="flex items-center gap-4">
+                              <div className="w-12 h-12 rounded-2xl flex items-center justify-center text-white text-xl font-bold shadow-lg" style={{ background: `linear-gradient(135deg, ${projectColor}, ${projectColor}CC)`, boxShadow: `0 4px 16px ${projectColor}40` }}>
                                 {project.name?.charAt(0).toUpperCase()}
                               </div>
                               <div>
-                                <h3 style={{ fontSize: '1rem', fontWeight: 700, color: '#fff', marginBottom: 2 }}>{project.name}</h3>
-                                <p style={{ fontSize: '0.8rem', color: 'rgba(255,255,255,0.35)', maxWidth: 200, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{project.description || 'No description'}</p>
+                                <h3 className="text-lg font-bold mb-1">{project.name}</h3>
+                                <p className="text-xs text-gray-500 dark:text-gray-400 max-w-[200px] truncate">{project.description || 'No description'}</p>
                               </div>
                             </div>
                             <ProgressRing progress={progress} color={projectColor} />
                           </div>
 
-                          <div style={{ display: 'flex', alignItems: 'center', gap: 20, fontSize: '0.8rem' }}>
-                            <span style={{ display: 'flex', alignItems: 'center', gap: 6, color: 'rgba(255,255,255,0.4)', fontWeight: 500 }}>
-                              <ClockIcon style={{ width: 14, height: 14 }} /> {m.total} Tasks
+                          <div className="flex items-center gap-4 text-xs font-semibold">
+                            <span className="flex items-center gap-1.5 text-gray-500 dark:text-gray-400">
+                              <ClockIcon className="w-4 h-4" /> {m.total} Tasks
                             </span>
-                            <span style={{ display: 'flex', alignItems: 'center', gap: 6, color: progress === 100 ? '#34D399' : '#818CF8', fontWeight: 700 }}>
-                              {progress === 100 ? <CheckCircleIcon style={{ width: 14, height: 14 }} /> : <ChartBarIcon style={{ width: 14, height: 14 }} />}
+                            <span className="flex items-center gap-1.5" style={{ color: progress === 100 ? '#10B981' : '#6366F1' }}>
+                              {progress === 100 ? <CheckCircleIcon className="w-4 h-4" /> : <ChartBarIcon className="w-4 h-4" />}
                               {progress}% Done
                             </span>
                             {m.overdue > 0 && (
-                              <span style={{ display: 'flex', alignItems: 'center', gap: 4, color: '#F87171', fontWeight: 600 }}>
-                                <FireIcon style={{ width: 14, height: 14 }} /> {m.overdue} overdue
+                              <span className="flex items-center gap-1 text-red-500">
+                                <FireIcon className="w-4 h-4" /> {m.overdue} overdue
                               </span>
                             )}
                           </div>
 
                           {/* Thin progress bar */}
-                          <div style={{ marginTop: 14, height: 3, width: '100%', background: 'rgba(255,255,255,0.06)', borderRadius: 100, overflow: 'hidden' }}>
-                            <div style={{ height: '100%', width: `${progress}%`, background: `linear-gradient(90deg, ${projectColor}, ${projectColor}99)`, borderRadius: 100, transition: 'width 0.6s ease' }} />
+                          <div className="mt-4 h-1 w-full bg-gray-200 dark:bg-white/10 rounded-full overflow-hidden">
+                            <div className="h-full rounded-full transition-all duration-700" style={{ width: `${progress}%`, background: `linear-gradient(90deg, ${projectColor}, ${projectColor}99)` }} />
                           </div>
                         </Link>
                       );
@@ -994,9 +976,9 @@ const Dashboard = () => {
         </div>
 
         {/* ─── Recent Activity ─── */}
-        <div className="animate-fade-in-up" style={{ animationDelay: '0.3s', marginBottom: 48 }}>
+        <div className="animate-fade-in-up stagger-3 mb-12">
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 20 }}>
-            <h2 style={{ fontSize: '1.25rem', fontWeight: 800, color: '#fff' }}>Recent Activity</h2>
+            <h2 className="text-gray-900 dark:text-white" style={{ fontSize: '1.25rem', fontWeight: 800 }}>Recent Activity</h2>
             {recentTasks.length > 3 && (
               <button
                 onClick={() => setShowAllActivity(!showAllActivity)}
@@ -1009,24 +991,24 @@ const Dashboard = () => {
               </button>
             )}
           </div>
-          <div className="section-glass">
+          <div className="bento-card overflow-hidden">
             {recentTasks.length === 0 ? (
-              <div style={{ padding: 48, textAlign: 'center', color: 'rgba(255,255,255,0.3)', fontSize: '0.875rem' }}>No recent activity</div>
+              <div className="p-12 text-center text-gray-400 text-sm">No recent activity</div>
             ) : (
               <div>
                 {visibleRecentTasks.map(task => (
-                  <div key={task._id} className="activity-item">
-                    <div className={`status-dot ${getStatusClass(task.status)}`} />
-                    <div style={{ flex: 1, minWidth: 0 }}>
-                      <h4 style={{ fontWeight: 600, color: '#fff', fontSize: '0.875rem', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{task.title}</h4>
-                      <p style={{ fontSize: '0.75rem', color: 'rgba(255,255,255,0.3)', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', marginTop: 2 }}>{task.description || 'No details'}</p>
+                  <div key={task._id} className="flex items-center gap-4 p-4 border-b border-gray-200 dark:border-white/5 last:border-0 hover:bg-gray-50 dark:hover:bg-white/5 transition-colors">
+                    <div className={`w-2.5 h-2.5 rounded-full ${getStatusClass(task.status)}`} />
+                    <div className="flex-1 min-w-0">
+                      <h4 className="font-bold text-sm truncate">{task.title}</h4>
+                      <p className="text-xs text-gray-500 dark:text-gray-400 truncate mt-1">{task.description || 'No details'}</p>
                     </div>
                     <div className="hidden sm:block">
-                      <span className={`priority-badge ${getPriorityClass(task.priority)}`}>
+                      <span className={`px-2.5 py-1 rounded-md text-xs font-bold bg-opacity-20 ${getPriorityClass(task.priority)}`}>
                         {task.priority || 'Medium'}
                       </span>
                     </div>
-                    <div style={{ fontSize: '0.75rem', color: 'rgba(255,255,255,0.25)', whiteSpace: 'nowrap', fontWeight: 500 }}>
+                    <div className="text-xs text-gray-400 font-medium whitespace-nowrap">
                       {task.updatedAt ? new Date(task.updatedAt).toLocaleDateString() : 'Just now'}
                     </div>
                   </div>
@@ -1034,12 +1016,10 @@ const Dashboard = () => {
                 {!showAllActivity && recentTasks.length > 3 && (
                   <button
                     onClick={() => setShowAllActivity(true)}
-                    style={{ width: '100%', padding: '14px 20px', background: 'none', border: 'none', borderTop: '1px solid rgba(255,255,255,0.04)', color: '#818CF8', fontSize: '0.8rem', fontWeight: 600, cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6, transition: 'all 0.2s' }}
-                    onMouseOver={e => { e.currentTarget.style.background = 'rgba(99,102,241,0.06)'; e.currentTarget.style.color = '#A5B4FC' }}
-                    onMouseOut={e => { e.currentTarget.style.background = 'none'; e.currentTarget.style.color = '#818CF8' }}
+                    className="w-full py-3 text-sm font-bold text-primary-500 hover:text-primary-400 hover:bg-primary-500/10 flex items-center justify-center gap-2 transition-all border-t border-gray-200 dark:border-white/5"
                   >
                     View {recentTasks.length - 3} more activities
-                    <ChevronRightIcon style={{ width: 14, height: 14, transform: 'rotate(90deg)' }} />
+                    <ChevronRightIcon className="w-4 h-4 rotate-90" />
                   </button>
                 )}
               </div>
@@ -1048,9 +1028,9 @@ const Dashboard = () => {
         </div>
 
         {/* ─── Quick Actions ─── */}
-        <div className="animate-fade-in-up" style={{ animationDelay: '0.4s' }}>
-          <h2 style={{ fontSize: '1.25rem', fontWeight: 800, color: '#fff', marginBottom: 20 }}>Quick Actions</h2>
-          <div className="quick-actions-grid">
+        <div className="animate-fade-in-up stagger-4">
+          <h2 className="text-2xl font-bold mb-6">Quick Actions</h2>
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4">
             {[
               { to: null, onClick: () => setShowAIGenerator(true), icon: SparklesIcon, label: 'Generate with AI', color: '#8B5CF6', bg: 'rgba(139,92,246,0.12)' },
               { to: null, onClick: () => setShowCreateWorkspace(true), icon: Squares2X2Icon, label: 'New Workspace', color: '#818CF8', bg: 'rgba(99,102,241,0.12)' },
@@ -1061,17 +1041,17 @@ const Dashboard = () => {
             ].map((action, idx) => {
               const inner = (
                 <>
-                  <div style={{ width: 48, height: 48, borderRadius: 14, background: action.bg, display: 'flex', alignItems: 'center', justifyContent: 'center', transition: 'transform 0.3s' }}>
-                    <action.icon style={{ width: 24, height: 24, color: action.color }} />
+                  <div className="w-12 h-12 rounded-2xl flex items-center justify-center mb-3 transition-transform group-hover:scale-110 duration-300" style={{ background: action.bg }}>
+                    <action.icon className="w-6 h-6" style={{ color: action.color }} />
                   </div>
-                  <span style={{ fontWeight: 700, fontSize: '0.8rem', color: '#fff' }}>{action.label}</span>
+                  <span className="text-xs font-bold">{action.label}</span>
                 </>
               );
 
               if (action.to) {
-                return <Link key={idx} to={action.to} className="quick-action-card">{inner}</Link>;
+                return <Link key={idx} to={action.to} className="bento-card p-6 flex flex-col items-center justify-center text-center group hover:-translate-y-1 transition-all">{inner}</Link>;
               }
-              return <button key={idx} onClick={action.onClick} className="quick-action-card">{inner}</button>;
+              return <button key={idx} onClick={action.onClick} className="bento-card p-6 flex flex-col items-center justify-center text-center group hover:-translate-y-1 transition-all w-full">{inner}</button>;
             })}
           </div>
         </div>
@@ -1104,7 +1084,7 @@ const Dashboard = () => {
       )}
 
       {/* ─── Footer ─── */}
-      <footer className="relative border-t border-white/5 pt-12 pb-8 bg-[#0B0F19] overflow-hidden mt-12 shadow-[0_-10px_40px_rgba(0,0,0,0.5)]">
+      <footer className="relative border-t border-white/5 pt-12 pb-8 bg-[#0B0F19] overflow-hidden mt-12 shadow-none dark:shadow-[0_-10px_40px_rgba(0,0,0,0.5)]">
         {/* Subtle footer glow */}
         <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[500px] h-[150px] bg-indigo-600/10 rounded-full blur-[100px] pointer-events-none"></div>
 

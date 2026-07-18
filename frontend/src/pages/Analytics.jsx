@@ -366,7 +366,7 @@ const Analytics = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-900 selection:bg-primary-500/30">
+    <div className="min-h-screen relative overflow-hidden flex flex-col">
       {/* Ambient Background Blobs & Fireflies */}
       <div style={{ position: 'fixed', inset: 0, overflow: 'hidden', pointerEvents: 'none', zIndex: 0 }}>
         <div className="dashboard-bg-blob-1" />
@@ -390,9 +390,9 @@ const Analytics = () => {
       </div>
 
       {/* Navigation - Minimal */}
-      <nav className="sticky top-0 z-30" style={{ background: 'rgba(11,15,26,0.75)', backdropFilter: 'blur(24px) saturate(180%)', WebkitBackdropFilter: 'blur(24px) saturate(180%)', borderBottom: '1px solid rgba(255,255,255,0.06)' }}>
-        <div style={{ maxWidth: 1280, margin: '0 auto', padding: '0 24px' }}>
-          <div className="flex justify-between items-center" style={{ height: 64 }}>
+      <nav className="sticky top-0 z-50 bg-[#0B0F19]/80 backdrop-blur-xl border-b border-white/5 transition-all duration-300">
+        <div className="max-w-[1400px] w-full mx-auto px-6 h-20 flex justify-between items-center">
+          <div className="flex justify-between items-center w-full">
             <div className="flex items-center gap-3">
               <Link to="/dashboard" className="p-2 rounded-xl hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-500 dark:text-gray-400 transition-colors">
                  <ArrowLeftIcon className="w-5 h-5" />
@@ -440,7 +440,7 @@ const Analytics = () => {
       </nav>
 
       {/* Main Content */}
-      <div style={{ maxWidth: 1280, margin: '0 auto', padding: '20px 24px' }} className="relative z-10">
+      <div className="max-w-[1400px] w-full mx-auto px-6 py-10 relative z-10 flex-1">
         
         {/* AI Insights Card */}
         <div className="mb-6 bg-gradient-to-r from-indigo-500/10 to-purple-500/10 border border-indigo-500/20 dark:border-indigo-400/20 rounded-2xl p-6 backdrop-blur-md relative overflow-hidden group">
@@ -491,7 +491,7 @@ const Analytics = () => {
         </div>
         
         {/* Dynamic Activity Heatmap */}
-        <div className="mb-6 bg-white/80 dark:bg-gray-800/80 backdrop-blur-md rounded-2xl p-6 border border-gray-200/50 dark:border-gray-700/50 shadow-sm overflow-hidden">
+        <div className="mb-6 bento-card overflow-hidden">
             <h3 className="text-sm font-bold text-gray-900 dark:text-gray-100 flex items-center gap-2 mb-6">
                <CalendarDaysIcon className="w-5 h-5 text-indigo-500" />
                Workspace Activity
@@ -514,7 +514,7 @@ const Analytics = () => {
 
         {/* KPI Cards */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
-          <div className="group bg-white/80 dark:bg-gray-800/80 backdrop-blur-md rounded-2xl p-5 border border-gray-200/50 dark:border-gray-700/50 shadow-sm hover:shadow-lg hover:-translate-y-0.5 transition-all duration-300">
+          <div className="group bento-card">
             <div className="flex items-center justify-between mb-3">
               <span className="text-[10px] font-bold text-gray-400 dark:text-gray-500 uppercase tracking-wider">Total Tasks</span>
               <div className="w-8 h-8 rounded-lg bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center group-hover:scale-110 transition-transform">
@@ -525,7 +525,7 @@ const Analytics = () => {
             <p className="text-[10px] font-medium text-gray-400 dark:text-gray-500">{analytics.noDueDate} without due date</p>
           </div>
 
-          <div className="group bg-white/80 dark:bg-gray-800/80 backdrop-blur-md rounded-2xl p-5 border border-gray-200/50 dark:border-gray-700/50 shadow-sm hover:shadow-lg hover:-translate-y-0.5 transition-all duration-300">
+          <div className="group bento-card">
             <div className="flex items-center justify-between mb-3">
               <span className="text-[10px] font-bold text-gray-400 dark:text-gray-500 uppercase tracking-wider">Completed</span>
               <div className="w-8 h-8 rounded-lg bg-green-100 dark:bg-green-900/30 flex items-center justify-center group-hover:scale-110 transition-transform">
@@ -539,7 +539,7 @@ const Analytics = () => {
             </p>
           </div>
 
-          <div className="group bg-white/80 dark:bg-gray-800/80 backdrop-blur-md rounded-2xl p-5 border border-gray-200/50 dark:border-gray-700/50 shadow-sm hover:shadow-lg hover:-translate-y-0.5 transition-all duration-300">
+          <div className="group bento-card">
             <div className="flex items-center justify-between mb-3">
               <span className="text-[10px] font-bold text-gray-400 dark:text-gray-500 uppercase tracking-wider">In Progress</span>
               <div className="w-8 h-8 rounded-lg bg-amber-100 dark:bg-amber-900/30 flex items-center justify-center group-hover:scale-110 transition-transform">
@@ -550,7 +550,7 @@ const Analytics = () => {
             <p className="text-[10px] font-medium text-amber-500">{analytics.review} in review</p>
           </div>
 
-          <div className="group bg-white/80 dark:bg-gray-800/80 backdrop-blur-md rounded-2xl p-5 border border-gray-200/50 dark:border-gray-700/50 shadow-sm hover:shadow-lg hover:-translate-y-0.5 transition-all duration-300">
+          <div className="group bento-card">
             <div className="flex items-center justify-between mb-3">
               <span className="text-[10px] font-bold text-gray-400 dark:text-gray-500 uppercase tracking-wider">Overdue</span>
               <div className="w-8 h-8 rounded-lg bg-red-100 dark:bg-red-900/30 flex items-center justify-center group-hover:scale-110 transition-transform">
@@ -565,7 +565,7 @@ const Analytics = () => {
         {/* Charts Grid */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 mb-6">
           {/* Performance Score */}
-          <div className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-md rounded-2xl p-6 border border-gray-200/50 dark:border-gray-700/50 shadow-sm">
+          <div className="bento-card">
             <h3 className="text-sm font-bold text-gray-900 dark:text-white mb-5 flex items-center gap-2">
               <SparklesIcon className="w-4 h-4 text-primary-500" />
               Team Performance
@@ -587,7 +587,7 @@ const Analytics = () => {
           </div>
 
           {/* Status Distribution */}
-          <div className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-md rounded-2xl p-6 border border-gray-200/50 dark:border-gray-700/50 shadow-sm">
+          <div className="bento-card">
             <h3 className="text-sm font-bold text-gray-900 dark:text-white mb-4 flex items-center gap-2">
               <ChartBarIcon className="w-4 h-4 text-blue-500" />
               Status Breakdown
@@ -612,7 +612,7 @@ const Analytics = () => {
           </div>
 
           {/* Priority Breakdown */}
-          <div className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-md rounded-2xl p-6 border border-gray-200/50 dark:border-gray-700/50 shadow-sm">
+          <div className="bento-card">
             <h3 className="text-sm font-bold text-gray-900 dark:text-white mb-4 flex items-center gap-2">
               <FlagIcon className="w-4 h-4 text-orange-500" />
               Task Priorities
@@ -636,7 +636,7 @@ const Analytics = () => {
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 pb-6">
           {/* Project Health - Redesigned */}
-          <div className="lg:col-span-2 bg-white/80 dark:bg-gray-800/80 backdrop-blur-md rounded-2xl p-6 border border-gray-200/50 dark:border-gray-700/50 shadow-sm">
+          <div className="lg:col-span-2 bento-card">
             <h3 className="text-sm font-bold text-gray-900 dark:text-white mb-4 flex items-center gap-2">
               <FolderIcon className="w-4 h-4 text-purple-500" />
               Project Health
@@ -703,7 +703,7 @@ const Analytics = () => {
           </div>
 
           {/* Latest Tasks - Redesigned */}
-          <div className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-md rounded-2xl p-6 border border-gray-200/50 dark:border-gray-700/50 shadow-sm flex flex-col">
+          <div className="bento-card flex flex-col">
             <h3 className="text-sm font-bold text-gray-900 dark:text-white mb-4 flex items-center gap-2">
               <CalendarDaysIcon className="w-4 h-4 text-gray-500" />
               Latest Tasks

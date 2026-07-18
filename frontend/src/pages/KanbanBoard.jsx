@@ -485,11 +485,11 @@ const TaskCard = ({ task, onMoveTask, onDeleteTask, onOpenTask, columnIndex, isD
       onDragStart={handleDragStart}
       onDragEnd={handleDragEnd}
       onClick={() => onOpenTask(task)}
-      className={`kanban-task-card group animate-fade-in-up ${isDragging ? 'opacity-50 cursor-grabbing' : 'cursor-grab'}`}
+      className={`bento-card p-4 flex gap-4 relative group animate-fade-in-up ${isDragging ? 'opacity-50 cursor-grabbing' : 'cursor-grab'}`}
       style={{ transition: isDragging ? 'none' : 'all 0.2s ease' }}
     >
       {/* Priority Strip */}
-      <div className="kanban-task-priority-strip" style={{ background: priority.color || '#6366F1', boxShadow: `0 0 10px ${priority.color}80` }} />
+      <div className="absolute left-0 top-0 bottom-0 w-1 rounded-l-2xl" style={{ background: priority.color || '#6366F1', boxShadow: `0 0 10px ${priority.color}80` }} />
 
       {/* Avatar */}
       <div style={{
@@ -511,12 +511,12 @@ const TaskCard = ({ task, onMoveTask, onDeleteTask, onOpenTask, columnIndex, isD
 
       {/* Content Stack */}
       <div className="flex-1 flex flex-col justify-center min-w-0 pr-4">
-        <h3 className="kanban-task-title truncate">
+        <h3 className="text-sm font-bold text-gray-900 dark:text-white truncate">
           {task.title}
         </h3>
 
         {getCleanDesc(task.description).length > 0 && (
-          <p className="kanban-task-desc">
+          <p className="text-xs text-gray-500 dark:text-gray-400 mt-1 line-clamp-2">
             {getCleanDesc(task.description)}
           </p>
         )}
@@ -541,7 +541,7 @@ const TaskCard = ({ task, onMoveTask, onDeleteTask, onOpenTask, columnIndex, isD
         {showMenu && createPortal(
           <div
             ref={menuRef}
-            className="kanban-task-menu"
+            className="bg-white dark:bg-gray-800 rounded-xl shadow-xl border border-gray-100 dark:border-gray-700 w-48 py-2"
             style={{
               position: 'fixed',
               top: menuPos.top,
@@ -556,7 +556,7 @@ const TaskCard = ({ task, onMoveTask, onDeleteTask, onOpenTask, columnIndex, isD
                 key={col.id}
                 disabled={idx === columnIndex}
                 onClick={(e) => { e.stopPropagation(); onMoveTask(task._id, col.id, col.status); setShowMenu(false); }}
-                className={`kanban-menu-item ${idx === columnIndex ? 'text-gray-300 cursor-default' : 'text-gray-700 dark:text-gray-300'}`}
+                className={`w-full text-left px-4 py-2 text-sm hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-colors ${idx === columnIndex ? 'text-gray-300 cursor-default' : 'text-gray-700 dark:text-gray-300'}`}
               >
                 {col.name}
               </button>
@@ -779,7 +779,7 @@ const KanbanBoard = () => {
   );
 
   return (
-    <div className="kanban-page">
+    <div className="min-h-screen relative overflow-hidden flex flex-col">
       {/* Ambient Background Blobs & Fireflies */}
       <div style={{ position: 'fixed', inset: 0, overflow: 'hidden', pointerEvents: 'none', zIndex: 0 }}>
         <div className="dashboard-bg-blob-1" />
@@ -803,8 +803,8 @@ const KanbanBoard = () => {
       </div>
 
       {/* Header - Minimal & Consistent */}
-      <nav className="kanban-header-nav">
-        <div style={{ maxWidth: 1280, margin: '0 auto', padding: '0 24px', height: 64, display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+      <nav className="sticky top-0 z-50 bg-[#0B0F19]/80 backdrop-blur-xl border-b border-white/5 transition-all duration-300">
+        <div className="max-w-[1400px] w-full mx-auto px-6 h-20 flex justify-between items-center">
           <div className="flex items-center gap-4">
             <Link to="/dashboard" className="p-2 rounded-xl hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-500 dark:text-gray-400 transition-colors">
               <ArrowLeftIcon className="w-5 h-5" />
@@ -908,16 +908,16 @@ const KanbanBoard = () => {
           <div style={{ flex: 1, minWidth: 0, display: 'flex', flexDirection: 'column', gap: 24 }}>
 
             {/* Columns Wrapper */}
-            <div className="kanban-columns-wrapper" style={{ padding: 0 }}>
+            <div className="flex gap-6 overflow-x-auto pb-6 w-full custom-scrollbar">
               {columns.map((col, colIndex) => {
                 const colTasks = getTasksByColumn(col);
                 return (
-                  <div key={col.id} className="kanban-column" style={{ position: 'relative' }}>
+                  <div key={col.id} className="min-w-[320px] max-w-[320px] flex flex-col bg-white/5 dark:bg-gray-800/20 backdrop-blur-md rounded-2xl border border-gray-200/50 dark:border-gray-700/50 relative p-4 group">
                     {/* Decorative glow */}
-                    <div style={{ position: 'absolute', top: -60, right: -60, width: 180, height: 180, background: `radial-gradient(circle, ${col.glowColor || 'rgba(99,102,241,0.15)'}, transparent 70%)`, borderRadius: '50%', pointerEvents: 'none' }} />
+                    <div style={{ position: 'absolute', top: -40, right: -40, width: 120, height: 120, background: `radial-gradient(circle, ${col.glowColor || 'rgba(99,102,241,0.15)'}, transparent 70%)`, borderRadius: '50%', pointerEvents: 'none' }} className="opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
 
                     {/* Minimal Column Header */}
-                    <div className="kanban-column-header" style={{ position: 'relative', zIndex: 1 }}>
+                    <div className="flex items-center justify-between mb-4 relative z-10">
                       <div className="flex items-center gap-3">
                         {/* Column Icon */}
                         <div style={{ width: 32, height: 32, borderRadius: 10, background: col.bgGradient, border: `1px solid ${col.iconBorder}`, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
@@ -935,15 +935,10 @@ const KanbanBoard = () => {
 
                     {/* Task List */}
                     <div
-                      className={`kanban-task-list custom-scrollbar overflow-y-auto max-h-[80vh] ${dropZoneHovered === col.id ? 'drop-zone-active' : ''}`}
+                      className={`flex flex-col gap-3 custom-scrollbar overflow-y-auto flex-1 transition-all duration-300 rounded-xl ${dropZoneHovered === col.id ? 'bg-primary-500/10 border-2 border-dashed border-primary-500/30 p-2' : ''}`}
                       style={{
                         position: 'relative',
                         zIndex: 1,
-                        background: dropZoneHovered === col.id ? 'rgba(99, 102, 241, 0.1)' : 'transparent',
-                        borderRadius: '12px',
-                        transition: 'background-color 0.2s ease',
-                        border: dropZoneHovered === col.id ? '2px dashed rgba(99, 102, 241, 0.4)' : 'none',
-                        padding: dropZoneHovered === col.id ? '8px' : '0'
                       }}
                       onDragOver={(e) => {
                         e.preventDefault();
@@ -966,11 +961,11 @@ const KanbanBoard = () => {
                       }}
                     >
                       {colTasks.length === 0 ? (
-                        <div className="kanban-empty-col">
-                          <svg fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
+                        <div className="flex flex-col items-center justify-center p-8 text-gray-400 dark:text-gray-500 border border-dashed border-gray-200 dark:border-gray-700 rounded-xl mt-2">
+                          <svg className="w-8 h-8 mb-2 opacity-50" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
                             <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 13.5h3.86a2.25 2.25 0 012.012 1.244l.256.512a2.25 2.25 0 002.013 1.244h3.218a2.25 2.25 0 002.013-1.244l.256-.512a2.25 2.25 0 012.013-1.244h3.859m-19.5.338V18a2.25 2.25 0 002.25 2.25h15A2.25 2.25 0 0021.75 18v-4.162c0-.224-.034-.447-.1-.661L19.24 5.338a2.25 2.25 0 00-2.15-1.588H6.911a2.25 2.25 0 00-2.15 1.588L2.35 12.838c-.066.214-.1.437-.1.662z" />
                           </svg>
-                          <p>No tasks yet</p>
+                          <p className="text-xs font-bold uppercase tracking-wider">No tasks yet</p>
                         </div>
                       ) : (
                         colTasks.map(task => (
@@ -998,15 +993,15 @@ const KanbanBoard = () => {
               <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 24, paddingBottom: 32 }}>
 
                 {/* Task Progress Card */}
-                <div style={{ background: 'rgba(17,24,39,0.8)', backdropFilter: 'blur(24px)', border: '1px solid rgba(255,255,255,0.06)', borderRadius: 24, padding: 28, boxShadow: '0 20px 60px rgba(0,0,0,0.4)', position: 'relative', overflow: 'hidden' }}>
+                <div className="bento-card relative overflow-hidden group p-6">
                   {/* Decorative glow */}
-                  <div style={{ position: 'absolute', top: -60, right: -60, width: 180, height: 180, background: 'radial-gradient(circle, rgba(99,102,241,0.15), transparent 70%)', borderRadius: '50%', pointerEvents: 'none' }} />
+                  <div style={{ position: 'absolute', top: -60, right: -60, width: 180, height: 180, background: 'radial-gradient(circle, rgba(99,102,241,0.15), transparent 70%)', borderRadius: '50%', pointerEvents: 'none' }} className="opacity-50 group-hover:opacity-100 transition-opacity duration-500" />
 
                   <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 24, position: 'relative', zIndex: 1 }}>
                     <div style={{ width: 36, height: 36, borderRadius: 12, background: 'linear-gradient(135deg, rgba(99,102,241,0.2), rgba(139,92,246,0.2))', border: '1px solid rgba(99,102,241,0.2)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                       <svg style={{ width: 18, height: 18, color: '#A5B4FC' }} fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" /></svg>
                     </div>
-                    <h3 style={{ fontSize: '1.1rem', fontWeight: 800, color: '#fff', letterSpacing: '-0.02em' }}>Task Progress</h3>
+                    <h3 style={{ fontSize: '1.1rem', fontWeight: 800, color: theme === 'dark' ? '#fff' : '#111827', letterSpacing: '-0.02em' }}>Task Progress</h3>
                   </div>
 
                   {(() => {
@@ -1030,7 +1025,7 @@ const KanbanBoard = () => {
                         <div style={{ position: 'relative', flexShrink: 0 }}>
                           <svg width="160" height="160" viewBox="0 0 160 160">
                             {/* Background ring */}
-                            <circle cx="80" cy="80" r={radius} fill="none" stroke="rgba(255,255,255,0.06)" strokeWidth="14" />
+                            <circle cx="80" cy="80" r={radius} fill="none" stroke={theme === 'dark' ? "rgba(255,255,255,0.06)" : "rgba(0,0,0,0.06)"} strokeWidth="14" />
                             {/* Status segments */}
                             {statusData.map((s) => {
                               const segmentLength = (s.pct / 100) * circumference;
@@ -1054,8 +1049,8 @@ const KanbanBoard = () => {
                           </svg>
                           {/* Center text */}
                           <div style={{ position: 'absolute', inset: 0, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
-                            <span style={{ fontSize: '2rem', fontWeight: 900, color: '#fff', lineHeight: 1 }}>{completedPct}%</span>
-                            <span style={{ fontSize: '0.65rem', fontWeight: 600, color: 'rgba(255,255,255,0.35)', marginTop: 2 }}>DONE</span>
+                            <span style={{ fontSize: '2rem', fontWeight: 900, color: theme === 'dark' ? '#fff' : '#111827', lineHeight: 1 }}>{completedPct}%</span>
+                            <span style={{ fontSize: '0.65rem', fontWeight: 600, color: theme === 'dark' ? 'rgba(255,255,255,0.5)' : 'rgba(17,24,39,0.5)', marginTop: 2 }}>DONE</span>
                           </div>
                         </div>
 
@@ -1071,14 +1066,14 @@ const KanbanBoard = () => {
                             }}>
                               <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginBottom: 6 }}>
                                 <div style={{ width: 8, height: 8, borderRadius: '50%', background: barColors[s.id], boxShadow: `0 0 8px ${barColors[s.id]}88` }} />
-                                <span style={{ fontSize: '0.65rem', fontWeight: 700, color: 'rgba(255,255,255,0.5)', textTransform: 'uppercase', letterSpacing: '0.04em' }}>{s.name}</span>
+                                <span style={{ fontSize: '0.65rem', fontWeight: 700, color: theme === 'dark' ? 'rgba(255,255,255,0.5)' : 'rgba(17,24,39,0.6)', textTransform: 'uppercase', letterSpacing: '0.04em' }}>{s.name}</span>
                               </div>
                               <div style={{ display: 'flex', alignItems: 'baseline', gap: 4 }}>
                                 <span style={{ fontSize: '1.5rem', fontWeight: 900, color: barColors[s.id] }}>{s.count}</span>
-                                <span style={{ fontSize: '0.7rem', fontWeight: 600, color: 'rgba(255,255,255,0.3)' }}>({s.pct}%)</span>
+                                <span style={{ fontSize: '0.7rem', fontWeight: 600, color: theme === 'dark' ? 'rgba(255,255,255,0.3)' : 'rgba(17,24,39,0.4)' }}>({s.pct}%)</span>
                               </div>
                               {/* Mini progress bar */}
-                              <div style={{ marginTop: 8, height: 4, borderRadius: 4, background: 'rgba(255,255,255,0.06)', overflow: 'hidden' }}>
+                              <div style={{ marginTop: 8, height: 4, borderRadius: 4, background: theme === 'dark' ? 'rgba(255,255,255,0.06)' : 'rgba(0,0,0,0.06)', overflow: 'hidden' }}>
                                 <div style={{ height: '100%', width: `${s.pct}%`, background: barColors[s.id], borderRadius: 4, transition: 'width 0.6s ease', boxShadow: `0 0 8px ${barColors[s.id]}44` }} />
                               </div>
                             </div>
@@ -1090,10 +1085,10 @@ const KanbanBoard = () => {
                 </div>
 
                 {/* Task Timeline Card */}
-                <div style={{ background: 'rgba(17,24,39,0.8)', backdropFilter: 'blur(24px)', border: '1px solid rgba(255,255,255,0.06)', borderRadius: 24, padding: 28, boxShadow: '0 20px 60px rgba(0,0,0,0.4)', position: 'relative', overflow: 'hidden' }}>
+                <div className="bento-card relative overflow-hidden group p-6">
                   {/* Decorative glows */}
-                  <div style={{ position: 'absolute', bottom: -80, left: -80, width: 200, height: 200, background: 'radial-gradient(circle, rgba(99,102,241,0.12), transparent 70%)', borderRadius: '50%', pointerEvents: 'none' }} />
-                  <div style={{ position: 'absolute', top: -60, right: -60, width: 160, height: 160, background: 'radial-gradient(circle, rgba(59,130,246,0.08), transparent 70%)', borderRadius: '50%', pointerEvents: 'none' }} />
+                  <div style={{ position: 'absolute', bottom: -80, left: -80, width: 200, height: 200, background: 'radial-gradient(circle, rgba(99,102,241,0.12), transparent 70%)', borderRadius: '50%', pointerEvents: 'none' }} className="opacity-50 group-hover:opacity-100 transition-opacity duration-500" />
+                  <div style={{ position: 'absolute', top: -60, right: -60, width: 160, height: 160, background: 'radial-gradient(circle, rgba(59,130,246,0.08), transparent 70%)', borderRadius: '50%', pointerEvents: 'none' }} className="opacity-50 group-hover:opacity-100 transition-opacity duration-500" />
 
                   <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 20, position: 'relative', zIndex: 1 }}>
                     <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
@@ -1101,16 +1096,16 @@ const KanbanBoard = () => {
                         <svg style={{ width: 18, height: 18, color: '#93C5FD' }} fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg>
                       </div>
                       <div>
-                        <h3 style={{ fontSize: '1.1rem', fontWeight: 800, color: '#fff', letterSpacing: '-0.02em' }}>Task Timeline</h3>
-                        <p style={{ fontSize: '0.65rem', color: 'rgba(255,255,255,0.3)', marginTop: 1 }}>14-day view · {tasks.length} tasks</p>
+                        <h3 style={{ fontSize: '1.1rem', fontWeight: 800, color: theme === 'dark' ? '#fff' : '#111827', letterSpacing: '-0.02em' }}>Task Timeline</h3>
+                        <p style={{ fontSize: '0.65rem', color: theme === 'dark' ? 'rgba(255,255,255,0.4)' : 'rgba(17,24,39,0.5)', marginTop: 1 }}>14-day view · {tasks.length} tasks</p>
                       </div>
                     </div>
                     {/* Legend */}
-                    <div style={{ display: 'flex', gap: 10, background: 'rgba(255,255,255,0.04)', padding: '6px 12px', borderRadius: 10, border: '1px solid rgba(255,255,255,0.05)' }}>
+                    <div style={{ display: 'flex', gap: 10, background: theme === 'dark' ? 'rgba(255,255,255,0.04)' : 'rgba(0,0,0,0.04)', padding: '6px 12px', borderRadius: 10, border: theme === 'dark' ? '1px solid rgba(255,255,255,0.05)' : '1px solid rgba(0,0,0,0.05)' }}>
                       {[{ c: '#6B7280', l: 'To Do' }, { c: '#6366F1', l: 'Active' }, { c: '#F59E0B', l: 'Review' }, { c: '#10B981', l: 'Done' }].map(({ c, l }) => (
                         <div key={l} style={{ display: 'flex', alignItems: 'center', gap: 4 }}>
                           <div style={{ width: 7, height: 7, borderRadius: '50%', background: c, boxShadow: `0 0 6px ${c}88` }} />
-                          <span style={{ fontSize: '0.6rem', fontWeight: 600, color: 'rgba(255,255,255,0.4)' }}>{l}</span>
+                          <span style={{ fontSize: '0.6rem', fontWeight: 600, color: theme === 'dark' ? 'rgba(255,255,255,0.4)' : 'rgba(17,24,39,0.6)' }}>{l}</span>
                         </div>
                       ))}
                     </div>
@@ -1159,14 +1154,14 @@ const KanbanBoard = () => {
                       <div style={{ position: 'relative', zIndex: 1 }}>
                         <div style={{ display: 'flex' }}>
                           {/* Left: Task labels + assignees */}
-                          <div style={{ width: 155, flexShrink: 0, paddingRight: 10, borderRight: '1px solid rgba(255,255,255,0.06)' }}>
+                          <div style={{ width: 155, flexShrink: 0, paddingRight: 10, borderRight: theme === 'dark' ? '1px solid rgba(255,255,255,0.06)' : '1px solid rgba(0,0,0,0.06)' }}>
                             <div style={{ height: 38, display: 'flex', alignItems: 'flex-end', paddingBottom: 6 }}>
-                              <span style={{ fontSize: '0.6rem', fontWeight: 700, color: 'rgba(255,255,255,0.2)', textTransform: 'uppercase', letterSpacing: '0.06em' }}>Task</span>
+                              <span style={{ fontSize: '0.6rem', fontWeight: 700, color: theme === 'dark' ? 'rgba(255,255,255,0.3)' : 'rgba(17,24,39,0.5)', textTransform: 'uppercase', letterSpacing: '0.06em' }}>Task</span>
                             </div>
                             {timelineTasks.map((task, idx) => {
                               const assignee = getAssignee(task);
                               return (
-                                <div key={task._id} style={{ height: 44, display: 'flex', alignItems: 'center', gap: 8, borderBottom: '1px solid rgba(255,255,255,0.03)' }}>
+                                <div key={task._id} style={{ height: 44, display: 'flex', alignItems: 'center', gap: 8, borderBottom: theme === 'dark' ? '1px solid rgba(255,255,255,0.03)' : '1px solid rgba(0,0,0,0.03)' }}>
                                   {assignee ? (
                                     <div title={assignee.name} style={{ width: 24, height: 24, borderRadius: 8, background: avatarGradients[idx % 5], display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '0.55rem', fontWeight: 800, color: '#fff', flexShrink: 0, boxShadow: '0 2px 8px rgba(0,0,0,0.3)' }}>
                                       {assignee.initials}
@@ -1177,8 +1172,8 @@ const KanbanBoard = () => {
                                     </div>
                                   )}
                                   <div style={{ overflow: 'hidden', minWidth: 0 }}>
-                                    <p style={{ fontSize: '0.7rem', fontWeight: 700, color: 'rgba(255,255,255,0.75)', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', lineHeight: 1.2 }}>{task.title}</p>
-                                    <p style={{ fontSize: '0.55rem', fontWeight: 600, color: assignee ? 'rgba(255,255,255,0.3)' : 'rgba(255,255,255,0.15)', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', marginTop: 1 }}>{assignee ? assignee.name : 'Unassigned'}</p>
+                                    <p style={{ fontSize: '0.7rem', fontWeight: 700, color: theme === 'dark' ? 'rgba(255,255,255,0.9)' : 'rgba(17,24,39,0.9)', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', lineHeight: 1.2 }}>{task.title}</p>
+                                    <p style={{ fontSize: '0.55rem', fontWeight: 600, color: theme === 'dark' ? (assignee ? 'rgba(255,255,255,0.4)' : 'rgba(255,255,255,0.2)') : (assignee ? 'rgba(17,24,39,0.6)' : 'rgba(17,24,39,0.4)'), whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', marginTop: 1 }}>{assignee ? assignee.name : 'Unassigned'}</p>
                                   </div>
                                 </div>
                               );
@@ -1191,11 +1186,11 @@ const KanbanBoard = () => {
                             <div style={{ height: 38, display: 'flex' }}>
                               {getDayLabels().map((d, i) => (
                                 <div key={i} style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'flex-end', paddingBottom: 6 }}>
-                                  <span style={{ fontSize: '0.45rem', fontWeight: 600, color: d.isToday ? 'rgba(165,180,252,0.7)' : 'rgba(255,255,255,0.12)', marginBottom: 2 }}>{d.wd}</span>
+                                  <span style={{ fontSize: '0.45rem', fontWeight: 600, color: d.isToday ? 'rgba(165,180,252,0.7)' : (theme === 'dark' ? 'rgba(255,255,255,0.2)' : 'rgba(17,24,39,0.4)'), marginBottom: 2 }}>{d.wd}</span>
                                   {d.isToday ? (
                                     <span style={{ fontSize: '0.7rem', fontWeight: 800, color: '#A5B4FC', background: 'rgba(99,102,241,0.2)', padding: '1px 7px', borderRadius: 6, border: '1px solid rgba(99,102,241,0.3)' }}>{d.day}</span>
                                   ) : (
-                                    <span style={{ fontSize: '0.6rem', fontWeight: 600, color: 'rgba(255,255,255,0.18)' }}>{d.day}</span>
+                                    <span style={{ fontSize: '0.6rem', fontWeight: 600, color: theme === 'dark' ? 'rgba(255,255,255,0.3)' : 'rgba(17,24,39,0.5)' }}>{d.day}</span>
                                   )}
                                 </div>
                               ))}
@@ -1219,7 +1214,7 @@ const KanbanBoard = () => {
                                   const color = statusColors[task.status] || '#6B7280';
                                   const assignee = getAssignee(task);
                                   return (
-                                    <div key={task._id} style={{ height: 44, display: 'flex', alignItems: 'center', position: 'relative', borderBottom: '1px solid rgba(255,255,255,0.03)' }}>
+                                    <div key={task._id} style={{ height: 44, display: 'flex', alignItems: 'center', position: 'relative', borderBottom: theme === 'dark' ? '1px solid rgba(255,255,255,0.03)' : '1px solid rgba(0,0,0,0.03)' }}>
                                       <div
                                         style={{
                                           position: 'absolute', top: 7, bottom: 7,

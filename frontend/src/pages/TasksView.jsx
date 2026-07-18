@@ -280,8 +280,7 @@ const TasksView = () => {
     return (
       <div 
         onClick={() => setSelectedTask(task)} 
-        className="tasks-view-list-row group relative cursor-pointer"
-        style={{ overflow: 'hidden', padding: '16px 20px', gap: '16px' }}
+        className="bento-card group relative cursor-pointer flex items-center p-4 gap-4 overflow-hidden mb-3"
       >
         {/* Priority Strip */}
         <div style={{ position: 'absolute', left: 0, top: 0, bottom: 0, width: '4px', background: priorityColor, boxShadow: `0 0 10px ${priorityColor}80`, borderRadius: '0 4px 4px 0' }} />
@@ -306,10 +305,10 @@ const TasksView = () => {
 
         {/* Content Stack */}
         <div className="flex-1 min-w-0 flex flex-col justify-center">
-          <p className="tasks-view-list-title" style={{ fontSize: '18px', fontWeight: '700', marginBottom: '4px', color: '#F8FAFC' }}>
+          <p className="text-lg font-bold text-gray-900 dark:text-white mb-1 truncate">
             {task.title}
           </p>
-          <p className="tasks-view-list-subtitle" style={{ fontSize: '13px', color: '#94A3B8' }}>
+          <p className="text-sm text-gray-500 dark:text-gray-400 truncate">
             {getCleanDesc(task.description) || getProjectName(task) || 'No description provided'}
           </p>
         </div>
@@ -317,10 +316,7 @@ const TasksView = () => {
         {/* Action button */}
         <button 
           onClick={(e) => { e.stopPropagation(); setSelectedTask(task); }} 
-          className="tasks-view-list-action"
-          style={{ padding: '8px', opacity: 1, background: 'transparent', border: 'none', color: '#94A3B8' }}
-          onMouseOver={(e) => { e.currentTarget.style.color = '#fff' }}
-          onMouseOut={(e) => { e.currentTarget.style.color = '#94a3b8' }}
+          className="p-2 text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors"
         >
           <EllipsisHorizontalIcon className="w-6 h-6" />
         </button>
@@ -329,14 +325,7 @@ const TasksView = () => {
   };
   const KanbanColumn = ({ status, tasks: colTasks }) => {
     return (
-      <div className="tasks-view-kanban-column" style={{ 
-        minWidth: '340px', 
-        flex: 1, 
-        borderRadius: '16px', 
-        padding: '16px', 
-        background: 'rgba(255, 255, 255, 0.02)', // Dark subtle background
-        border: '1px solid rgba(255, 255, 255, 0.05)'
-      }}>
+      <div className="min-w-[340px] flex-1 bg-white/5 dark:bg-gray-800/20 backdrop-blur-md rounded-2xl border border-gray-200/50 dark:border-gray-700/50 p-4">
         {/* Column Header */}
         <div className="flex items-center justify-between mb-5 px-1">
           <div className="flex items-center gap-3">
@@ -544,7 +533,7 @@ const TasksView = () => {
   }
 
   return (
-    <div className="tasks-view-page">
+    <div className="min-h-screen relative overflow-hidden flex flex-col">
       {/* Ambient Background Blobs & Fireflies */}
       <div style={{ position: 'fixed', inset: 0, overflow: 'hidden', pointerEvents: 'none', zIndex: 0 }}>
         <div className="dashboard-bg-blob-1" />
@@ -568,9 +557,9 @@ const TasksView = () => {
       </div>
 
       {/* Nav */}
-      <nav className="tasks-view-nav">
-        <div className="max-w-[1400px] mx-auto px-6">
-          <div className="flex justify-between h-14 items-center">
+      <nav className="sticky top-0 z-50 bg-[#0B0F19]/80 backdrop-blur-xl border-b border-white/5 transition-all duration-300">
+        <div className="max-w-[1400px] w-full mx-auto px-6 h-20 flex justify-between items-center">
+          <div className="flex justify-between w-full items-center">
             <div className="flex items-center gap-3">
               <Link to="/dashboard" className="p-2 rounded-xl hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-500 transition-colors"><ArrowLeftIcon className="w-5 h-5" /></Link>
               <span className="text-lg font-bold text-gray-900 dark:text-white">Tasks</span>
@@ -590,7 +579,7 @@ const TasksView = () => {
         </div>
       </nav>
 
-      <div className="max-w-[1400px] mx-auto px-6 py-6 relative z-10">
+      <div className="max-w-[1400px] w-full mx-auto px-6 py-10 relative z-10 flex-1">
         {/* Toolbar */}
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-6">
           {/* View Switcher */}

@@ -51,12 +51,12 @@ const LoginModal = ({ isOpen, onClose }) => {
         onClick={onClose}
       >
         <div
-          className="w-full max-w-6xl w-[95%] xl:w-full h-[90vh] min-h-[600px] flex overflow-hidden rounded-[2.5rem] bg-[#0B0F19] border border-white/10 shadow-[0_0_80px_rgba(0,0,0,0.8)] animate-fade-in-up relative"
+          className="w-full max-w-6xl w-[95%] xl:w-full h-[90vh] min-h-[600px] flex overflow-hidden rounded-[2.5rem] bg-white dark:bg-[#0B0F19] border border-gray-200 dark:border-white/10 shadow-[0_0_80px_rgba(0,0,0,0.8)] animate-fade-in-up relative"
           onClick={(e) => e.stopPropagation()}
         >
 
           {/* Left Panel - Branding */}
-          <div className="hidden lg:flex lg:w-1/2 relative overflow-hidden bg-[#0B0F19] border-r border-gray-800/50">
+          <div className="hidden lg:flex lg:w-1/2 relative overflow-hidden bg-white dark:bg-[#0B0F19] border-r border-gray-200 dark:border-gray-800/50">
             {/* Modern Grid Background */}
             <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.02)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.02)_1px,transparent_1px)] bg-[size:32px_32px] opacity-30"></div>
 
@@ -71,9 +71,9 @@ const LoginModal = ({ isOpen, onClose }) => {
               {/* Top: Logo */}
               <Link to="/" className="flex items-center gap-3 w-fit group">
                 <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-primary-600 to-blue-600 flex items-center justify-center shadow-lg shadow-primary-500/20 group-hover:shadow-primary-500/40 transition-shadow">
-                  <SparklesIcon className="h-6 w-6 text-white" />
+                  <SparklesIcon className="h-6 w-6 text-gray-900 dark:text-white" />
                 </div>
-                <span className="text-xl font-bold tracking-tight text-white drop-shadow-sm">Centrion</span>
+                <span className="text-xl font-bold tracking-tight text-gray-900 dark:text-white drop-shadow-sm">Centrion</span>
               </Link>
 
               {/* Middle: Floating Dashboard Concept */}
@@ -82,9 +82,9 @@ const LoginModal = ({ isOpen, onClose }) => {
                 <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[110%] h-[110%] bg-gradient-to-br from-primary-500/10 to-purple-500/10 rounded-full blur-3xl z-0"></div>
 
                 {/* Main Dashboard Window */}
-                <div className="relative z-10 bg-[#111827]/80 backdrop-blur-2xl rounded-2xl border border-white/10 shadow-[0_20px_40px_rgba(0,0,0,0.5)] overflow-hidden transform transition-transform hover:-translate-y-2 duration-700 hover:shadow-primary-500/20">
+                <div className="relative z-10 bg-gray-50 dark:bg-[#111827]/80 backdrop-blur-2xl rounded-2xl border border-gray-200 dark:border-white/10 shadow-[0_20px_40px_rgba(0,0,0,0.5)] overflow-hidden transform transition-transform hover:-translate-y-2 duration-700 hover:shadow-primary-500/20">
                   {/* Window Header */}
-                  <div className="h-8 bg-gray-900/80 border-b border-white/5 flex items-center px-4 gap-2">
+                  <div className="h-8 bg-white dark:bg-gray-900/80 border-b border-gray-200 dark:border-white/5 flex items-center px-4 gap-2">
                     <div className="w-3 h-3 rounded-full bg-[#EF4444] shadow-sm"></div>
                     <div className="w-3 h-3 rounded-full bg-[#F59E0B] shadow-sm"></div>
                     <div className="w-3 h-3 rounded-full bg-[#10B981] shadow-sm"></div>
@@ -92,14 +92,14 @@ const LoginModal = ({ isOpen, onClose }) => {
                   <div className="p-4 lg:p-5">
                     <div className="flex justify-between items-center mb-4">
                       <div>
-                        <h3 className="text-white font-semibold flex items-center gap-2">
+                        <h3 className="text-gray-900 dark:text-white font-semibold flex items-center gap-2">
                           Project Overview
                           <span className="relative flex h-2.5 w-2.5 ml-1">
                             <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary-400 opacity-75"></span>
                             <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-primary-500"></span>
                           </span>
                         </h3>
-                        <p className="text-gray-400 text-xs mt-0.5">Real-time engagement metrics</p>
+                        <p className="text-gray-600 dark:text-gray-400 text-xs mt-0.5">Real-time engagement metrics</p>
                       </div>
                       <div className="px-3 py-1 rounded-full bg-primary-500/20 text-primary-400 text-[11px] font-semibold border border-primary-500/20">
                         This Week ▾
@@ -120,18 +120,18 @@ const LoginModal = ({ isOpen, onClose }) => {
                       {[
                         { c: 'emerald', t: 'Deployment successful', s: 'Just now' },
                         { c: 'blue', t: 'New team member joined', s: '2m ago' }].map((item, i) => (
-                          <div key={i} className="flex items-center justify-between p-2.5 rounded-xl bg-gray-800/40 border border-white/5 hover:bg-gray-800/60 transition-colors">
+                          <div key={i} className="flex items-center justify-between p-2.5 rounded-xl bg-gray-100 dark:bg-gray-800/40 border border-gray-200 dark:border-white/5 hover:bg-gray-100 dark:bg-gray-800/60 transition-colors">
                             <div className="flex items-center gap-3">
                               <div className={`w-8 h-8 rounded-lg flex items-center justify-center bg-${item.c}-500/20 text-${item.c}-400 shadow-[0_0_15px_rgba(0,0,0,0.2)]`}>
                                 <CheckIcon className="w-3 h-3" />
                               </div>
                               <div className="space-y-1">
-                                <div className="text-xs font-medium text-gray-200">{item.t}</div>
+                                <div className="text-xs font-medium text-gray-800 dark:text-gray-200">{item.t}</div>
                                 <div className="text-[10px] text-gray-500">{item.s}</div>
                               </div>
                             </div>
                             <div className="h-5 w-12 bg-gray-700/50 rounded-full flex items-center justify-center">
-                              <span className="text-[9px] text-gray-400 font-medium">View</span>
+                              <span className="text-[9px] text-gray-600 dark:text-gray-400 font-medium">View</span>
                             </div>
                           </div>
                         ))}
@@ -140,43 +140,43 @@ const LoginModal = ({ isOpen, onClose }) => {
                 </div>
 
                 {/* Floating Stat Card 1 */}
-                <div className="absolute -right-6 lg:-right-10 top-20 z-20 bg-[#1F2937]/90 backdrop-blur-xl p-4 lg:p-5 rounded-2xl border border-white/10 shadow-[0_15px_30px_rgba(0,0,0,0.6)] animate-[bounce_4s_ease-in-out_infinite]">
+                <div className="absolute -right-6 lg:-right-10 top-20 z-20 bg-[#1F2937]/90 backdrop-blur-xl p-4 lg:p-5 rounded-2xl border border-gray-200 dark:border-white/10 shadow-[0_15px_30px_rgba(0,0,0,0.6)] animate-[bounce_4s_ease-in-out_infinite]">
                   <div className="flex items-center gap-4">
                     <div className="w-10 h-10 lg:w-12 lg:h-12 rounded-full bg-emerald-500/20 flex items-center justify-center border border-emerald-500/30">
                       <ArrowTrendingUpIcon className="w-5 h-5 lg:w-6 lg:h-6 text-emerald-400" />
                     </div>
                     <div>
                       <p className="text-emerald-400 font-bold text-lg lg:text-lg">+24.5%</p>
-                      <p className="text-gray-400 text-[11px] lg:text-xs font-medium">Velocity</p>
+                      <p className="text-gray-600 dark:text-gray-400 text-[11px] lg:text-xs font-medium">Velocity</p>
                     </div>
                   </div>
                 </div>
 
                 {/* Floating Stat Card 2 */}
-                <div className="absolute -left-8 lg:-left-12 bottom-24 lg:bottom-28 z-20 bg-[#1F2937]/90 backdrop-blur-xl p-3 lg:p-3.5 rounded-2xl border border-white/10 shadow-[0_15px_30px_rgba(0,0,0,0.6)] animate-[bounce_5s_ease-in-out_infinite_1s]">
+                <div className="absolute -left-8 lg:-left-12 bottom-24 lg:bottom-28 z-20 bg-[#1F2937]/90 backdrop-blur-xl p-3 lg:p-3.5 rounded-2xl border border-gray-200 dark:border-white/10 shadow-[0_15px_30px_rgba(0,0,0,0.6)] animate-[bounce_5s_ease-in-out_infinite_1s]">
                   <div className="flex items-center gap-2 mb-2 lg:mb-3">
                     <UserGroupIcon className="w-4 h-4 lg:w-5 lg:h-5 text-blue-400" />
-                    <span className="text-white text-xs lg:text-sm font-semibold">Active Team</span>
+                    <span className="text-gray-900 dark:text-white text-xs lg:text-sm font-semibold">Active Team</span>
                   </div>
                   <div className="flex -space-x-2">
                     <div className="w-5 h-5 lg:w-6 lg:h-6 lg:w-8 lg:h-8 rounded-full border-2 border-[#1F2937] bg-gradient-to-br from-purple-400 to-indigo-500 shadow-sm"></div>
                     <div className="w-7 h-7 lg:w-8 lg:h-8 rounded-full border-2 border-[#1F2937] bg-gradient-to-br from-pink-400 to-rose-500 shadow-sm"></div>
                     <div className="w-7 h-7 lg:w-8 lg:h-8 rounded-full border-2 border-[#1F2937] bg-gradient-to-br from-emerald-400 to-teal-500 shadow-sm"></div>
-                    <div className="w-7 h-7 lg:w-8 lg:h-8 rounded-full border-2 border-[#1F2937] bg-gray-700 flex items-center justify-center text-[9px] lg:text-[10px] text-white font-bold shadow-sm">+5</div>
+                    <div className="w-7 h-7 lg:w-8 lg:h-8 rounded-full border-2 border-[#1F2937] bg-gray-700 flex items-center justify-center text-[9px] lg:text-[10px] text-gray-900 dark:text-white font-bold shadow-sm">+5</div>
                   </div>
                 </div>
               </div>
 
               {/* Bottom: Text & Social Proof */}
               <div className="mt-auto pt-4">
-                <h1 className="text-2xl lg:text-3xl font-extrabold text-transparent bg-clip-text bg-gradient-to-br from-white via-gray-100 to-gray-500 leading-[1.1] mb-2 tracking-tight">
+                <h1 className="text-2xl lg:text-3xl font-extrabold text-transparent bg-clip-text bg-gradient-to-br from-gray-900 via-gray-700 to-gray-500 dark:from-white dark:via-gray-100 dark:to-gray-500 leading-[1.1] mb-2 tracking-tight">
                   Manage projects <br /> with complete clarity
                 </h1>
-                <p className="text-gray-400/90 text-base lg:text-sm lg:text-[15px] max-w-[400px] leading-relaxed font-medium mb-4 lg:mb-5">
+                <p className="text-gray-600 dark:text-gray-400/90 text-base lg:text-sm lg:text-[15px] max-w-[400px] leading-relaxed font-medium mb-4 lg:mb-5">
                   A unified workspace for your entire team to plan, build, and deploy exceptionally. Stop managing tools and start shipping features.
                 </p>
 
-                <div className="flex items-center gap-4 lg:gap-5 pt-4 lg:pt-4 border-t border-gray-800/80">
+                <div className="flex items-center gap-4 lg:gap-5 pt-4 lg:pt-4 border-t border-gray-200 dark:border-gray-800/80">
                   <div className="flex -space-x-3">
                     {[1, 2, 3, 4].map(i => (
                       <div key={i} className={`w-8 h-8 lg:w-10 lg:h-10 rounded-full border-2 border-[#0B0F19] bg-gradient-to-br ${i % 2 === 0 ? 'from-primary-500 to-blue-500' : 'from-purple-500 to-pink-500'} opacity-90 shadow-sm relative z-${10 - i}`}></div>
@@ -190,7 +190,7 @@ const LoginModal = ({ isOpen, onClose }) => {
                         </svg>
                       ))}
                     </div>
-                    <p className="text-[11px] lg:text-sm text-gray-400 font-medium">Trusted by 10,000+ top tier teams</p>
+                    <p className="text-[11px] lg:text-sm text-gray-600 dark:text-gray-400 font-medium">Trusted by 10,000+ top tier teams</p>
                   </div>
                 </div>
               </div>
@@ -198,7 +198,7 @@ const LoginModal = ({ isOpen, onClose }) => {
           </div>
 
           {/* Right Panel - Form */}
-          <div className="w-full lg:w-1/2 flex flex-col bg-gray-50 dark:bg-gray-900 relative overflow-hidden">
+          <div className="w-full lg:w-1/2 flex flex-col bg-white dark:bg-gray-900 relative overflow-hidden">
             {/* Decorative background blobs for the form side */}
             <div className="absolute inset-0 pointer-events-none z-0">
               <div className="absolute top-[-10%] right-[-10%] w-[500px] h-[500px] bg-primary-500/10 rounded-full blur-[100px] animate-pulse" style={{ animationDuration: '6s' }} />
@@ -210,7 +210,7 @@ const LoginModal = ({ isOpen, onClose }) => {
 
               <button
                 onClick={onClose}
-                className="flex items-center gap-2 text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors group"
+                className="flex items-center gap-2 text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-900 dark:text-white transition-colors group"
               >
                 <ArrowLeftIcon className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
                 <span className="text-sm font-medium">Back to home</span>
@@ -234,7 +234,7 @@ const LoginModal = ({ isOpen, onClose }) => {
                 <div className="lg:hidden mb-8 text-center flex justify-center">
                   <Link to="/" className="inline-flex items-center gap-3">
                     <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-primary-600 to-blue-600 flex items-center justify-center shadow-lg shadow-primary-500/20">
-                      <SparklesIcon className="h-6 w-6 text-white" />
+                      <SparklesIcon className="h-6 w-6 text-gray-900 dark:text-white" />
                     </div>
                     <span className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Centrion</span>
                   </Link>
@@ -244,7 +244,7 @@ const LoginModal = ({ isOpen, onClose }) => {
                   <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-2">
                     Sign in
                   </h2>
-                  <p className="text-gray-500 dark:text-gray-400">
+                  <p className="text-gray-600 dark:text-gray-400">
                     Enter your credentials to access your workspace
                   </p>
                 </div>
@@ -253,7 +253,7 @@ const LoginModal = ({ isOpen, onClose }) => {
                 <div className="grid grid-cols-2 gap-3 mb-4">
                   <button
                     type="button"
-                    className="flex items-center justify-center gap-2 px-4 py-3 border border-gray-200 dark:border-gray-700/50 rounded-xl bg-white/50 dark:bg-gray-800/50 backdrop-blur-md hover:bg-gray-50 dark:hover:bg-gray-800 hover:shadow-md transition-all text-sm font-semibold text-gray-700 dark:text-gray-300"
+                    className="flex items-center justify-center gap-2 px-4 py-3 border border-gray-200 dark:border-gray-700/50 rounded-xl bg-white/50 dark:bg-gray-800/50 backdrop-blur-md hover:bg-gray-50 dark:hover:bg-gray-100 dark:bg-gray-800 hover:shadow-md transition-all text-sm font-semibold text-gray-700 dark:text-gray-300"
                     onClick={() => window.location.href = `${API_URL}/auth/google`}
                   >
                     <svg className="w-5 h-5" viewBox="0 0 24 24">
@@ -266,7 +266,7 @@ const LoginModal = ({ isOpen, onClose }) => {
                   </button>
                   <button
                     type="button"
-                    className="flex items-center justify-center gap-2 px-4 py-3 border border-gray-200 dark:border-gray-700/50 rounded-xl bg-white/50 dark:bg-gray-800/50 backdrop-blur-md hover:bg-gray-50 dark:hover:bg-gray-800 hover:shadow-md transition-all text-sm font-semibold text-gray-700 dark:text-gray-300"
+                    className="flex items-center justify-center gap-2 px-4 py-3 border border-gray-200 dark:border-gray-700/50 rounded-xl bg-white/50 dark:bg-gray-800/50 backdrop-blur-md hover:bg-gray-50 dark:hover:bg-gray-100 dark:bg-gray-800 hover:shadow-md transition-all text-sm font-semibold text-gray-700 dark:text-gray-300"
                     onClick={() => window.location.href = `${API_URL}/auth/github`}
                   >
                     <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
@@ -282,7 +282,7 @@ const LoginModal = ({ isOpen, onClose }) => {
                     <div className="w-full border-t border-gray-200 dark:border-gray-700/50"></div>
                   </div>
                   <div className="relative flex justify-center">
-                    <span className="px-4 text-xs font-semibold uppercase tracking-wider text-gray-400 bg-gray-50 dark:bg-gray-900 rounded-full">
+                    <span className="px-4 text-xs font-semibold uppercase tracking-wider text-gray-600 dark:text-gray-400 bg-white dark:bg-gray-900 rounded-full">
                       or continue with email
                     </span>
                   </div>
@@ -295,13 +295,13 @@ const LoginModal = ({ isOpen, onClose }) => {
                       Email address
                     </label>
                     <div className="relative group">
-                      <EnvelopeIcon className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400 group-focus-within:text-primary-500 transition-colors" />
+                      <EnvelopeIcon className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-600 dark:text-gray-400 group-focus-within:text-primary-500 transition-colors" />
                       <input
                         id="email"
                         name="email"
                         type="email"
                         required
-                        className="w-full pl-12 pr-4 py-3.5 border border-gray-200 dark:border-gray-700/50 rounded-xl bg-white/50 dark:bg-gray-800/50 backdrop-blur-md text-gray-900 dark:text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:bg-white dark:focus:bg-gray-800 transition-all shadow-sm"
+                        className="w-full pl-12 pr-4 py-3.5 border border-gray-200 dark:border-gray-700/50 rounded-xl bg-white/50 dark:bg-gray-800/50 backdrop-blur-md text-gray-900 dark:text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:bg-white dark:focus:bg-gray-100 dark:bg-gray-800 transition-all shadow-sm"
                         placeholder="you@example.com"
                         value={formData.email}
                         onChange={handleChange}
@@ -322,13 +322,13 @@ const LoginModal = ({ isOpen, onClose }) => {
                       </Link>
                     </div>
                     <div className="relative group">
-                      <LockClosedIcon className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400 group-focus-within:text-primary-500 transition-colors" />
+                      <LockClosedIcon className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-600 dark:text-gray-400 group-focus-within:text-primary-500 transition-colors" />
                       <input
                         id="password"
                         name="password"
                         type={showPassword ? 'text' : 'password'}
                         required
-                        className="w-full pl-12 pr-12 py-3.5 border border-gray-200 dark:border-gray-700/50 rounded-xl bg-white/50 dark:bg-gray-800/50 backdrop-blur-md text-gray-900 dark:text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:bg-white dark:focus:bg-gray-800 transition-all shadow-sm"
+                        className="w-full pl-12 pr-12 py-3.5 border border-gray-200 dark:border-gray-700/50 rounded-xl bg-white/50 dark:bg-gray-800/50 backdrop-blur-md text-gray-900 dark:text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:bg-white dark:focus:bg-gray-100 dark:bg-gray-800 transition-all shadow-sm"
                         placeholder="Enter your password"
                         value={formData.password}
                         onChange={handleChange}
@@ -336,7 +336,7 @@ const LoginModal = ({ isOpen, onClose }) => {
                       <button
                         type="button"
                         onClick={() => setShowPassword(!showPassword)}
-                        className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 dark:hover:text-gray-200 transition-colors"
+                        className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-600 dark:text-gray-400 hover:text-gray-600 dark:hover:text-gray-800 dark:text-gray-200 transition-colors"
                       >
                         {showPassword ? (
                           <EyeSlashIcon className="w-5 h-5" />
@@ -350,7 +350,7 @@ const LoginModal = ({ isOpen, onClose }) => {
                   <button
                     type="submit"
                     disabled={loading}
-                    className="w-full mt-2 py-3.5 px-4 bg-gradient-to-r from-primary-600 to-blue-600 hover:from-primary-500 hover:to-blue-500 text-white font-bold rounded-xl shadow-lg shadow-primary-500/25 hover:shadow-primary-500/40 transform hover:-translate-y-0.5 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
+                    className="w-full mt-2 py-3.5 px-4 bg-gradient-to-r from-primary-600 to-blue-600 hover:from-primary-500 hover:to-blue-500 text-gray-900 dark:text-white font-bold rounded-xl shadow-lg shadow-primary-500/25 hover:shadow-primary-500/40 transform hover:-translate-y-0.5 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
                   >
                     {loading ? (
                       <span className="flex items-center justify-center gap-2">
@@ -367,7 +367,7 @@ const LoginModal = ({ isOpen, onClose }) => {
                 </form>
 
                 {/* Footer */}
-                <p className="mt-8 text-center text-sm font-medium text-gray-500 dark:text-gray-400">
+                <p className="mt-8 text-center text-sm font-medium text-gray-600 dark:text-gray-400">
                   Don't have an account?{' '}
 
                   <Link to="/register" onClick={onClose} className="font-bold text-primary-600 dark:text-primary-400 hover:text-primary-500 transition-colors">

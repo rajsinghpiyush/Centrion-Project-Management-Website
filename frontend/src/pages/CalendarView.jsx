@@ -155,15 +155,7 @@ const CalendarView = () => {
   const overdueTasks = tasks.filter(t => t.dueDate && new Date(t.dueDate) < today && t.status !== 'completed');
 
   return (
-    <div style={{
-      height: '100vh',
-      display: 'flex',
-      flexDirection: 'column',
-      background: '#111827',
-      overflow: 'hidden',
-      fontFamily: "'Inter', -apple-system, sans-serif",
-      color: '#E5E7EB',
-    }}>
+    <div className="min-h-screen relative overflow-hidden flex flex-col">
       {/* Ambient Background Blobs & Fireflies */}
       <div style={{ position: 'fixed', inset: 0, overflow: 'hidden', pointerEvents: 'none', zIndex: 0 }}>
         <div className="dashboard-bg-blob-1" />
@@ -187,15 +179,8 @@ const CalendarView = () => {
       </div>
 
       {/* ═══ NAV BAR ═══ */}
-      <nav style={{
-        height: 64,
-        flexShrink: 0,
-        borderBottom: '1px solid rgba(255,255,255,0.06)',
-        background: 'rgba(11,15,26,0.75)',
-        backdropFilter: 'blur(24px) saturate(180%)',
-        WebkitBackdropFilter: 'blur(24px) saturate(180%)',
-      }}>
-        <div style={{ maxWidth: 1280, margin: '0 auto', padding: '0 24px', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+      <nav className="sticky top-0 z-50 bg-[#0B0F19]/80 backdrop-blur-xl border-b border-white/5 transition-all duration-300">
+        <div className="max-w-[1400px] w-full mx-auto px-6 h-20 flex justify-between items-center">
         <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
           <Link to="/dashboard" style={{
             width: 36, height: 36, borderRadius: 10,
@@ -240,7 +225,7 @@ const CalendarView = () => {
           >
             {theme === 'dark' ? <SunIcon style={{ width: 20, height: 20 }} /> : <MoonIcon style={{ width: 20, height: 20 }} />}
           </button>
-        </div>
+          </div>
         </div>
       </nav>
 
@@ -305,18 +290,7 @@ const CalendarView = () => {
           </div>
 
             {/* Calendar Grid */}
-            <div style={{
-              flex: 1,
-              borderRadius: 16,
-              border: '1px solid rgba(255,255,255,0.05)',
-              overflow: 'hidden',
-              display: 'flex',
-              flexDirection: 'column',
-              background: '#151B2E',
-              boxShadow: '0 8px 32px rgba(0,0,0,0.3)',
-              zIndex: 10,
-              position: 'relative'
-            }}>
+            <div className="bento-card flex-1 flex flex-col relative z-10 overflow-hidden">
             {/* Day headers */}
             <div style={{
               display: 'grid',
@@ -339,17 +313,10 @@ const CalendarView = () => {
             </div>
 
             {/* Date cells */}
-            <div style={{
-              flex: 1,
-              display: 'grid',
-              gridTemplateColumns: 'repeat(7, 1fr)',
-              gridTemplateRows: `repeat(${numRows}, 1fr)`,
-              gap: 1,
-              background: 'rgba(255,255,255,0.03)',
-            }}>
+            <div className="flex-1 grid grid-cols-7 gap-[1px] bg-gray-100 dark:bg-white/5" style={{ gridTemplateRows: `repeat(${numRows}, 1fr)` }}>
               {cells.map((day, i) => {
                 if (day === null) {
-                  return <div key={`e-${i}`} style={{ background: '#111827' }} />;
+                  return <div key={`e-${i}`} className="bg-white dark:bg-[#0B0F19]" />;
                 }
 
                 const dayTasks = getTasksForDate(day);
@@ -360,18 +327,7 @@ const CalendarView = () => {
                   <div
                     key={day}
                     onClick={() => setSelectedDate(isSelected ? null : day)}
-                    style={{
-                      background: isSelected ? 'rgba(129,140,248,0.06)' : '#111827',
-                      padding: '6px 8px',
-                      cursor: 'pointer',
-                      transition: 'background 0.15s',
-                      display: 'flex',
-                      flexDirection: 'column',
-                      overflow: 'hidden',
-                      borderLeft: isSelected ? '2px solid #818CF8' : '2px solid transparent',
-                    }}
-                    onMouseOver={e => { if (!isSelected) e.currentTarget.style.background = 'rgba(255,255,255,0.02)'; }}
-                    onMouseOut={e => { if (!isSelected) e.currentTarget.style.background = '#111827'; }}
+                    className={`p-2 flex flex-col cursor-pointer transition-colors border-l-2 ${isSelected ? 'bg-primary-50 dark:bg-primary-500/10 border-primary-500' : 'bg-white dark:bg-[#0B0F19] border-transparent hover:bg-gray-50 dark:hover:bg-white/5'}`}
                   >
                     {/* Day number */}
                     <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 4 }}>
@@ -455,15 +411,7 @@ const CalendarView = () => {
           position: 'relative',
           background: 'transparent'
         }}>
-          <div style={{
-            flex: 1,
-            borderRadius: 16,
-            border: '1px solid rgba(255,255,255,0.05)',
-            background: '#151B2E',
-            boxShadow: '0 8px 32px rgba(0,0,0,0.3)',
-            display: 'flex', flexDirection: 'column',
-            overflow: 'hidden',
-          }}>
+          <div className="bento-card flex-1 flex flex-col overflow-hidden">
           {selectedDate ? (
             /* ── Date Detail with rich task cards ── */
             <div style={{ flex: 1, overflowY: 'auto', padding: 20, }} className="custom-scrollbar">
