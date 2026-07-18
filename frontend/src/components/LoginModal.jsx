@@ -253,7 +253,7 @@ const LoginModal = ({ isOpen, onClose }) => {
                 <div className="grid grid-cols-2 gap-3 mb-4">
                   <button
                     type="button"
-                    className="flex items-center justify-center gap-2 px-4 py-3 border border-gray-200 dark:border-gray-700/50 rounded-xl bg-white/50 dark:bg-gray-800/50 backdrop-blur-md hover:bg-gray-50 dark:hover:bg-gray-100 dark:bg-gray-800 hover:shadow-md transition-all text-sm font-semibold text-gray-700 dark:text-gray-300"
+                    className="flex items-center justify-center gap-2 px-4 py-3 border border-gray-200 dark:border-gray-700/50 rounded-xl bg-white/50 dark:bg-gray-800/50 backdrop-blur-md hover:bg-gray-50 dark:hover:bg-gray-700/50 hover:shadow-md transition-all text-sm font-semibold text-gray-700 dark:text-gray-300"
                     onClick={() => window.location.href = `${API_URL}/auth/google`}
                   >
                     <svg className="w-5 h-5" viewBox="0 0 24 24">
@@ -266,7 +266,7 @@ const LoginModal = ({ isOpen, onClose }) => {
                   </button>
                   <button
                     type="button"
-                    className="flex items-center justify-center gap-2 px-4 py-3 border border-gray-200 dark:border-gray-700/50 rounded-xl bg-white/50 dark:bg-gray-800/50 backdrop-blur-md hover:bg-gray-50 dark:hover:bg-gray-100 dark:bg-gray-800 hover:shadow-md transition-all text-sm font-semibold text-gray-700 dark:text-gray-300"
+                    className="flex items-center justify-center gap-2 px-4 py-3 border border-gray-200 dark:border-gray-700/50 rounded-xl bg-white/50 dark:bg-gray-800/50 backdrop-blur-md hover:bg-gray-50 dark:hover:bg-gray-700/50 hover:shadow-md transition-all text-sm font-semibold text-gray-700 dark:text-gray-300"
                     onClick={() => window.location.href = `${API_URL}/auth/github`}
                   >
                     <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
@@ -301,7 +301,7 @@ const LoginModal = ({ isOpen, onClose }) => {
                         name="email"
                         type="email"
                         required
-                        className="w-full pl-12 pr-4 py-3.5 border border-gray-200 dark:border-gray-700/50 rounded-xl bg-white/50 dark:bg-gray-800/50 backdrop-blur-md text-gray-900 dark:text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:bg-white dark:focus:bg-gray-100 dark:bg-gray-800 transition-all shadow-sm"
+                        className="w-full pl-12 pr-4 py-3.5 border border-gray-200 dark:border-gray-700/50 rounded-xl bg-white/50 dark:bg-gray-800/50 backdrop-blur-md text-gray-900 dark:text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:bg-white dark:focus:bg-gray-700/50 transition-all shadow-sm"
                         placeholder="you@example.com"
                         value={formData.email}
                         onChange={handleChange}
@@ -328,7 +328,7 @@ const LoginModal = ({ isOpen, onClose }) => {
                         name="password"
                         type={showPassword ? 'text' : 'password'}
                         required
-                        className="w-full pl-12 pr-12 py-3.5 border border-gray-200 dark:border-gray-700/50 rounded-xl bg-white/50 dark:bg-gray-800/50 backdrop-blur-md text-gray-900 dark:text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:bg-white dark:focus:bg-gray-100 dark:bg-gray-800 transition-all shadow-sm"
+                        className="w-full pl-12 pr-12 py-3.5 border border-gray-200 dark:border-gray-700/50 rounded-xl bg-white/50 dark:bg-gray-800/50 backdrop-blur-md text-gray-900 dark:text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:bg-white dark:focus:bg-gray-700/50 transition-all shadow-sm"
                         placeholder="Enter your password"
                         value={formData.password}
                         onChange={handleChange}
